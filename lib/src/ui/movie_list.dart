@@ -19,6 +19,12 @@ class MovieListState extends State<MovieList> {
   void initState() {
     super.initState();
     bloc.fetchAllMovies();
+    //By using WidgetsBinding.instance.addPostFrameCallback,
+    // ensure that _animatedListView is called after the frame is painted,
+    // and the ListView is properly built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _animatedListView();
+    });
   }
 
   @override
@@ -62,15 +68,34 @@ class MovieListState extends State<MovieList> {
       ),
     );
   }
+final ScrollController _controller = ScrollController();
+ void _animatedListView(){
+   Future.delayed(Duration(seconds: 5),(){
+     _controller.animateTo(
+         _controller.position.maxScrollExtent,
+         duration: Duration(seconds: 50),
+         curve: Curves.linear
+     ).then(
+             (_) {
+
+               _controller.jumpTo(_controller.position.minScrollExtent);
+               _animatedListView();
+             }
+     );
+   }
+   );
+ }
 
   buildList(AsyncSnapshot<ItemModel?> snapshot) {
 
     return ListView.builder(
+      controller:_controller ,
       itemCount: snapshot.data?.results.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-        return InkResponse(
+        return GestureDetector(
           // we can use GestureDetector instead of InkResponse
+
           onTap: () {
             openDetailPage(snapshot.data, index);
           },

@@ -10,8 +10,8 @@ class MoviesApiProvider {
   final _apiUrl = 'https://api.themoviedb.org/3/movie';
   Future<ItemModel?> fetchMovieList() async {
     print('entered');
-    final response =
-        await client.get(Uri.parse('$_apiUrl/popular?api_key=$_apiKey'));
+    final response = await client.get(
+        Uri.parse('$_apiUrl/popular?api_key=$_apiKey'));
     print(response.body.toString());
     final parsedJsonDecode = json.decode(response
         .body); // We have to Decode the json file before using with fromJson
@@ -21,6 +21,20 @@ class MoviesApiProvider {
       return ItemModel.fromJson(parsedJsonDecode);
     } else {
       throw Exception('Failed to load Post');
+    }
+  }
+
+  Future<ItemModel?> fetchTopRated() async {
+    print('Entered'); // Checking the method fetchTopRated
+    final response =
+        await client.get(Uri.parse('$_apiUrl/top-rated?api_key = $_apiKey'));
+    print(response.body.toString()); // printing the json file as it is
+
+    final parsedJsonDecode = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return ItemModel.fromJson(parsedJsonDecode);
+    } else {
+      throw Exception('Failed to load the post');
     }
   }
 

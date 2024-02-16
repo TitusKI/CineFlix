@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'movie_list_tile.dart';
 import '../blocs/movies_detail_bloc_provider.dart';
 import 'movie_detail.dart';
 import '../models/item_model.dart';
@@ -19,12 +21,6 @@ class MovieListState extends State<MovieList> {
   void initState() {
     super.initState();
     bloc.fetchAllMovies();
-    //By using WidgetsBinding.instance.addPostFrameCallback,
-    // ensure that _animatedListView is called after the frame is painted,
-    // and the ListView is properly built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _animatedListView();
-    });
   }
 
   @override
@@ -39,81 +35,136 @@ class MovieListState extends State<MovieList> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: const Text('CineFlix',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.red),),
+          child: const Text('CineFlix', style: TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            color: Colors.red,
+          )),
         ),
       ),
-      body: Column(
-        children: [
-          Text('Popular Movies'),
-          Flexible(
-
-            child: StreamBuilder(
-
-                stream: bloc.allMovies,
-                builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
-                  if (snapshot.hasData) {
-                    return buildList(snapshot);
-                  } else if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                }),
-          ),
-          Flexible(
-              flex: 2,
-              child: Text('Genre')
-          )
-        ],
-      ),
+      body: StreamBuilder(
+          stream: bloc.allMovies,
+          builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
+            
+            if (snapshot.hasData) {
+              return buildList(snapshot);
+            } else if (snapshot.hasError) {
+              return Text(snapshot.error.toString());
+            }else if (snapshot.connectionState == HttpStatus.accepted){
+              return Center(child: Text('No internet connection'),);
+              
+           }
+            return const Center(child: CircularProgressIndicator());
+          }),
     );
   }
-final ScrollController _controller = ScrollController();
- void _animatedListView(){
-   Future.delayed(Duration(seconds: 5),(){
-     _controller.animateTo(
-         _controller.position.maxScrollExtent,
-         duration: Duration(seconds: 50),
-         curve: Curves.linear
-     ).then(
-             (_) {
-
-               _controller.jumpTo(_controller.position.minScrollExtent);
-               _animatedListView();
-             }
-     );
-   }
-   );
- }
 
   buildList(AsyncSnapshot<ItemModel?> snapshot) {
+   
+    
+    return Column(
 
-    return ListView.builder(
-      controller:_controller ,
-      itemCount: snapshot.data?.results.length,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (BuildContext context, int index) {
-        return GestureDetector(
-          // we can use GestureDetector instead of InkResponse
-
-          onTap: () {
-            openDetailPage(snapshot.data, index);
-          },
-          child: Column(
+      children: [
+        Container(
+          height: 50,
+          child: ListView(
+           scrollDirection: Axis.horizontal,
             children: [
-
-              Container(
-                height: 200,
-                margin: EdgeInsets.only(top: 8,bottom: 8,right: 5,left: 5),
+          
+              MovieListTile(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(25.0),
+                  ),
+                  child: Container(
+                    height: 30,
+                    width: 100,
+                    
+                    decoration: BoxDecoration(
+                    color: Colors.grey,
+                   
+                    ),
+                    child: Center(child: Text('Movies', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),))
+                    ),
+                ),
+              txt1: 'Popular Movies',
+              txt2: 'Top Rated Movies',
+              ),
+          Padding(padding: EdgeInsets.all(10.0)),
+             ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(25.0),
+                ),
+                child: Container(
+                  height: 30,
+                  width: 100,
+                  
+                  decoration: BoxDecoration(
+                  color: Colors.grey,
+                 
+                  ),
+                  child: Center(child: Text('TV Shows', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),))
+                  ),
+              ),
+          Padding(padding: EdgeInsets.all(10.0)),
+             ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(25.0),
+                ),
+                child: Container(
+                  height: 30,
+                  width: 100,
+                  
+                  decoration: BoxDecoration(
+                  color: Colors.grey,
+                 
+                  ),
+                  child: Center(child: Text('People', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),))
+                  ),
+              ),
+          Padding(padding: EdgeInsets.all(10.0)),
+             ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(25.0),
+                ),
+                child: Container(
+                  height: 30,
+                  width: 100,
+                  
+                  decoration: BoxDecoration(
+                  color: Colors.grey,
+                 
+                  ),
+                  child: Center(child: Text('More', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),))
+                  ),
+              ),
+          Padding(padding: EdgeInsets.all(10.0)),
+       
+              
+              
+              ],),
+        ),
+SizedBox(height: 10,),
+        Expanded(
+          child: GridView.builder(
+            
+            itemCount: snapshot.data?.results.length,
+            gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            itemBuilder: (BuildContext context, int index) {
+              return InkResponse(
+                // we can use GestureDetector instead of InkResponse
+                onTap: () {
+                  openDetailPage(snapshot.data, index);
+                },
                 child: Image.network(
                     'https://image.tmdb.org/t/p/w185${snapshot.data?.results[index].poster_path}',
-                    fit: BoxFit.cover
-                ),
-              ),
-            ],
+                    fit: BoxFit.cover),
+              );
+            },
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 

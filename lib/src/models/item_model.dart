@@ -10,11 +10,16 @@ class ItemModel {
     _total_results = parsedJson['total_results'];
     _total_pages = parsedJson['total_pages'];
     List<_Result> temp = [];
-    for (int i = 0; i < parsedJson['results'].length; i++) {
+    for(_page = 1; _page <= _total_pages; _page ++){
+      _page = _page++;
+       for (int i = 0; i < parsedJson['results'].length; i++) {
       _Result result = _Result(parsedJson['results'][
           i]); // It only responses one result from the list with specific index
       temp.add(result); // add that result of specific index to the temp list
     }
+
+    }
+   
     _results = temp;
   }
 

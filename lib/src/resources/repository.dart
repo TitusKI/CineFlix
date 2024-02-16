@@ -8,8 +8,12 @@ class Repository {
   Future<ItemModel?> fetchAllMovies() {
     return moviesApiProvider.fetchMovieList();
   }
+  Future<ItemModel?> fetchTopRatedMovies(){
+    return moviesApiProvider.fetchTopRated();
+  }
 
   Future<TrailerModel?> fetchTrailers(int movieId) {
     return moviesApiProvider.fetchTrailer(movieId);
   }
+  
 }

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import '../blocs/movies_bloc.dart';
 import 'movie_list.dart';
 
 class MovieListTile extends StatefulWidget{
-  final Widget child;
+  final Widget? child;
   final String? txt1;
   final String? txt2;
   final String? txt3;
   final String? txt4;
-  MovieListTile({required this.child, this.txt1, this.txt2, this.txt3, this.txt4});
+  MovieListTile({ this.child, this.txt1, this.txt2, this.txt3, this.txt4});
 
 @override
 _MovieListTileState createState(){
+  
  return _MovieListTileState();
 }
 
@@ -19,26 +21,37 @@ class _MovieListTileState extends State<MovieListTile>{
   GlobalKey _rowkey = GlobalKey();
   OverlayEntry? _overlayEntry; 
   late Widget _storeChild = Container();
-
+  
+ 
   @override
   void initState(){
     super.initState();
-     _storeChild = widget.child;
+     bloc.showPopupStream.listen((event){
+    if(event){
+      _showPopup();
+    }
+  });
+  bloc.hidePopupStream.listen((event) {
+    if(event){
+      hidePopup();
+    }
+  });
+     _storeChild = widget.child!;
   }
 
   @override
   Widget build(BuildContext context){
+    MovieListState(hidePopup: hidePopup);
     return Container(
       height: 30,
       width:100,
-      child: MouseRegion(
+      child: InkWell(
        key: _rowkey,
-       onHover: (_){
-         _showPopup();
+       onTap: ( ){
+         bloc.handleShowPopup();
        },
-       onExit: (_){
-          _hidePopup();
-       },
+       onTapCancel: bloc.handleHidePopup(),
+      
        child: _storeChild,
       ),
     );
@@ -79,6 +92,12 @@ class _MovieListTileState extends State<MovieListTile>{
       );
       Overlay.of(context).insert(_overlayEntry!);// for inserting the overlay to the popup
   }
+  void hidePopup(){
+    if(_overlayEntry != null){
+      _overlayEntry!.remove();
+      _overlayEntry = null;
+    }
+  }
   _buildPopupItem(String item){
     return ListTile(
       title: Text(
@@ -91,11 +110,6 @@ class _MovieListTileState extends State<MovieListTile>{
     );
 
   }
-  void _hidePopup(){
-    if(_overlayEntry != null){
-      _overlayEntry!.remove();
-      _overlayEntry = null;
-    }
+  
 
   }
-}

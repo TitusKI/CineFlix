@@ -12,11 +12,15 @@ class MovieList extends StatefulWidget {
   //all its properties are immutable
   @override
   State<StatefulWidget> createState() {
-    return MovieListState();
+    return MovieListState(hidePopup: () {  });
   }
 }
 
 class MovieListState extends State<MovieList> {
+  final VoidCallback hidePopup;
+  MovieListState({required this.hidePopup});
+ 
+  // ignore: empty_constructor_bodies
   @override
   void initState() {
     super.initState();
@@ -32,30 +36,39 @@ class MovieListState extends State<MovieList> {
   @override
   Widget build(BuildContext context) {
     bloc.fetchAllMovies();
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: const Text('CineFlix', style: TextStyle(
-            fontSize: 26,
-            fontWeight: FontWeight.bold,
-            color: Colors.red,
-          )),
+    return GestureDetector(
+      onTap: (){
+       return bloc.handleHidePopup();
+      },
+      child: Scaffold(
+        
+        appBar: AppBar(
+          title: GestureDetector(
+            onTap: hidePopup,
+            child: Center(
+              child: const Text('CineFlix', style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              )),
+            ),
+          ),
         ),
-      ),
-      body: StreamBuilder(
-          stream: bloc.allMovies,
-          builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
-            
-            if (snapshot.hasData) {
-              return buildList(snapshot);
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            }else if (snapshot.connectionState == HttpStatus.accepted){
-              return Center(child: Text('No internet connection'),);
+        body: StreamBuilder(
+            stream: bloc.allMovies,
+            builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
               
-           }
-            return const Center(child: CircularProgressIndicator());
-          }),
+              if (snapshot.hasData) {
+                return buildList(snapshot);
+              } else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              }else if (snapshot.connectionState == HttpStatus.accepted){
+                return Center(child: Text('No internet connection'),);
+                
+             }
+              return const Center(child: CircularProgressIndicator());
+            }),
+      ),
     );
   }
 

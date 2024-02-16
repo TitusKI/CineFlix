@@ -41,13 +41,14 @@ class _MovieListTileState extends State<MovieListTile>{
 
   @override
   Widget build(BuildContext context){
-    MovieListState(hidePopup: hidePopup);
+   
     return Container(
       height: 30,
       width:100,
       child: InkWell(
        key: _rowkey,
        onTap: ( ){
+        
          bloc.handleShowPopup();
        },
        onTapCancel: bloc.handleHidePopup(),
@@ -68,26 +69,40 @@ class _MovieListTileState extends State<MovieListTile>{
          // Calculate the position below the main hover click
       Offset position = renderBox.localToGlobal(Offset(0.0, renderBox.size.height));
         return Positioned(
-        left: position.dx,
-        top: position.dy,
-         
-          width:100,
-          height: 150,
-          child: Material(
-            child: Container(
-              color: Colors.white60,
-              child: ListView(
-                children: [
-                  _buildPopupItem('$text1'),
-                  _buildPopupItem('$text2'),
-                  _buildPopupItem('$text3'),
-                  _buildPopupItem('$text4')
-
-                ],
+          left: position.dx,
+          top: position.dy,
+           
+            width:100,
+            height: 150,
+            child: Stack(
+              children:[ Material(
+                child: Container(
+                  color: Colors.white60,
+                  child: ListView(
+                    children: [
+                      _buildPopupItem('$text1'),
+                      _buildPopupItem('$text2'),
+                      _buildPopupItem('$text3'),
+                      _buildPopupItem('$text4')
+                        
+                    ],
+                  ),
+                ),
+              ),
+          // to make scrollable in the stack widget
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: hidePopup,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.transparent,
               ),
             ),
           )
-        );
+          ],)
+          );
+        
       },
       );
       Overlay.of(context).insert(_overlayEntry!);// for inserting the overlay to the popup

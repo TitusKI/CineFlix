@@ -36,41 +36,24 @@ class MovieListState extends State<MovieList> {
   @override
   Widget build(BuildContext context) {
     bloc.fetchAllMovies();
-    return GestureDetector(
-      onTap: () {
-        return bloc.handleHidePopup();
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Center(
-            child: const Text('CineFlix',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                )),
-          ),
-        ),
-        body: StreamBuilder(
-          stream: bloc.allMovies,
-          builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
-            if (snapshot.hasData) {
-              return buildList(snapshot);
-            } else if (snapshot.connectionState == ConnectionState.none ||
-                snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.connectionState == ConnectionState.done) {
-              return Center(
-                child: Text('No data avaliable'),
-              );
-            }
+    return StreamBuilder(
+      stream: bloc.allMovies,
+      builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
+        if (snapshot.hasData) {
+          return buildList(snapshot);
+        } else if (snapshot.connectionState == ConnectionState.none ||
+            snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          return Center(
+            child: Text('No data avaliable'),
+          );
+        }
 
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
-      ),
+        return const Center(child: CircularProgressIndicator());
+      },
     );
   }
 
@@ -177,12 +160,12 @@ class MovieListState extends State<MovieList> {
                   openDetailPage(snapshot.data, index);
                 },
                 child: Image.network(
-                    'https://image.tmdb.org/t/p/w185${snapshot.data?.results[index].poster_path}',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, StackTrace){
-                      return Center(child: CircularProgressIndicator());
-                    },
-                    ),
+                  'https://image.tmdb.org/t/p/w185${snapshot.data?.results[index].poster_path}',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, StackTrace) {
+                    return Center(child: CircularProgressIndicator());
+                  },
+                ),
               );
             },
           ),

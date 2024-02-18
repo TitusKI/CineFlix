@@ -30,6 +30,9 @@ class _MovieListTileState extends State<MovieListTile>{
     if(event){
       _showPopup();
     }
+    // else if(!event){
+    //   hidePopup();
+    // }
   });
   bloc.hidePopupStream.listen((event) {
     if(event){
@@ -43,70 +46,73 @@ class _MovieListTileState extends State<MovieListTile>{
   Widget build(BuildContext context){
    
     return Container(
-      height: 30,
-      width:100,
-      child: InkWell(
-       key: _rowkey,
-       onTap: ( ){
+        height: 30,
+        width:100,
+        child: InkWell(
+         key: _rowkey,
+         onTap: ( ){
+          
+           bloc.handleShowPopup();
+         },
+       
         
-         bloc.handleShowPopup();
-       },
-       onTapCancel: bloc.handleHidePopup(),
-      
-       child: _storeChild,
-      ),
-    );
+         child: _storeChild,
+        ),
+      );
   }
-  void _showPopup(){
-    _overlayEntry = OverlayEntry(
-      builder: (context) {
-        String? text1 = widget.txt1;// wwidget is used to access the variables from the above class
-        String? text2 = widget.txt2;
-      
-        String? text3 = widget.txt3;
-        String? text4 = widget.txt4;
-        RenderBox renderBox = _rowkey.currentContext!.findRenderObject() as RenderBox;
-         // Calculate the position below the main hover click
+void _showPopup() {
+  _overlayEntry = OverlayEntry(
+    builder: (context) {
+      String? text1 = widget.txt1;
+      String? text2 = widget.txt2;
+      String? text3 = widget.txt3;
+      String? text4 = widget.txt4;
+
+      List<String?> items = [text1, text2, text3, text4]; // Store all items in a list
+
+      RenderBox renderBox = _rowkey.currentContext!.findRenderObject() as RenderBox;
       Offset position = renderBox.localToGlobal(Offset(0.0, renderBox.size.height));
-        return Positioned(
-          left: position.dx,
-          top: position.dy,
-           
-            width:100,
-            height: 150,
-            child: Stack(
-              children:[ Material(
-                child: Container(
-                  color: Colors.white60,
-                  child: ListView(
-                    children: [
-                      _buildPopupItem('$text1'),
-                      _buildPopupItem('$text2'),
-                      _buildPopupItem('$text3'),
-                      _buildPopupItem('$text4')
-                        
-                    ],
-                  ),
-                ),
-              ),
-          // to make scrollable in the stack widget
-          Positioned.fill(
-            child: GestureDetector(
-              onTap: hidePopup,
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Colors.transparent,
+
+      return Positioned(
+        left: position.dx,
+        top: position.dy,
+        width: 165,
+        height: 130 + items.length * 30, // Adjust the height based on the number of items
+        child: Stack(
+          children: [Material(
+            child: Container(
+              color: Colors.white60,
+              child: Column(
+                children: items.map<Widget>((item) => _buildPopupItem('$item')).toList(),
               ),
             ),
-          )
-          ],)
-          );
+          ),
         
-      },
+        // Positioned.fill(
+          
+        //   child: GestureDetector(
+        //     onTap: bloc.handleHidePopup(),
+        //     // },
+        //     // onPanDown: (_){
+        //     //   bloc.handleHidePopup();
+        //     // },
+        //     // behavior: HitTestBehavior.translucent,
+        //     child: Container(
+        //       width: double.infinity,
+        //       height: double.infinity,
+        //       color: Colors.transparent
+        //     ),
+        //   ),
+        // ),
+        ],
+        )
       );
-      Overlay.of(context).insert(_overlayEntry!);// for inserting the overlay to the popup
-  }
+    },
+  );
+
+  Overlay.of(context).insert(_overlayEntry!);
+}
+
   void hidePopup(){
     if(_overlayEntry != null){
       _overlayEntry!.remove();

@@ -26,6 +26,7 @@ class App extends StatelessWidget {
         ),
        body: Listener(onPointerDown: (event){
       bloc.handleHidePopup();
+    
        },
        child: MovieList(),),
       )

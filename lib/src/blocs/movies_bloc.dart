@@ -8,6 +8,9 @@ class MoviesBloc {
   final _topRatedFetcher = PublishSubject<ItemModel?>();
   final _hideHandler = BehaviorSubject<bool>();
   final _showHandler = BehaviorSubject<bool>();
+  final _selectedTileIndex = BehaviorSubject<int>();
+  final _popupContent = BehaviorSubject<List<String>>();
+
 
   // in Dart StreamController = PublishSubject/Subject in Rxdart
 // PublishSubject is a type of subject that,
@@ -17,6 +20,9 @@ class MoviesBloc {
   Sink<bool> get showPopupSink => _showHandler.sink;
   Stream<bool> get hidePopupStream => _hideHandler.stream;
   Sink<bool> get hidePopupSink => _hideHandler.sink;
+  Stream<int> get selectedTileIndexStream => _selectedTileIndex.stream;
+  Sink<int> get selectedTileIndexSink => _selectedTileIndex.sink;
+  Stream<List<String>> get popupContentStream => _popupContent.stream;
 
   
   Stream<ItemModel> get allMovies => _moviesFetcher.stream;
@@ -42,6 +48,12 @@ class MoviesBloc {
   handleShowPopup(){
    showPopupSink.add(true);
   }
+  handleTileTap(int index, List<String> content){
+    selectedTileIndexSink.add(index);
+    List<String> filterdContent = content.where((item) => item.isNotEmpty).toList();
+    _popupContent.sink.add(filterdContent);
+
+  }
 
 
   dispose() {
@@ -51,6 +63,8 @@ class MoviesBloc {
     _topRatedFetcher.close();
     _hideHandler.close();
     _showHandler.close();
+    _selectedTileIndex.close();
+    _popupContent.close();
   }
 }
 

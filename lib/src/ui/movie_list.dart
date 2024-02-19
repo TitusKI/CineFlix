@@ -1,4 +1,4 @@
-import 'dart:io';
+
 import 'movie_list_tile.dart';
 import '../blocs/movies_detail_bloc_provider.dart';
 import 'movie_detail.dart';
@@ -57,91 +57,24 @@ class MovieListState extends State<MovieList> {
     );
   }
 
+  // Map<MovieListTile, List<String>> popupContentMap = {};
   buildList(AsyncSnapshot<ItemModel?> snapshot) {
     return Column(
       children: [
         Container(
           height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MovieListTile(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(25.0),
-                  ),
-                  child: Container(
-                      height: 30,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                      ),
-                      child: Center(
-                          child: Text(
-                        'Movies',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ))),
-                ),
-                txt1: 'Popular Movies',
-                txt2: 'Top Rated Movies',
-                txt3: "Upcoming Movies",
-              ),
-              Padding(padding: EdgeInsets.all(10.0)),
-              ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25.0),
-                ),
-                child: Container(
-                    height: 30,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                    child: Center(
-                        child: Text(
-                      'TV Shows',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ))),
-              ),
-              Padding(padding: EdgeInsets.all(10.0)),
-              ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25.0),
-                ),
-                child: Container(
-                    height: 30,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                    child: Center(
-                        child: Text(
-                      'People',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ))),
-              ),
-              Padding(padding: EdgeInsets.all(10.0)),
-              ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25.0),
-                ),
-                child: Container(
-                    height: 30,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                    child: Center(
-                        child: Text(
-                      'More',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ))),
-              ),
-              Padding(padding: EdgeInsets.all(10.0)),
+              buildMovieListTile('Movies',
+                  ["Popular ", 'Top Rated ', 'Now Playing', 'Upcoming '], 1),
+              // Padding(padding: EdgeInsets.all(4.0)),
+              buildMovieListTile("TV Shows",
+                  ['Popular', 'Top Rated', 'Airing Today', 'On TV'], 2),
+              // Padding(padding: EdgeInsets.all(4.0)),
+              buildMovieListTile('People', ['Popular People'], 3),
+              // Padding(padding: EdgeInsets.all(4.0)),
+              buildMovieListTile('More', ['Genre'], 4)
             ],
           ),
         ),
@@ -193,5 +126,37 @@ class MovieListState extends State<MovieList> {
         ),
       );
     }));
+  }
+
+  Widget buildMovieListTile(String title, List<String> popupContent, int index) {
+    MovieListTile movieListTile = MovieListTile(
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(
+          Radius.circular(25.0),
+        ),
+        child: Container(
+          height: 25,
+          width: 50,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+          ),
+          child: Center(
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ),
+     txt1: popupContent.length > 0 ? popupContent[0] : '',
+     txt2: popupContent.length > 1 ? popupContent[1] : '',
+
+     txt3: popupContent.length > 2 ? popupContent[2] : '',
+
+     txt4: popupContent.length > 3 ? popupContent[3] : '',
+      index: index,
+    );
+    // popupContentMap[movieListTile] = popupContent;
+    return movieListTile;
   }
 }

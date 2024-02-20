@@ -1,6 +1,11 @@
+import 'package:cineflix/src/ui/item_navigation.dart';
 import 'package:flutter/material.dart';
 import '../blocs/movies_bloc.dart';
-import 'movie_list.dart';
+import '../blocs/movies_detail_bloc_provider.dart';
+import '../models/item_model.dart';
+import 'movie_detail.dart';
+import 'item_navigation.dart';
+
 
 class MovieListTile extends StatefulWidget {
   final Widget? child;
@@ -9,6 +14,7 @@ class MovieListTile extends StatefulWidget {
   final String? txt3;
   final String? txt4;
   final int index;
+  ItemNavigation itemNavigation = ItemNavigation();
   MovieListTile(
       {this.child,
       this.txt1,
@@ -53,7 +59,6 @@ class _MovieListTileState extends State<MovieListTile> {
       }
     });
 
-  
     bloc.hidePopupStream.listen((event) {
       if (event) {
         hidePopup();
@@ -104,9 +109,10 @@ class _MovieListTileState extends State<MovieListTile> {
                       child: Container(
                         color: Colors.white60,
                         child: ListView(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            children: _popupContent),
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          children: _popupContent,
+                        ),
                       ),
                     ),
                   ),
@@ -134,11 +140,16 @@ class _MovieListTileState extends State<MovieListTile> {
           style: TextStyle(color: Colors.white),
         ),
         onTap: () {
-          print('clicked');
-        },
+          bloc.handleHidePopup();
+          Future.delayed(Duration(milliseconds: 200),(){
+ Navigator.push(context, MaterialPageRoute(builder: (context)=>const ItemNavigation()));
+          });
+         
+        }
       );
-    } else {
-      return Container(); // Return an empty container if item is null or empty
     }
-  }
+    else{
+      return Container();
+    }
+}
 }

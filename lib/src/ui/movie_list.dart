@@ -1,4 +1,3 @@
-
 import 'movie_list_tile.dart';
 import '../blocs/movies_detail_bloc_provider.dart';
 import 'movie_detail.dart';
@@ -81,54 +80,15 @@ class MovieListState extends State<MovieList> {
         SizedBox(
           height: 10,
         ),
-        Expanded(
-          child: GridView.builder(
-            itemCount: snapshot.data?.results.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
-            itemBuilder: (BuildContext context, int index) {
-              return InkResponse(
-                // we can use GestureDetector instead of InkResponse
-                onTap: () {
-                  openDetailPage(snapshot.data, index);
-                },
-                child: Image.network(
-                  'https://image.tmdb.org/t/p/w185${snapshot.data?.results[index].poster_path}',
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, StackTrace) {
-                    return Center(child: CircularProgressIndicator());
-                  },
-                ),
-              );
-            },
-          ),
-        ),
+     
       ],
     );
   }
 
-  openDetailPage(ItemModel? data, int index) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return MovieDetailBlocProvider(
-        // Returning of instances of MovieDetailBlocProvider(InheritedWidget)
-        // wrapping the MOvieDetail screen to it.
-        // So MovieDetailBloc class will be accessible inside the detail
-        // screen and to all the widgets since
-        // It is in the Initializer list of the MovieDetailBlocProvider instances
-        key: GlobalKey(),
-        child: MovieDetail(
-          title: data!.results[index].title,
-          posterUrl: data!.results[index].poster_path,
-          description: data!.results[index].overview,
-          releaseDate: data!.results[index].release_date,
-          voteAverage: data!.results[index].vote_average.toString(),
-          movieId: data!.results[index].id,
-        ),
-      );
-    }));
-  }
+  
 
-  Widget buildMovieListTile(String title, List<String> popupContent, int index) {
+  Widget buildMovieListTile(
+      String title, List<String> popupContent, int index) {
     MovieListTile movieListTile = MovieListTile(
       child: ClipRRect(
         borderRadius: BorderRadius.all(
@@ -148,12 +108,10 @@ class MovieListState extends State<MovieList> {
           ),
         ),
       ),
-     txt1: popupContent.length > 0 ? popupContent[0] : '',
-     txt2: popupContent.length > 1 ? popupContent[1] : '',
-
-     txt3: popupContent.length > 2 ? popupContent[2] : '',
-
-     txt4: popupContent.length > 3 ? popupContent[3] : '',
+      txt1: popupContent.length > 0 ? popupContent[0] : '',
+      txt2: popupContent.length > 1 ? popupContent[1] : '',
+      txt3: popupContent.length > 2 ? popupContent[2] : '',
+      txt4: popupContent.length > 3 ? popupContent[3] : '',
       index: index,
     );
     // popupContentMap[movieListTile] = popupContent;

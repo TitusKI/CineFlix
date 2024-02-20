@@ -1,8 +1,7 @@
-import 'dart:ffi';
-import 'dart:ui';
+
 
 import '../models/trailer_model.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+
 import '../blocs/movies_detail_bloc_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';

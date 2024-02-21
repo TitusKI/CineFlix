@@ -107,7 +107,7 @@ class _MovieListTileState extends State<MovieListTile> {
                   Material(
                     child: ClipRRect(
                       child: Container(
-                        color: Colors.white60,
+                        color: Colors.black,
                         child: ListView(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,

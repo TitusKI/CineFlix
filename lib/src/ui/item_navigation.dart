@@ -27,13 +27,32 @@ class _ItemNavigationState extends State<ItemNavigation> {
       theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          title: Center(
-            child: const Text('CineFlix',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                )),
+          title: GestureDetector(
+            onTap: (){
+          Navigator.of(context).pop();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(onPressed: (){
+                  Navigator.of(context).pop();
+                }, icon: Icon(Icons.home_filled, color: Colors.red,)),
+                // ,SizedBox(width: 80,),
+                Text('Popular Movies',
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                    )),
+                Center(
+                  child: const Text('CineFlix',
+                    style: TextStyle(
+                      
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    )),
+                ),
+          ]  ),
           ),
         ),
        body: Listener(onPointerDown: (event){
@@ -146,12 +165,14 @@ class _ItemNavigationState extends State<ItemNavigation> {
           height: 25,
           width: 50,
           decoration: BoxDecoration(
-            color: Colors.grey,
+            color: Colors.red,
           ),
           child: Center(
             child: Text(
               title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
         ),

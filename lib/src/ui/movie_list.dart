@@ -78,14 +78,83 @@ class MovieListState extends State<MovieList> {
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 20,
         ),
-     
+        Container(
+          color: Color.fromARGB(3, 39, 9, 191),
+          child: ListView(shrinkWrap: true, children: [
+            Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/cineflix.jpg'),
+                      fit: BoxFit.cover)),
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.baseline,
+                children: [
+                  Text(
+                    "Welcome.",
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  Text(
+                    "Millions of movies, TV shows and people to discover. Explore now.",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(25.0),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintStyle:
+                              TextStyle(color: Colors.grey, fontSize: 20),
+                          hintText: 'Search for a movie, tv show, person.....',
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              child: Column(children: [
+                Text(
+                  "Trending.",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: const Color.fromARGB(255, 66, 62, 62)),
+                   
+                ),
+                  //  ListView(
+                  //   scrollDirection: Axis.horizontal,
+                  //       children: [
+                         
+                  //       ],
+                      // )
+              ]),
+            ),
+          ]),
+        )
       ],
     );
   }
-
-  
 
   Widget buildMovieListTile(
       String title, List<String> popupContent, int index) {
@@ -98,12 +167,15 @@ class MovieListState extends State<MovieList> {
           height: 25,
           width: 50,
           decoration: BoxDecoration(
-            color: Colors.grey,
+            color: Colors.red,
           ),
           child: Center(
             child: Text(
               title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
           ),
         ),

@@ -43,26 +43,50 @@ MoviesBloc(){
   Stream<ItemModel> getStreamForIndex(int index){
     return _streamMap[index]!;
   }
-
-void fetchMoviesForIndex(int index) async {
 ItemModel? itemModel;
+void fetchMoviesForIndex(int index) async {
+
 switch(index){
   case 1: 
-      itemModel =  await _repository.fetchAllMovies();
+      itemModel =  await _repository.fetchMovieByType(Types.popular);
       break;
   case 2:
-      itemModel =  await _repository.fetchTopRatedMovies();
+      itemModel =  await _repository.fetchMovieByType(Types.topRated);
       break;
   case 3:
-      itemModel = await _repository.fetchNowPlaying();
+      itemModel = await _repository.fetchMovieByType(Types.nowPlaying);
       break;
   case 4: 
-      itemModel = await _repository.fetchUpcoming();
+      itemModel = await _repository.fetchMovieByType(Types.upcoming);
       break;
 } 
 _streamMap[index]!.add(itemModel!);
 
 }
+void fetchTVShowsForIndex(int index) async{
+
+  switch(index){
+    case 1: 
+    itemModel = await _repository.fetchTVShowByType(Types.popular);
+    break;
+     case 2: 
+    itemModel = await _repository.fetchTVShowByType(Types.topRated);
+    break;
+     case 3: 
+    itemModel = await _repository.fetchTVShowByType(Types.airingToday);
+    break;
+     case 4: 
+    itemModel = await _repository.fetchTVShowByType(Types.onTv);
+    break;
+    
+  }
+}
+ void fetchPeopleForIndex(int index) async{
+ switch(index){
+  case 1:
+     itemModel = await _repository.fetchPeopleByType(Types.popular);
+ }
+ }
   // fetchAllMovies() async {
   //   // It fetches all movies from the repository then waits
   //   // and adds the itemModel to the movieFetcher Stream using sink

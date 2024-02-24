@@ -26,6 +26,14 @@ class MoviesBloc {
   Stream<ItemModel> get allMovies => _moviesFetcher.stream;
   Stream<ItemModel?> get topRatedMovies => _topRatedFetcher.stream;
 
+
+final _popupContentMap = Map<int, BehaviorSubject<List<String>>>();
+
+MoviesBloc(){
+      for (int i = 1; i <= 4; i++){
+  _popupContentMap[i] = BehaviorSubject<List<String>>.seeded([]);
+}
+}
   // Subscribers or Consumers can listen to this stream to get updates on movie data.
 
   fetchAllMovies() async {
@@ -47,12 +55,15 @@ class MoviesBloc {
   handleShowPopup() {
     showPopupSink.add(true);
   }
+  Stream<List<String>> getPopupContentForIndex(int index){
+    return _popupContentMap[index]!.stream;
+  }
 
   handleTileTap(int index, List<String> content) {
     selectedTileIndexSink.add(index);
     List<String> filterdContent =
         content.where((item) => item.isNotEmpty).toList();
-    _popupContent.sink.add(filterdContent);
+    _popupContentMap[index]!.sink.add(filterdContent);
   }
 
   dispose() {
@@ -63,6 +74,10 @@ class MoviesBloc {
     _hideHandler.close();
     _showHandler.close();
     _selectedTileIndex.close();
+    _popupContentMap.forEach((key, value) {
+      value.close();
+    });
+  
     _popupContent.close();
   }
 }

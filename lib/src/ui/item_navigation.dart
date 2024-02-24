@@ -171,7 +171,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
             child: Text(
               title,
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),

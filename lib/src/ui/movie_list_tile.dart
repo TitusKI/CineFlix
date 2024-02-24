@@ -14,7 +14,7 @@ class MovieListTile extends StatefulWidget {
   final String? txt3;
   final String? txt4;
   final int index;
-  ItemNavigation itemNavigation = ItemNavigation();
+
   MovieListTile(
       {this.child,
       this.txt1,
@@ -33,12 +33,14 @@ class _MovieListTileState extends State<MovieListTile> {
   GlobalKey _rowkey = GlobalKey();
   OverlayEntry? _overlayEntry;
   late List<Widget> _popupContent = [];
+  int startingIndex = 1;
   _MovieListTileState({required List<Widget> popupContent}) {
     // List<String?> popupContent = [widget.txt1, widget.txt2, widget.txt3, widget.txt4];
     // // ignore: unnecessary_null_comparison
     _popupContent = popupContent
-        .where((item) => item is String && (item as String).isNotEmpty)
-        .map((item) => _buildPopupItem(item as String))
+        . asMap().entries
+        // .where((item) => item is String && (item as String).isNotEmpty)
+        .map((item) => _buildPopupItem(item.value as String, item.key + startingIndex))
         .toList();
   }
 
@@ -46,10 +48,10 @@ class _MovieListTileState extends State<MovieListTile> {
   void initState() {
     super.initState();
     _popupContent = [
-      _buildPopupItem(widget.txt1 ?? ''),
-      _buildPopupItem(widget.txt2 ?? ''),
-      _buildPopupItem(widget.txt3 ?? ''),
-      _buildPopupItem(widget.txt4 ?? ''),
+      _buildPopupItem(widget.txt1 ?? '', 1),
+      _buildPopupItem(widget.txt2 ?? '',2),
+      _buildPopupItem(widget.txt3 ?? '', 3),
+      _buildPopupItem(widget.txt4 ?? '', 4),
     ];
     bloc.selectedTileIndexStream.listen((index) {
       if (index == widget.index) {
@@ -132,7 +134,7 @@ class _MovieListTileState extends State<MovieListTile> {
     }
   }
 
-  Widget _buildPopupItem(String? item) {
+  Widget _buildPopupItem(String? item, int itemIndex) {
     if (item != null && item.isNotEmpty) {
       return ListTile(
         title: Text(
@@ -142,7 +144,7 @@ class _MovieListTileState extends State<MovieListTile> {
         onTap: () {
           bloc.handleHidePopup();
           Future.delayed(Duration(milliseconds: 200),(){
- Navigator.push(context, MaterialPageRoute(builder: (context)=>const ItemNavigation()));
+ Navigator.push(context, MaterialPageRoute(builder: (context)=> ItemNavigation(buttonIndex: widget.index,itemIndex: itemIndex,)));
           });
          
         }

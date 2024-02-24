@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' show Client;
 import '../models/item_model.dart';
-import '../models/trailer_model.dart';
+// import '../models/trailer_model.dart';
 
 class TvShowsApiProvider{
 Client client = Client();

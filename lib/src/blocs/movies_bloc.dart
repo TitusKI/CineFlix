@@ -25,7 +25,7 @@ class MoviesBloc {
 
   Stream<ItemModel> get allMovies => _moviesFetcher.stream;
   Stream<ItemModel?> get topRatedMovies => _topRatedFetcher.stream;
-
+// Subscribers or Consumers can listen to this stream to get updates on movie data
 
 final _popupContentMap = Map<int, BehaviorSubject<List<String>>>();
 
@@ -34,19 +34,52 @@ MoviesBloc(){
   _popupContentMap[i] = BehaviorSubject<List<String>>.seeded([]);
 }
 }
-  // Subscribers or Consumers can listen to this stream to get updates on movie data.
-
-  fetchAllMovies() async {
-    // It fetches all movies from the repository then waits
-    // and adds the itemModel to the movieFetcher Stream using sink
-    ItemModel? itemModel = await _repository.fetchAllMovies();
-    _moviesFetcher.sink.add(itemModel!);
+  final Map<int, PublishSubject<ItemModel>> _streamMap = {
+    1: PublishSubject<ItemModel>(),
+    2: PublishSubject<ItemModel>(),
+    3: PublishSubject<ItemModel>(),
+    4: PublishSubject<ItemModel>(),
+  };
+  Stream<ItemModel> getStreamForIndex(int index){
+    return _streamMap[index]!;
   }
 
-  fetchRatedMovies() async {
-    ItemModel? itemModel = await _repository.fetchTopRatedMovies();
-    _topRatedFetcher.sink.add(itemModel);
-  }
+void fetchMoviesForIndex(int index) async {
+ItemModel? itemModel;
+switch(index){
+  case 1: 
+      itemModel =  await _repository.fetchAllMovies();
+      break;
+  case 2:
+      itemModel =  await _repository.fetchTopRatedMovies();
+      break;
+  case 3:
+      itemModel = await _repository.fetchNowPlaying();
+      break;
+  case 4: 
+      itemModel = await _repository.fetchUpcoming();
+      break;
+} 
+_streamMap[index]!.add(itemModel!);
+
+}
+  // fetchAllMovies() async {
+  //   // It fetches all movies from the repository then waits
+  //   // and adds the itemModel to the movieFetcher Stream using sink
+  //   ItemModel? itemModel = await _repository.fetchAllMovies();
+  //   _moviesFetcher.sink.add(itemModel!);
+  // }
+
+  // fetchRatedMovies() async {
+  //   ItemModel? itemModel = await _repository.fetchTopRatedMovies();
+  //   _topRatedFetcher.sink.add(itemModel);
+  // }
+  // fetchNowPlaying() async{
+  //   ItemModel? itemModel = await _repository.fetchNowPlaying();
+  // }
+  // fetchUpcoming() async{
+  //   ItemModel? itemModel = await _repository.fetchUpcoming();
+  // }
 
   handleHidePopup() {
     hidePopupSink.add(true);

@@ -27,7 +27,7 @@ class MoviesApiProvider {
   Future<ItemModel?> fetchTopRated() async {
     print('Entered'); // Checking the method fetchTopRated
     final response =
-        await client.get(Uri.parse('$_apiUrl/top-rated?api_key = $_apiKey'));
+        await client.get(Uri.parse('$_apiUrl/top_rated?api_key=$_apiKey'));
     print(response.body.toString()); // printing the json file as it is
 
     final parsedJsonDecode = json.decode(response.body);
@@ -41,7 +41,7 @@ class MoviesApiProvider {
   Future<ItemModel?> fetchNowPlaying() async {
     print('Now Playing Entered');
     final response =
-        await client.get(Uri.parse('$_apiUrl/now-playing?api_key = $_apiKey'));
+        await client.get(Uri.parse('$_apiUrl/now_playing?api_key=$_apiKey'));
     print(response.body.toString());
     final parsedJsonDecode = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -51,10 +51,10 @@ class MoviesApiProvider {
     }
   }
 
-  Future<ItemModel?> fetchedUpcoming() async {
+  Future<ItemModel?> fetchUpcoming() async {
     print('Upcoming');
     final response =
-        await client.get(Uri.parse('$_apiUrl/upcoming?api_key =$_apiKey'));
+        await client.get(Uri.parse('$_apiUrl/upcoming?api_key=$_apiKey'));
     print(response.body.toString());
     final parsedJsonDecode = json.decode(response.body);
     if (response.statusCode == 200) {

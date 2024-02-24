@@ -15,5 +15,11 @@ class Repository {
   Future<TrailerModel?> fetchTrailers(int movieId) {
     return moviesApiProvider.fetchTrailer(movieId);
   }
+  Future<ItemModel?> fetchNowPlaying(){
+    return moviesApiProvider.fetchNowPlaying();
+  }
+  Future<ItemModel?> fetchUpcoming(){
+    return moviesApiProvider.fetchUpcoming();
+  }
   
 }

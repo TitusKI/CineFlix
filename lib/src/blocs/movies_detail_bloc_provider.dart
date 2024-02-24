@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'movies_detail_bloc.dart';
-export 'movies_detail_bloc.dart'; // Export keyword here is if another class imports movieo_detail_bloc.dart ,
+export 'movies_detail_bloc.dart'; 
+// Export keyword here is if another class imports movieo_detail_bloc.dart ,
 // they will also have an access to MOvieDetailBlocProvider
 
 class MovieDetailBlocProvider extends InheritedWidget {

@@ -23,7 +23,8 @@ class MovieListState extends State<MovieList> {
   @override
   void initState() {
     super.initState();
-    bloc.fetchAllMovies();
+    // bloc.fetchAllMovies();
+    bloc.fetchMoviesForIndex(1);
   }
 
   @override
@@ -34,16 +35,17 @@ class MovieListState extends State<MovieList> {
 
   @override
   Widget build(BuildContext context) {
-    bloc.fetchAllMovies();
+    // bloc.fetchAllMovies();
+    bloc.fetchMoviesForIndex(1);
     return StreamBuilder(
-      stream: bloc.allMovies,
+      stream: bloc.getStreamForIndex(1),
       builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
         if (snapshot.hasData) {
           return buildList(snapshot);
         } else if (snapshot.connectionState == ConnectionState.none ||
             snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: Text('hi titus'),
           );
         } else if (snapshot.connectionState == ConnectionState.done) {
           return Center(
@@ -51,7 +53,7 @@ class MovieListState extends State<MovieList> {
           );
         }
 
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: Text('ERRor'));
       },
     );
   }

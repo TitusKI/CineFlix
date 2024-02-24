@@ -10,7 +10,7 @@ class PeopleApiProvider{
   final _apiUrl = 'https://api.themoviedb.org/3/person';
   Future<ItemModel?> fetchPopularPeople() async{
     print('Famous Entered');
-    final response = await client.get(Uri.parse('$_apiUrl/person/popular?_apiKey=$_apiKey'));
+    final response = await client.get(Uri.parse('$_apiUrl/popular?api_key=$_apiKey'));
     print(response.body.toString());
     final parsedJson = json.decode(response.body);
     if(response.statusCode == 200){

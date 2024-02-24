@@ -9,9 +9,9 @@ Client client = Client();
  final _apiKey = 'fdd7db0a47ca786d8055a9120ed43d35';
   final _apiUrl = 'https://api.themoviedb.org/3/tv';
    Future<ItemModel?> fetchPopular() async {
-    print('entered');
+    print('Popular TVShows');
     final response =
-        await client.get(Uri.parse('$_apiUrl?api_key=$_apiKey'));
+        await client.get(Uri.parse('$_apiUrl/popular?api_key=$_apiKey'));
     print(response.body.toString());
     final parsedJsonDecode = json.decode(response
         .body); // We have to Decode the json file before using with fromJson
@@ -24,9 +24,9 @@ Client client = Client();
     }
   }
    Future<ItemModel?> fetchTopRated() async {
-    print('entered');
+    print('Top Rated Tvshows');
     final response =
-        await client.get(Uri.parse('$_apiUrl/top-rated?api_key=$_apiKey'));
+        await client.get(Uri.parse('$_apiUrl/top_rated?api_key=$_apiKey'));
     print(response.body.toString());
     final parsedJsonDecode = json.decode(response
         .body); // We have to Decode the json file before using with fromJson
@@ -39,9 +39,9 @@ Client client = Client();
     }
   }
      Future<ItemModel?> fetchAiringToday() async {
-    print('entered');
+    print('Airing Today Tv shows');
     final response =
-        await client.get(Uri.parse('$_apiUrl/on-the-air?api_key=$_apiKey'));
+        await client.get(Uri.parse('$_apiUrl/airing_today?api_key=$_apiKey'));
     print(response.body.toString());
     final parsedJsonDecode = json.decode(response
         .body); // We have to Decode the json file before using with fromJson
@@ -54,9 +54,9 @@ Client client = Client();
     }
   }
      Future<ItemModel?> fetchOnTv() async {
-    print('entered');
+    print('On TV Tvshows');
     final response =
-        await client.get(Uri.parse('$_apiUrl/on-tv?api_key=$_apiKey'));
+        await client.get(Uri.parse('$_apiUrl/on_the_air?api_key=$_apiKey'));
     print(response.body.toString());
     final parsedJsonDecode = json.decode(response
         .body); // We have to Decode the json file before using with fromJson

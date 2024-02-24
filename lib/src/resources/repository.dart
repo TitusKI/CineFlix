@@ -6,9 +6,9 @@ import 'dart:async';
 import 'movies_api_provider.dart';
 import '../models/item_model.dart';
 
-  enum Types {
-      popular,
-      topRated,
+enum Types {
+  popular,
+  topRated,
   nowPlaying,
   upcoming,
   airingToday,
@@ -16,34 +16,30 @@ import '../models/item_model.dart';
   genre,
 
   trailers,
-
-  }
+}
 
 class Repository {
-
-
-
   final moviesApiProvider = MoviesApiProvider();
   final tvShowsApiProvider = TvShowsApiProvider();
   final peopleApiProvider = PeopleApiProvider();
 
-
-  Future<ItemModel?> fetchMovieByType(Types type,{int? movieId}){
-    switch (type){
+  Future<ItemModel?> fetchMovieByType(Types type, {int? movieId}) {
+    switch (type) {
       case Types.popular:
-          return moviesApiProvider.fetchMovieList();
+        return moviesApiProvider.fetchMovieList();
       case Types.topRated:
-          return moviesApiProvider.fetchTopRated();
+        return moviesApiProvider.fetchTopRated();
       case Types.nowPlaying:
-          return moviesApiProvider.fetchNowPlaying();
+        return moviesApiProvider.fetchNowPlaying();
       case Types.upcoming:
-           return moviesApiProvider.fetchUpcoming();
+        return moviesApiProvider.fetchUpcoming();
       default:
         throw Exception("Invalid Movie Type provided: $type");
     }
   }
- Future<ItemModel?> fetchTVShowByType(Types type,{int? movieId}){
-    switch (type){
+
+  Future<ItemModel?> fetchTVShowByType(Types type, {int? movieId}) {
+    switch (type) {
       case Types.popular:
         return tvShowsApiProvider.fetchPopular();
       case Types.topRated:
@@ -56,8 +52,9 @@ class Repository {
         throw Exception('Invalid TV Shows Type provided: $type');
     }
   }
-   Future<ItemModel?> fetchPeopleByType(Types type,{int? movieId}){
-    switch (type){
+
+  Future<ItemModel?> fetchPeopleByType(Types type, {int? movieId}) {
+    switch (type) {
       case Types.popular:
         return peopleApiProvider.fetchPopularPeople();
       default:
@@ -68,7 +65,6 @@ class Repository {
   //   switch (type){
   //     case Types.allMovies
   //   }
-  
 
   // Future<ItemModel?> fetchAllMovies() {
   //   return moviesApiProvider.fetchMovieList();
@@ -86,5 +82,4 @@ class Repository {
   // Future<ItemModel?> fetchUpcoming(){
   //   return moviesApiProvider.fetchUpcoming();
   // }
-  
 }

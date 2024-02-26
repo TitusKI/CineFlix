@@ -5,6 +5,7 @@ import '../blocs/movies_detail_bloc_provider.dart';
 import '../models/item_model.dart';
 import 'movie_detail.dart';
 import 'item_navigation.dart';
+import "people_item_screen.dart";
 
 
 class MovieListTile extends StatefulWidget {
@@ -144,7 +145,13 @@ class _MovieListTileState extends State<MovieListTile> {
         onTap: () {
           bloc.handleHidePopup();
           Future.delayed(Duration(milliseconds: 200),(){
- Navigator.push(context, MaterialPageRoute(builder: (context)=> ItemNavigation(buttonIndex: widget.index,itemIndex: itemIndex,)));
+            if(widget.index == 3){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> PeopleScreen(buttonIndex: widget.index,itemIndex: itemIndex,)));
+            }
+            else{
+               Navigator.push(context, MaterialPageRoute(builder: (context)=> ItemNavigation(buttonIndex: widget.index,itemIndex: itemIndex,)));
+            }
+
           });
          
         }

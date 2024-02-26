@@ -10,8 +10,8 @@ class MovieDetail extends StatefulWidget {
   final posterUrl;
   final description;
   final releaseDate;
-  final String title;
-  final String voteAverage;
+  final String? title;
+  final String? voteAverage;
   final int movieId;
 
   MovieDetail({
@@ -42,8 +42,8 @@ class MovieDetailState extends State<MovieDetail> {
   final posterUrl;
   final description;
   final releaseDate;
-  final String title;
-  final String voteAverage;
+  final String? title;
+  final String? voteAverage;
   final int movieId;
   late MovieDetailBloc bloc;
   MovieDetailState({
@@ -102,13 +102,15 @@ class MovieDetailState extends State<MovieDetail> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        title,
+                      child: title != null
+                      ?Text(
+                        title!,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 23,
                         ),
-                      ),
+                      ):
+                      Text('No title avaliable')
                     ),
                     SizedBox(
                       height: 8.0,
@@ -125,7 +127,7 @@ class MovieDetailState extends State<MovieDetail> {
                           margin: EdgeInsets.only(left: 1.0, right: 1.0),
                         ),
                         Text(
-                          voteAverage,
+                          voteAverage!,
                           style: TextStyle(fontSize: 18.0),
                         ),
                         Container(

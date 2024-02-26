@@ -45,7 +45,7 @@ class MovieListState extends State<MovieList> {
         } else if (snapshot.connectionState == ConnectionState.none ||
             snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child: Text('hi titus'),
+            child: CircularProgressIndicator(),
           );
         } else if (snapshot.connectionState == ConnectionState.done) {
           return Center(

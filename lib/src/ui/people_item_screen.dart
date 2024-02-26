@@ -2,27 +2,29 @@
 
 
 
+import 'package:cineflix/src/models/people_model.dart';
 import 'package:flutter/material.dart';
 
 import '../blocs/movies_bloc.dart';
 import '../blocs/movies_detail_bloc_provider.dart';
-import '../models/item_model.dart';
+// import '../models/item_model.dart';
+import "../models/people_model.dart";
 import 'movie_detail.dart';
 
 import 'movie_list_tile.dart';
 
-class ItemNavigation extends StatefulWidget {
+class PeopleScreen extends StatefulWidget {
 
   final int buttonIndex; 
   final int itemIndex;
-  const ItemNavigation({super.key, required this.buttonIndex, required this.itemIndex});
+  const PeopleScreen({super.key, required this.buttonIndex, required this.itemIndex});
 
   @override
   // ignore: no_logic_in_create_state
-  State<ItemNavigation> createState() => _ItemNavigationState(buttonIndex: buttonIndex, itemIndex: itemIndex);
+  State<PeopleScreen> createState() => _ItemNavigationState(buttonIndex: buttonIndex, itemIndex: itemIndex);
 }
 
-class _ItemNavigationState extends State<ItemNavigation> {
+class _ItemNavigationState extends State<PeopleScreen> {
    final int  buttonIndex;
   final int itemIndex;
   _ItemNavigationState({required this.buttonIndex, required this.itemIndex});
@@ -114,8 +116,8 @@ class _ItemNavigationState extends State<ItemNavigation> {
        },
        child:  Material(
       child: StreamBuilder(
-          stream: bloc.getStreamForIndex(itemIndex),
-          builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
+          stream: bloc.getStreamForPeopleIndex(itemIndex),
+          builder: (context, AsyncSnapshot<PeopleModel?> snapshot) {
             if (snapshot.hasData) {
               return buildList(snapshot);
             } else if (snapshot.connectionState == ConnectionState.none ||
@@ -137,7 +139,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
         }
     } 
 
-   buildList(AsyncSnapshot<ItemModel?> snapshot) {
+   buildList(AsyncSnapshot<PeopleModel?> snapshot) {
     return Column(
       children: [
         Container(
@@ -168,11 +170,11 @@ class _ItemNavigationState extends State<ItemNavigation> {
             itemBuilder: (BuildContext context, int index) {
               return InkResponse(
                 // // we can use GestureDetector instead of InkResponse
-                onTap: () {
-                  openDetailPage(context,snapshot.data, index);
-                },
+                // onTap: () {
+                //   openDetailPage(context,snapshot.data, index);
+                // },
                 child: Image.network(
-                  'https://image.tmdb.org/t/p/w185${snapshot.data?.results[index].poster_path}',
+                  'https://image.tmdb.org/t/p/w185${snapshot.data?.results[index].profile_path}',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, StackTrace) {
                     return Center(child: CircularProgressIndicator());
@@ -186,26 +188,26 @@ class _ItemNavigationState extends State<ItemNavigation> {
     );
   }
 
-  openDetailPage(BuildContext context, ItemModel? data, int index) {
-    Navigator.push(context , MaterialPageRoute(builder: (context) {
-      return MovieDetailBlocProvider(
-        // Returning of instances of MovieDetailBlocProvider(InheritedWidget)
-        // wrapping the MOvieDetail screen to it.
-        // So MovieDetailBloc class will be accessible inside the detail
-        // screen and to all the widgets since
-        // It is in the Initializer list of the MovieDetailBlocProvider instances
-        key: GlobalKey(),
-        child: MovieDetail(
-          title: data?.results[index].title,
-          posterUrl: data?.results[index].poster_path,
-          description: data?.results[index].overview,
-          releaseDate: data?.results[index].release_date,
-          voteAverage: data?.results[index].vote_average.toString(),
-          movieId: data!.results[index].id,
-        ),
-      );
-    }));
-  }
+  // openDetailPage(BuildContext context, ItemModel? data, int index) {
+  //   Navigator.push(context , MaterialPageRoute(builder: (context) {
+  //     return MovieDetailBlocProvider(
+  //       // Returning of instances of MovieDetailBlocProvider(InheritedWidget)
+  //       // wrapping the MOvieDetail screen to it.
+  //       // So MovieDetailBloc class will be accessible inside the detail
+  //       // screen and to all the widgets since
+  //       // It is in the Initializer list of the MovieDetailBlocProvider instances
+  //       key: GlobalKey(),
+  //       child: MovieDetail(
+  //         title: data?.results[index].title,
+  //         posterUrl: data?.results[index].poster_path,
+  //         description: data?.results[index].overview,
+  //         releaseDate: data?.results[index].release_date,
+  //         voteAverage: data?.results[index].vote_average.toString(),
+  //         movieId: data!.results[index].id,
+  //       ),
+  //     );
+  //   }));
+  // }
 
   Widget buildMovieListTile(
       String title, List<String> popupContent, int index) {

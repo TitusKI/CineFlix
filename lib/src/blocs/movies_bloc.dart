@@ -1,3 +1,4 @@
+import 'package:cineflix/src/models/people_model.dart';
 import 'package:rxdart/rxdart.dart';
 import '../models/item_model.dart';
 import '../resources/repository.dart';
@@ -33,6 +34,15 @@ MoviesBloc(){
       for (int i = 1; i <= 4; i++){
   _popupContentMap[i] = BehaviorSubject<List<String>>.seeded([]);
 }
+}
+final Map<int, PublishSubject<PeopleModel>> _streamMapPeople = {
+    1: PublishSubject<PeopleModel>(),
+    2: PublishSubject<PeopleModel>(),
+    3: PublishSubject<PeopleModel>(),
+    4: PublishSubject<PeopleModel>(),
+};
+Stream<PeopleModel> getStreamForPeopleIndex(int index){
+  return _streamMapPeople[index]!;
 }
   final Map<int, PublishSubject<ItemModel>> _streamMap = {
     1: PublishSubject<ItemModel>(),
@@ -80,11 +90,13 @@ void fetchTVShowsForIndex(int index) async{
     break;
     
   }
+  _streamMap[index]!.add(itemModel!);
 }
  void fetchPeopleForIndex(int index) async{
+  PeopleModel? peopleModel;
  switch(index){
   case 1:
-     itemModel = await _repository.fetchPeopleByType(Types.popular);
+     peopleModel = (await _repository.fetchPeopleByType(Types.popular)) ;
  }
  }
   // fetchAllMovies() async {

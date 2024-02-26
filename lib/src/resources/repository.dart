@@ -1,3 +1,4 @@
+import 'package:cineflix/src/models/people_model.dart';
 import 'package:cineflix/src/resources/people_api_provider.dart';
 import 'package:cineflix/src/resources/tv_shows_api_provider.dart';
 
@@ -53,7 +54,7 @@ class Repository {
     }
   }
 
-  Future<ItemModel?> fetchPeopleByType(Types type, {int? movieId}) {
+  Future<PeopleModel?> fetchPeopleByType(Types type, {int? movieId}) {
     switch (type) {
       case Types.popular:
         return peopleApiProvider.fetchPopularPeople();

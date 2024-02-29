@@ -22,7 +22,7 @@ enum Types {
 class Repository {
   final moviesApiProvider = MoviesApiProvider();
   final tvShowsApiProvider = TvShowsApiProvider();
-  final peopleApiProvider = PeopleApiProvider();
+  // final peopleApiProvider = PeopleApiProvider();
 
   Future<ItemModel?> fetchMovieByType(Types type, {int? movieId}) {
     switch (type) {
@@ -54,14 +54,14 @@ class Repository {
     }
   }
 
-  Future<PeopleModel?> fetchPeopleByType(Types type, {int? movieId}) {
-    switch (type) {
-      case Types.popular:
-        return peopleApiProvider.fetchPopularPeople();
-      default:
-        throw Exception('Invalid People Type provided : $type');
-    }
-  }
+  // Future<PeopleModel?> fetchPeopleByType(Types type, {int? movieId}) {
+  //   switch (type) {
+  //     case Types.popular:
+  //       return peopleApiProvider.fetchPopularPeople();
+  //     default:
+  //       throw Exception('Invalid People Type provided : $type');
+  //   }
+  // }
   //  Future<ItemModel?> fetchMoreByType(Types type,{int? movieId}){
   //   switch (type){
   //     case Types.allMovies

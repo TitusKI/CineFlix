@@ -145,12 +145,12 @@ class _MovieListTileState extends State<MovieListTile> {
         onTap: () {
           bloc.handleHidePopup();
           Future.delayed(Duration(milliseconds: 200),(){
-            if(widget.index == 3){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> PeopleScreen(buttonIndex: widget.index,itemIndex: itemIndex,)));
-            }
-            else{
+          //   if(widget.index == 3){
+          // Navigator.push(context, MaterialPageRoute(builder: (context)=> PeopleScreen(buttonIndex: widget.index,itemIndex: itemIndex,)));
+          //   }
+            
                Navigator.push(context, MaterialPageRoute(builder: (context)=> ItemNavigation(buttonIndex: widget.index,itemIndex: itemIndex,)));
-            }
+            
 
           });
          

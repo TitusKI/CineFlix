@@ -5,7 +5,7 @@ import '../models/trailer_model.dart';
 import '../blocs/movies_detail_bloc_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
+enum MediaType{movie, tvshow}
 class MovieDetail extends StatefulWidget {
   final posterUrl;
   final description;
@@ -102,15 +102,14 @@ class MovieDetailState extends State<MovieDetail> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(top: 5.0),
-                      child: title != null
-                      ?Text(
+                      child: Text(
                         title!,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 23,
                         ),
-                      ):
-                      Text('No title avaliable')
+                      ),
+                     
                     ),
                     SizedBox(
                       height: 8.0,

@@ -35,6 +35,7 @@ class _Result {
   // late bool _video;
   late double _vote_average;
   late String? _title;
+  late String? _original_name;
   // late double _popularity;
   late String? _poster_path;
   // late String _original_language;
@@ -49,6 +50,7 @@ class _Result {
     _id = result['id'];
     // _video = result['video'];
     _vote_average = result['vote_average'];
+    _original_name = result['original_name'] as String?;
     _title = result['title'] as String?;
     // _popularity = result['popularity'];
     _poster_path = result['poster_path'] as String?;
@@ -81,7 +83,7 @@ class _Result {
 
   // double get popularity => _popularity;
 
-  String? get title => _title;
+  String? get title => _title ?? _original_name;
 
   double get vote_average => _vote_average;
 

@@ -119,13 +119,20 @@ class MovieListState extends State<MovieList> {
                         color: Colors.white,
                       ),
                       child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintStyle:
-                              TextStyle(color: Colors.grey, fontSize: 20),
-                          hintText: 'Search for a movie, tv show, person.....',
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            
+                            hintStyle:
+                                TextStyle(color: Colors.grey, fontSize: 20),
+                            hintText: 'Search for a movie, tv show.....',
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.filter),
+                              onPressed: (){},
+                              )
+                          ),
+                        onChanged: (_){},
                         ),
-                      ),
+                     
                     ),
                   ),
                   SizedBox(

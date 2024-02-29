@@ -58,7 +58,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
        case 3:
        switch(itemIndex){
         case 1:
-          bloc.fetchPeopleForIndex(itemIndex);
+          bloc.fetchTVShowsForIndex(itemIndex);
           break;
        }
        break;

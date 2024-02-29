@@ -1,3 +1,5 @@
+import 'package:cineflix/src/ui/search_screen.dart';
+
 import 'movie_list_tile.dart';
 import '../blocs/movies_detail_bloc_provider.dart';
 import 'movie_detail.dart';
@@ -110,55 +112,44 @@ class MovieListState extends State<MovieList> {
                   SizedBox(
                     height: 25,
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(25.0),
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: TextField(
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            
-                            hintStyle:
-                                TextStyle(color: Colors.grey, fontSize: 20),
-                            hintText: 'Search for a movie, tv show.....',
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.filter),
-                              onPressed: (){},
-                              )
-                          ),
-                        onChanged: (_){},
+                  Stack(
+                    children: [ClipRRect(
+                      borderRadius: BorderRadius.circular(25.0),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
                         ),
-                     
+                        child: SearchScreen()
+                       
+                      ),
                     ),
-                  ),
+                ]),
                   SizedBox(
                     height: 25,
                   )
                 ],
               ),
             ),
-            Container(
-              child: Column(children: [
-                Text(
-                  "Trending.",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 66, 62, 62)),
+            // Container(
+            //   child: Column(children: [
+            //     Text(
+            //       "Trending.",
+            //       style: TextStyle(
+            //           fontSize: 20,
+            //           fontWeight: FontWeight.bold,
+            //           color: const Color.fromARGB(255, 66, 62, 62)),
                    
-                ),
-                  //  ListView(
-                  //   scrollDirection: Axis.horizontal,
-                  //       children: [
+            //     ),
+            //       //  ListView(
+            //       //   scrollDirection: Axis.horizontal,
+            //       //       children: [
                          
-                  //       ],
-                      // )
-              ]),
-            ),
+            //       //       ],
+            //           // )
+            //   ]),
+            // ),
           ]),
         )
       ],

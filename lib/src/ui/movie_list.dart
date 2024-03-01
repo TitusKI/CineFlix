@@ -112,20 +112,20 @@ class MovieListState extends State<MovieList> {
                   SizedBox(
                     height: 25,
                   ),
-                  Stack(
-                    children: [ClipRRect(
-                      borderRadius: BorderRadius.circular(25.0),
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: SearchScreen()
+                //   Stack(
+                //     children: [ClipRRect(
+                //       borderRadius: BorderRadius.circular(25.0),
+                //       child: Container(
+                //         padding:
+                //             EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                //         decoration: BoxDecoration(
+                //           color: Colors.white,
+                //         ),
+                //         // child: SearchScreen()
                        
-                      ),
-                    ),
-                ]),
+                //       ),
+                //     ),
+                // ]),
                   SizedBox(
                     height: 25,
                   )

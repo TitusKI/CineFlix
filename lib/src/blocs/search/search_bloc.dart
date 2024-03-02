@@ -15,9 +15,16 @@ class SearchBloc extends Bloc<SearchEvent , SearchState>{
 
       try {
         dynamic searchResult = await searchAll(event.query, event.mediaType);
-        emit(SearchSuccessState(searchResult));
+        emit(SearchSuccessState(searchResult, null));
       } catch (error) {
         emit(SearchErrorState('Failed to search ${event.mediaType}'));
+      }
+    }
+    
+    );
+    on<SelectedMovieEvent> ((event, emit)async{
+      if (state is SearchSuccessState){
+        emit(SearchSuccessState((state as SearchSuccessState).getItemModel, event.selectedMovie));
       }
     });
   }

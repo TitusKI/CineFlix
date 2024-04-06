@@ -19,17 +19,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         emit(SearchErrorState('Failed to search ${event.mediaType}'));
       }
     });
- on<SelectedMovieEvent>((event, emit) async {
-  if (state is SearchSuccessState) {
-    ItemModel? selectedMovie = (state as SearchSuccessState).getSelectedMovie;
-    if (selectedMovie != null) {
-      selectedMovie.populateSimilarTitles(event.selectedMovie.similarTitles.single as String);
-      emit(SearchSuccessState(
-          (state as SearchSuccessState).getItemModel, selectedMovie));
-    }
-  }
-});
-
+    on<SelectedMovieEvent>((event, emit) async {
+      if (state is SearchSuccessState) {
+        ItemModel? selectedMovie =
+            (state as SearchSuccessState).getSelectedMovie;
+        if (selectedMovie != null) {
+          selectedMovie.populateSimilarTitles(
+              event.selectedMovie.similarTitles.single as String);
+          emit(SearchSuccessState(
+              (state as SearchSuccessState).getItemModel, selectedMovie));
+        }
+      }
+    });
   }
 
   Future<dynamic> searchAll(String query, String mediaType) async {

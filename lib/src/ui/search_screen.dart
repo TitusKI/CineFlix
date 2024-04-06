@@ -65,96 +65,168 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
       body: Center(
-        child: Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 50.0),
-            // color: Theme.of(context).primaryColorDark,
-
-            child: BlocBuilder<SearchBloc, SearchState>(
-              builder: (context, state) {
-                if (state is SearchLoadingState) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (state is SearchSuccessState) {
-
-                  if (state.getSelectedMovie != null) {
-                    
-                    ItemModel? selectedMovie = state.getSelectedMovie;
-                  
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                          String releaseDate = selectedMovie?.results[index].release_date.toString() ?? '';
-                          String year ='';
-                    if (releaseDate.isNotEmpty){
-                          DateTime dateTime = DateTime.parse(releaseDate);
-                          year = dateTime.year.toString();
-                    }
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Image.network(
-                                'https://image.tmdb.org/t/p/w185${selectedMovie?.results[index].poster_path}'),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  selectedMovie!.results[index].title.toString(),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 25),
-                                ),
-                                Text(
-                                 year,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                     ),
-                                ),
-                              StarRating(voteAverage: selectedMovie.results[index].vote_average),
-                               Text(
-                                 selectedMovie.results[index].overview.toString(),
-                                  style: const TextStyle(
-                                    overflow: TextOverflow.ellipsis,
-                                      fontWeight: FontWeight.bold,
-                                     ),
-                                ),
-                              ],
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  }
-                  else{
-                    
-                  ItemModel itemModel = state.getItemModel;
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: itemModel.results.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          itemModel.results[index].title ?? " ",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onTap: () {
-                          ItemModel? tappedMovie= state.getSelectedMovie;
+        child: Column(
+          children: [
+            Expanded(
+              child: BlocBuilder<SearchBloc, SearchState>(
+                builder: (context, state) {
+                  if (state is SearchLoadingState) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is SearchSuccessState) {
+                    if (state.getSelectedMovie != null) {
+                      ItemModel? selectedMovie = state.getSelectedMovie;
+              try {
+                        return ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
                           
-                          BlocProvider.of<SearchBloc>(context).add(SelectedMovieEvent(tappedMovie!));
+                          String releaseDate = selectedMovie
+                                  ?.results[index].release_date
+                                  .toString() ??
+                              '';
+              
+                          return Container(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  child: SizedBox(
+                                    height: 200,
+                                    width: 150,
+                                    child: Expanded(
+                                      child: Image.network(
+                                          'https://image.tmdb.org/t/p/w185${selectedMovie?.results[index].poster_path}',
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 8.0,
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          selectedMovie!.results[index].title
+                                              .toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 20),
+                                        ),
+                                        Text(
+                                          year(releaseDate),
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        StarRating(
+                                            voteAverage: selectedMovie
+                                                .results[index].vote_average),
+                                        Text(
+                                          selectedMovie.results[index].overview
+                                              .toString(),
+                                          maxLines: 3,
+                                          style: const TextStyle(
+                                            overflow: TextOverflow.ellipsis,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
                         },
                       );
-                    },
-                  );
+                
+              }catch(e){
+                  print("error $e");
+              }
+                    } else {
+                      ItemModel? itemModel = state.getItemModel;
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: itemModel!.results.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                              title: Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      itemModel!.results[index].title ?? " ",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  Text(
+                                    " (${year(itemModel!.results[index].release_date ?? " ")})",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                              onTap: () {
+                                ItemModel tappedMovie = itemModel;
+                                String clickedTitle = itemModel.results[index].title.toString();
+                                tappedMovie.setResults([itemModel.results[index]]);
+                                // tappedMovie.setResults([itemModel.results[index]]);
+                                searchBloc.add(SelectedMovieEvent(tappedMovie));
+                                // if (index >= 0 &&
+                                //     index < itemModel.results.length) {
+                                //   String clickedTitle =
+                                //       itemModel.results[index].title ?? " ";
+                                //   ItemModel tappedMovie = itemModel;
+                                //   // ItemModel tapMovie = ItemModel.fromJson(itemModel.toJson());
+                                //   // ItemModel? tappedMovie= itemModel;
+                                //   tappedMovie
+                                //       .setResults([itemModel.results[index]]);
+                                //   final tappedItem = tappedMovie
+                                //       .populateSimilarTitles(clickedTitle);
+              
+                                //   if (tappedItem != null) {
+                                //     print(tappedMovie);
+                                //     searchBloc
+                                //         .add(SelectedMovieEvent(tappedMovie));
+                                //   } else {
+                                //     print("Selected Item not found in results");
+                                //   }
+                                // }
+                                // else{
+                                //   print("Invalid index: $index");
+                                // }
+                              },);
+                        },
+                      );
+                    }
+                  } else if (state is SearchErrorState) {
+                    return Center(
+                        child: Text('Error searching: ${state.errorMessage}'));
+                  } else {
+                    return Container();
                   }
-                } else if (state is SearchErrorState) {
-                  return Center(
-                      child: Text('Error searching: ${state.errorMessage}'));
-                } else {
-                  return Container();
-                }
-              },
+                  throw Exception("Error displaying");
+                },
+                
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
+  }
+
+  year(String date) {
+    String year = '';
+    if (date.isNotEmpty) {
+      DateTime dateTime = DateTime.parse(date);
+      year = dateTime.year.toString();
+    }
+    return year;
   }
 }

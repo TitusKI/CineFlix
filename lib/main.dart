@@ -8,7 +8,7 @@ import 'src/app.dart';
 void main() {
   runApp(
     BlocProvider(create: (context)=>SearchBloc(),
-    child:App()
+    child:const App()
     )
     
     );

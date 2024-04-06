@@ -1,4 +1,3 @@
-import 'package:cineflix/src/models/people_model.dart';
 import 'package:rxdart/rxdart.dart';
 import '../models/item_model.dart';
 import '../resources/repository.dart';
@@ -28,13 +27,13 @@ class MoviesBloc {
   Stream<ItemModel?> get topRatedMovies => _topRatedFetcher.stream;
 // Subscribers or Consumers can listen to this stream to get updates on movie data
 
-final _popupContentMap = Map<int, BehaviorSubject<List<String>>>();
+  final _popupContentMap = <int, BehaviorSubject<List<String>>>{};
 
-MoviesBloc(){
-      for (int i = 1; i <= 4; i++){
-  _popupContentMap[i] = BehaviorSubject<List<String>>.seeded([]);
-}
-}
+  MoviesBloc() {
+    for (int i = 1; i <= 4; i++) {
+      _popupContentMap[i] = BehaviorSubject<List<String>>.seeded([]);
+    }
+  }
 // final Map<int, PublishSubject<PeopleModel>> _streamMapPeople = {
 //     1: PublishSubject<PeopleModel>(),
 //     2: PublishSubject<PeopleModel>(),
@@ -50,48 +49,46 @@ MoviesBloc(){
     3: PublishSubject<ItemModel>(),
     4: PublishSubject<ItemModel>(),
   };
-  Stream<ItemModel> getStreamForIndex(int index){
+  Stream<ItemModel> getStreamForIndex(int index) {
     return _streamMap[index]!;
   }
-ItemModel? itemModel;
-void fetchMoviesForIndex(int index) async {
 
-switch(index){
-  case 1: 
-      itemModel =  await _repository.fetchMovieByType(Types.popular);
-      break;
-  case 2:
-      itemModel =  await _repository.fetchMovieByType(Types.topRated);
-      break;
-  case 3:
-      itemModel = await _repository.fetchMovieByType(Types.nowPlaying);
-      break;
-  case 4: 
-      itemModel = await _repository.fetchMovieByType(Types.upcoming);
-      break;
-} 
-_streamMap[index]!.add(itemModel!);
-
-}
-void fetchTVShowsForIndex(int index) async{
-
-  switch(index){
-    case 1: 
-    itemModel = await _repository.fetchTVShowByType(Types.popular);
-    break;
-     case 2: 
-    itemModel = await _repository.fetchTVShowByType(Types.topRated);
-    break;
-     case 3: 
-    itemModel = await _repository.fetchTVShowByType(Types.airingToday);
-    break;
-     case 4: 
-    itemModel = await _repository.fetchTVShowByType(Types.onTv);
-    break;
-    
+  ItemModel? itemModel;
+  void fetchMoviesForIndex(int index) async {
+    switch (index) {
+      case 1:
+        itemModel = await _repository.fetchMovieByType(Types.popular);
+        break;
+      case 2:
+        itemModel = await _repository.fetchMovieByType(Types.topRated);
+        break;
+      case 3:
+        itemModel = await _repository.fetchMovieByType(Types.nowPlaying);
+        break;
+      case 4:
+        itemModel = await _repository.fetchMovieByType(Types.upcoming);
+        break;
+    }
+    _streamMap[index]!.add(itemModel!);
   }
-  _streamMap[index]!.add(itemModel!);
-}
+
+  void fetchTVShowsForIndex(int index) async {
+    switch (index) {
+      case 1:
+        itemModel = await _repository.fetchTVShowByType(Types.popular);
+        break;
+      case 2:
+        itemModel = await _repository.fetchTVShowByType(Types.topRated);
+        break;
+      case 3:
+        itemModel = await _repository.fetchTVShowByType(Types.airingToday);
+        break;
+      case 4:
+        itemModel = await _repository.fetchTVShowByType(Types.onTv);
+        break;
+    }
+    _streamMap[index]!.add(itemModel!);
+  }
 //  void fetchPeopleForIndex(int index) async{
 //   PeopleModel? peopleModel;
 //  switch(index){
@@ -124,7 +121,8 @@ void fetchTVShowsForIndex(int index) async{
   handleShowPopup() {
     showPopupSink.add(true);
   }
-  Stream<List<String>> getPopupContentForIndex(int index){
+
+  Stream<List<String>> getPopupContentForIndex(int index) {
     return _popupContentMap[index]!.stream;
   }
 
@@ -146,7 +144,7 @@ void fetchTVShowsForIndex(int index) async{
     _popupContentMap.forEach((key, value) {
       value.close();
     });
-  
+
     _popupContent.close();
   }
 }

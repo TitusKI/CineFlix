@@ -1,5 +1,3 @@
-import 'package:cineflix/src/models/people_model.dart';
-import 'package:cineflix/src/resources/people_api_provider.dart';
 import 'package:cineflix/src/resources/tv_shows_api_provider.dart';
 
 import '../models/trailer_model.dart';

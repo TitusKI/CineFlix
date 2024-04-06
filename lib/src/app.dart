@@ -4,6 +4,8 @@ import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/movie_list.dart';
 
 class App extends StatelessWidget {
+  const App({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,7 +13,7 @@ class App extends StatelessWidget {
       theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'CineFlix',
             style: TextStyle(
               fontSize: 26,
@@ -25,9 +27,9 @@ class App extends StatelessWidget {
                 onPressed: () {
                    bloc.handleHidePopup();
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SearchScreen()));
+                      MaterialPageRoute(builder: (context) =>  SearchScreen()));
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
                   weight: 50.0,
                 ),
@@ -39,7 +41,7 @@ class App extends StatelessWidget {
           onPointerDown: (event) {
             bloc.handleHidePopup();
           },
-          child: MovieList(),
+          child: const MovieList(),
         ),
       ),
     );

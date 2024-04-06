@@ -1,5 +1,7 @@
 
 
+import 'package:cineflix/src/ui/star_rating.dart';
+
 import '../models/trailer_model.dart';
 
 import '../blocs/movies_detail_bloc_provider.dart';
@@ -11,10 +13,10 @@ class MovieDetail extends StatefulWidget {
   final description;
   final releaseDate;
   final String? title;
-  final String? voteAverage;
+  final double? voteAverage;
   final int movieId;
 
-  MovieDetail({
+  const MovieDetail({super.key, 
     required this.title,
     this.posterUrl,
     this.description,
@@ -43,7 +45,7 @@ class MovieDetailState extends State<MovieDetail> {
   final description;
   final releaseDate;
   final String? title;
-  final String? voteAverage;
+  final double? voteAverage;
   final int movieId;
   late MovieDetailBloc bloc;
   MovieDetailState({
@@ -101,55 +103,56 @@ class MovieDetailState extends State<MovieDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 5.0),
+                      margin: const EdgeInsets.only(top: 5.0),
                       child: Text(
                         title!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 23,
                         ),
                       ),
                      
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8.0,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.favorite),
-                          color: Colors.red,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 1.0, right: 1.0),
-                        ),
-                        Text(
-                          voteAverage!,
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                        ),
-                        Text(
-                          releaseDate,
-                          style: TextStyle(fontSize: 18.0),
-                        )
-                      ],
-                    ),
-                    SizedBox(
+                    StarRating(voteAverage: voteAverage!),
+                    // Row(
+                    //   // mainAxisAlignment: MainAxisAlignment.start,
+                    //   // children: [
+                    //   //   IconButton(
+                    //   //     onPressed: () {},
+                    //   //     icon: Icon(Icons.favorite),
+                    //   //     color: Colors.red,
+                    //   //   ),
+                    //   //   Container(
+                    //   //     margin: EdgeInsets.only(left: 1.0, right: 1.0),
+                    //   //   ),
+                    //   //   Text(
+                    //   //     voteAverage!,
+                    //   //     style: TextStyle(fontSize: 18.0),
+                    //   //   ),
+                    //   //   Container(
+                    //   //     margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                    //   //   ),
+                    //   //   Text(
+                    //   //     releaseDate,
+                    //   //     style: TextStyle(fontSize: 18.0),
+                    //   //   )
+                    //   // ],
+                    // ),
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(
                       description,
-                      style: TextStyle(fontSize: 18.0),
+                      style: const TextStyle(fontSize: 18.0),
                     ),
-                    Text(
+                    const Text(
                       "Trailer",
                       style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     StreamBuilder(
                         stream: bloc.movieTrailers,
                         builder: (context,
@@ -160,18 +163,19 @@ class MovieDetailState extends State<MovieDetail> {
                                 builder: (context,
                                     AsyncSnapshot<TrailerModel?> itemSnapshot) {
                                   if (itemSnapshot.hasData) {
-                                    if (itemSnapshot.data!.results.length > 0) {
+                                    if (itemSnapshot.data!.results.isNotEmpty) {
                                       return trailerLayout(itemSnapshot.data);
-                                    } else
+                                    } else {
                                       return noTrailer(itemSnapshot.data);
+                                    }
                                   } else {
-                                    return Center(
+                                    return const Center(
                                       child: CircularProgressIndicator(),
                                     );
                                   }
                                 });
                           } else {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }
@@ -187,7 +191,7 @@ class MovieDetailState extends State<MovieDetail> {
   noTrailer(TrailerModel? data) {
     return Center(
       child: Container(
-        child: Text("No trailer avaliable"),
+        child: const Text("No trailer avaliable"),
       ),
     );
   }
@@ -217,7 +221,7 @@ class MovieDetailState extends State<MovieDetail> {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.all(5.0),
+            margin: const EdgeInsets.all(5.0),
             height: 100.0,
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -228,11 +232,11 @@ class MovieDetailState extends State<MovieDetail> {
             ),
             child: Center(
               child: IconButton(
-                icon: Icon(Icons.play_circle_filled),
+                icon: const Icon(Icons.play_circle_filled),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     if (videoKey != null) {
-                      trailorPlayerScreen(data, videoKey!);
+                      trailorPlayerScreen(data, videoKey);
                       print(videoKey);
                     }
                     return trailorPlayerScreen(data, videoKey!);
@@ -267,12 +271,12 @@ class MovieDetailState extends State<MovieDetail> {
             child: Column(
               children: [
 
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 Container(
 
-                  margin: EdgeInsets.only(top: 26),
+                  margin: const EdgeInsets.only(top: 26),
                   child: YoutubePlayerBuilder(
                     player: YoutubePlayer(
 
@@ -297,7 +301,7 @@ class MovieDetailState extends State<MovieDetail> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('Trailer Play',
+                                const Text('Trailer Play',
                                   style: TextStyle(
                                     decoration: TextDecoration.none,
 
@@ -310,13 +314,13 @@ class MovieDetailState extends State<MovieDetail> {
                                     onTap: (){
                                       Navigator.of(context).pop();
                                     },
-                                    child: Icon(Icons.clear)),
+                                    child: const Icon(Icons.clear)),
                               ],
                             ),
-                            SizedBox(height: 10,),
+                            const SizedBox(height: 10,),
                             Center(
                               child: Container(
-                                margin: EdgeInsets.only(top: 10),
+                                margin: const EdgeInsets.only(top: 10),
                                 height: 200,
                                 child: player,
                               ),

@@ -1,8 +1,5 @@
-import 'package:cineflix/src/ui/search_screen.dart';
 
 import 'movie_list_tile.dart';
-import '../blocs/movies_detail_bloc_provider.dart';
-import 'movie_detail.dart';
 import '../models/item_model.dart';
 import '../blocs/movies_bloc.dart';
 import 'package:flutter/material.dart';
@@ -46,11 +43,11 @@ class MovieListState extends State<MovieList> {
           return buildList(snapshot);
         } else if (snapshot.connectionState == ConnectionState.none ||
             snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.connectionState == ConnectionState.done) {
-          return Center(
+          return const Center(
             child: Text('No data avaliable'),
           );
         }
@@ -64,7 +61,7 @@ class MovieListState extends State<MovieList> {
   buildList(AsyncSnapshot<ItemModel?> snapshot) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,18 +78,18 @@ class MovieListState extends State<MovieList> {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Container(
-          color: Color.fromARGB(3, 39, 9, 191),
+          color: const Color.fromARGB(3, 39, 9, 191),
           child: ListView(shrinkWrap: true, children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('assets/cineflix.jpg'),
                       fit: BoxFit.cover)),
-              child: Column(
+              child: const Column(
                 // crossAxisAlignment: CrossAxisAlignment.baseline,
                 children: [
                   Text(
@@ -159,20 +156,21 @@ class MovieListState extends State<MovieList> {
   Widget buildMovieListTile(
       String title, List<String> popupContent, int index) {
     MovieListTile movieListTile = MovieListTile(
+      // ignore: sort_child_properties_last
       child: ClipRRect(
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(25.0),
         ),
         child: Container(
           height: 25,
           width: 50,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.red,
           ),
           child: Center(
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
@@ -180,7 +178,7 @@ class MovieListState extends State<MovieList> {
           ),
         ),
       ),
-      txt1: popupContent.length > 0 ? popupContent[0] : '',
+      txt1: popupContent.isNotEmpty ? popupContent[0] : '',
       txt2: popupContent.length > 1 ? popupContent[1] : '',
       txt3: popupContent.length > 2 ? popupContent[2] : '',
       txt4: popupContent.length > 3 ? popupContent[3] : '',

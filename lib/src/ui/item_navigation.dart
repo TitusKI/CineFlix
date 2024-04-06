@@ -1,3 +1,4 @@
+import 'package:cineflix/src/ui/star_rating.dart';
 import 'package:flutter/material.dart';
 
 import '../blocs/movies_bloc.dart';
@@ -82,7 +83,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.home_filled,
                             color: Colors.red,
                           )),
@@ -93,8 +94,8 @@ class _ItemNavigationState extends State<ItemNavigation> {
                             fontWeight: FontWeight.w300,
                             color: Colors.white,
                           )),
-                      Center(
-                        child: const Text('CineFlix',
+                      const Center(
+                        child: Text('CineFlix',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.red,
@@ -116,12 +117,12 @@ class _ItemNavigationState extends State<ItemNavigation> {
                     } else if (snapshot.connectionState ==
                             ConnectionState.none ||
                         snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     } else if (snapshot.connectionState ==
                         ConnectionState.done) {
-                      return Center(
+                      return const Center(
                         child: Text('No data avaliable'),
                       );
                     }
@@ -137,7 +138,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
 buildList(AsyncSnapshot<ItemModel?> snapshot) {
   return Column(
     children: [
-      Container(
+      SizedBox(
         height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,17 +155,18 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
           ],
         ),
       ),
-      SizedBox(
+      const SizedBox(
         height: 10,
       ),
       Expanded(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: GridView.builder(
             itemCount: snapshot.data?.results.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2),
             itemBuilder: (BuildContext context, int index) {
+              final voteAverage = snapshot.data?.results[index].vote_average;
               return InkResponse(
                 // // we can use GestureDetector instead of InkResponse
                 onTap: () {
@@ -172,7 +174,7 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
                 },
                 child: Container(
                   height: 600,
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
                     
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -196,32 +198,33 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
                                 // height: 400.0,
                                 // width: 200.0,
                                 errorBuilder: (context, error, StackTrace) {
-                                  return Center(child: CircularProgressIndicator());
+                                  return const Center(child: CircularProgressIndicator());
                                 },
                               ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 8.0,),
+                      const SizedBox(height: 8.0,),
                       Text(
                         snapshot.data?.results[index].title ?? " ",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         snapshot.data?.results[index].release_date ?? " ",
-                        style: TextStyle(fontWeight: FontWeight.w100),
+                        style: const TextStyle(fontWeight: FontWeight.w100),
                       ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.favorite,
-                            color: Colors.red,
-                          ),
-                          Text(snapshot.data?.results[index].vote_average.toString() ?? "_"),
-                        ],
-                      ),
-                        SizedBox(height: 10.0,),
+                      StarRating(voteAverage: voteAverage!),
+                      // Row(
+                      //   children: [
+                      //     Icon(
+                      //       Icons.favorite,
+                      //       color: Colors.red,
+                      //     ),
+                      //     Text(snapshot.data?.results[index].vote_average.toString() ?? "_"),
+                      //   ],
+                      // ),
+                        const SizedBox(height: 10.0,),
                     ],
                   ),
                 ),
@@ -248,7 +251,7 @@ openDetailPage(BuildContext context, ItemModel? data, int index) {
         posterUrl: data?.results[index].poster_path,
         description: data?.results[index].overview,
         releaseDate: data?.results[index].release_date,
-        voteAverage: data?.results[index].vote_average.toString(),
+        voteAverage: data?.results[index].vote_average,
         movieId: data!.results[index].id,
       ),
     );
@@ -257,30 +260,30 @@ openDetailPage(BuildContext context, ItemModel? data, int index) {
 
 Widget buildMovieListTile(String title, List<String> popupContent, int index) {
   MovieListTile movieListTile = MovieListTile(
+    txt1: popupContent.isNotEmpty ? popupContent[0] : '',
+    txt2: popupContent.length > 1 ? popupContent[1] : '',
+    txt3: popupContent.length > 2 ? popupContent[2] : '',
+    txt4: popupContent.length > 3 ? popupContent[3] : '',
+    index: index,
     child: ClipRRect(
-      borderRadius: BorderRadius.all(
+      borderRadius: const BorderRadius.all(
         Radius.circular(25.0),
       ),
       child: Container(
         height: 25,
         width: 50,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.red,
         ),
         child: Center(
           child: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
       ),
     ),
-    txt1: popupContent.length > 0 ? popupContent[0] : '',
-    txt2: popupContent.length > 1 ? popupContent[1] : '',
-    txt3: popupContent.length > 2 ? popupContent[2] : '',
-    txt4: popupContent.length > 3 ? popupContent[3] : '',
-    index: index,
   );
   // popupContentMap[movieListTile] = popupContent;
   return movieListTile;

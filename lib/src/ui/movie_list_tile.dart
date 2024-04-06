@@ -1,11 +1,6 @@
 import 'package:cineflix/src/ui/item_navigation.dart';
 import 'package:flutter/material.dart';
 import '../blocs/movies_bloc.dart';
-import '../blocs/movies_detail_bloc_provider.dart';
-import '../models/item_model.dart';
-import 'movie_detail.dart';
-import 'item_navigation.dart';
-import "people_item_screen.dart";
 
 
 class MovieListTile extends StatefulWidget {
@@ -16,8 +11,8 @@ class MovieListTile extends StatefulWidget {
   final String? txt4;
   final int index;
 
-  MovieListTile(
-      {this.child,
+  const MovieListTile(
+      {super.key, this.child,
       this.txt1,
       this.txt2,
       this.txt3,
@@ -31,7 +26,7 @@ class MovieListTile extends StatefulWidget {
 }
 
 class _MovieListTileState extends State<MovieListTile> {
-  GlobalKey _rowkey = GlobalKey();
+  final GlobalKey _rowkey = GlobalKey();
   OverlayEntry? _overlayEntry;
   late List<Widget> _popupContent = [];
   int startingIndex = 1;
@@ -71,7 +66,7 @@ class _MovieListTileState extends State<MovieListTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 30,
       width: 100,
       child: InkWell(
@@ -140,11 +135,11 @@ class _MovieListTileState extends State<MovieListTile> {
       return ListTile(
         title: Text(
           item,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         onTap: () {
           bloc.handleHidePopup();
-          Future.delayed(Duration(milliseconds: 200),(){
+          Future.delayed(const Duration(milliseconds: 200),(){
           //   if(widget.index == 3){
           // Navigator.push(context, MaterialPageRoute(builder: (context)=> PeopleScreen(buttonIndex: widget.index,itemIndex: itemIndex,)));
           //   }

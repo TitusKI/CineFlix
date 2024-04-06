@@ -3,27 +3,56 @@ class ItemModel {
   late int _total_results;
   late int _total_pages;
   List<_Result> _results = [];
+   List<_Result> _similarTitles =[];
 
+   // ignore: library_private_types_in_public_api
+   
   ItemModel.fromJson(Map<String, dynamic> parsedJson) {
     print(parsedJson['results'].length);
     _page = parsedJson['page'];
     _total_results = parsedJson['total_results'];
     _total_pages = parsedJson['total_pages'];
     List<_Result> temp = [];
-    for(_page = 1; _page <= _total_pages; _page ++){
-      _page = _page++; 
+    // for(_page = 1; _page <= _total_pages; _page ++){
+    //   _page = _page++; 
        for (int i = 0; i < parsedJson['results'].length; i++) {
       _Result result = _Result(parsedJson['results'][
           i]); // It only responses one result from the list with specific index
       temp.add(result); // add that result of specific index to the temp list
     }
 
-    }
+    // }
    
     _results = temp;
+  }_Result? populateSimilarTitles(String clickedTitle) {
+  _Result? clickedItem;
+
+  // Find all items with the same title
+  List<_Result> similarTitles = _results.where((result) => result.title == clickedTitle).toList();
+
+  if (similarTitles.length == 1) {
+    clickedItem = similarTitles[0];
+  } else {
+    clickedItem = null;
   }
+  _similarTitles = similarTitles;
+  return clickedItem;
+}
+
+
+
+void setResults(List<_Result> results){
+    _results = results;
+   }
+  
+  //  populateSimilarTitles(String clickedTitle){
+  //   List<_Result> similarTitles = _results.where((result) => result.title == clickedTitle).toList();
+  //   _similarTitles = similarTitles;
+  //    return _similarTitles;
+  // }
 
   List<_Result> get results => _results;
+  List<_Result> get similarTitles => _similarTitles;
   int get total_pages => _total_pages;
   int get total_results => _total_results;
   int get page => _page;

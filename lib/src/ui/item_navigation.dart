@@ -1,5 +1,6 @@
 import 'package:cineflix/src/ui/star_rating.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../blocs/movies_bloc.dart';
 import '../blocs/movies_detail_bloc_provider.dart';
@@ -142,7 +143,7 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
       SizedBox(
         height: 50,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             buildMovieListTile('Movies',
                 ["Popular ", 'Top Rated ', 'Now Playing', 'Upcoming '], 1),
@@ -160,46 +161,45 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
         height: 10,
       ),
       Expanded(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: GridView.builder(
             itemCount: snapshot.data?.results.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
+              childAspectRatio: 5 / 8,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              crossAxisCount: 2,
+            ),
             itemBuilder: (BuildContext context, int index) {
               final voteAverage = snapshot.data?.results[index].vote_average;
-              return InkResponse(
+              return GestureDetector(
                 // // we can use GestureDetector instead of InkResponse
                 onTap: () {
                   openDetailPage(context, snapshot.data, index);
                 },
                 child: Container(
-                  height: 600,
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  color: const Color.fromARGB(161, 0, 0, 0),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: ClipRRect(
                           clipBehavior: Clip.hardEdge,
                           borderRadius: BorderRadius.circular(10.0),
-                          child: SizedBox(
-                            height: 300,
-                            width: 200,
-                            child: AspectRatio(
-                              aspectRatio: 2 / 3,
-                              child: Image.network(
-                                'https://image.tmdb.org/t/p/w185${snapshot.data?.results[index].poster_path}',
-                                fit: BoxFit.cover,
-                                // height: 500.0,
-                                // height: 400.0,
-                                // width: 200.0,
-                                errorBuilder: (context, error, StackTrace) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                },
-                              ),
+                          child: AspectRatio(
+                            aspectRatio: 3 / 2,
+                            child: Image.network(
+                              'https://image.tmdb.org/t/p/w185${snapshot.data?.results[index].poster_path}',
+                              fit: BoxFit.cover,
+                              // height: 500.0,
+                              // height: 400.0,
+                              // width: 200.0,
+                              errorBuilder: (context, error, StackTrace) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              },
                             ),
                           ),
                         ),
@@ -209,11 +209,12 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
                       ),
                       Text(
                         snapshot.data?.results[index].title ?? " ",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       Text(
                         snapshot.data?.results[index].release_date ?? " ",
-                        style: const TextStyle(fontWeight: FontWeight.w100),
+                        style: const TextStyle(fontWeight: FontWeight.w200),
                       ),
                       StarRating(voteAverage: voteAverage!),
                       // Row(
@@ -268,23 +269,11 @@ Widget buildMovieListTile(String title, List<String> popupContent, int index) {
     txt3: popupContent.length > 2 ? popupContent[2] : '',
     txt4: popupContent.length > 3 ? popupContent[3] : '',
     index: index,
-    child: ClipRRect(
-      borderRadius: const BorderRadius.all(
-        Radius.circular(25.0),
-      ),
-      child: Container(
-        height: 25,
-        width: 50,
-        decoration: const BoxDecoration(
-          color: Colors.red,
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: const TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ),
+    child: Center(
+      child: Text(
+        title,
+        style: const TextStyle(
+            color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
       ),
     ),
   );

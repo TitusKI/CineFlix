@@ -198,33 +198,18 @@ class MovieListState extends State<MovieList> {
   Widget buildMovieListTile(
       String title, List<String> popupContent, int index) {
     MovieListTile movieListTile = MovieListTile(
-      // ignore: sort_child_properties_last
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(25.0),
-        ),
-        child: Container(
-          height: 25,
-          width: 50,
-          decoration: const BoxDecoration(
-            color: Colors.red,
-          ),
-          child: Center(
-            child: Text(
-              title,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-          ),
-        ),
-      ),
       txt1: popupContent.isNotEmpty ? popupContent[0] : '',
       txt2: popupContent.length > 1 ? popupContent[1] : '',
       txt3: popupContent.length > 2 ? popupContent[2] : '',
       txt4: popupContent.length > 3 ? popupContent[3] : '',
       index: index,
+      child: Center(
+        child: Text(
+          title,
+          style: const TextStyle(
+              color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
     // popupContentMap[movieListTile] = popupContent;
     return movieListTile;

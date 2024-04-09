@@ -1,7 +1,7 @@
 // The UNIFICATION Of BlocProvider and routes and pages
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/common/routes/names.dart';
-import 'package:cineflix/src/pages/application/application.dart';
+
 import 'package:cineflix/src/pages/register/bloc/register_bloc.dart';
 import 'package:cineflix/src/pages/register/register.dart';
 import 'package:cineflix/src/pages/sign_in/blocs/sign_in_bloc.dart';
@@ -63,6 +63,7 @@ class AppPages {
   }
 
   // models that covers entire screen as we click on navigator object
+  // ignore: non_constant_identifier_names
   static MaterialPageRoute GenerateRouteSettings(RouteSettings settings) {
     if (settings.name != null) {
       // check for route name matching when navigator gets triggered

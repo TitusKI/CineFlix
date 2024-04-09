@@ -1,5 +1,5 @@
 import 'package:cineflix/src/ui/movie_detail.dart';
-import 'package:cineflix/src/ui/star_rating.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
@@ -106,7 +106,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   title: tapped.title,
                                   voteAverage: tapped.vote_average,
                                   movieId: tapped.id,
-                                  releaseDate: tapped.release_date,
+                                  //  Since it causes invalid format date exeception
+                                  // releaseDate: tapped.release_date,
                                   posterUrl: tapped.poster_path,
                                   description: tapped.overview,
                                 ),

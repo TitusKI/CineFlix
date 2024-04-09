@@ -1,9 +1,7 @@
 import 'package:cineflix/src/common/routes/pages.dart';
-import 'package:cineflix/src/common/values/colors.dart';
+
 import 'package:flutter/material.dart';
-import 'package:cineflix/src/blocs/movies_bloc.dart';
-import 'package:cineflix/src/ui/search_screen.dart';
-import 'package:cineflix/src/ui/movie_list.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,14 +25,14 @@ class App extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData.dark(),
           // theme: ThemeData(
-            
+
           //   iconTheme: const IconThemeData(color: AppColors.primaryText),
           //   appBarTheme: const AppBarTheme(
           //     elevation: 0,
           //     backgroundColor: Colors.white,
           //   ),
           // ),
-        onGenerateRoute: AppPages.GenerateRouteSettings,
+          onGenerateRoute: AppPages.GenerateRouteSettings,
 
           // home: const Welcome(),
           // routes: {

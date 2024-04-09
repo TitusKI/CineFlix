@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class SignInController {
   final BuildContext context;
   SignInController({required this.context});
@@ -37,9 +36,11 @@ class SignInController {
             toastInfo(msg: "You need to verify your email account");
             return;
           }
+
           final user = credential.user;
           if (user != null) {
-            Navigator.of(context).pushNamedAndRemoveUntil("/movie_list", ((route) => false));
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil("/movie_list", ((route) => false));
             toastInfo(msg: "User exist");
             return;
           } else {

@@ -1,4 +1,3 @@
-
 import 'movie_list_tile.dart';
 import '../models/item_model.dart';
 import '../blocs/movies_bloc.dart';
@@ -109,20 +108,20 @@ class MovieListState extends State<MovieList> {
                   SizedBox(
                     height: 25,
                   ),
-                //   Stack(
-                //     children: [ClipRRect(
-                //       borderRadius: BorderRadius.circular(25.0),
-                //       child: Container(
-                //         padding:
-                //             EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                //         decoration: BoxDecoration(
-                //           color: Colors.white,
-                //         ),
-                //         // child: SearchScreen()
-                       
-                //       ),
-                //     ),
-                // ]),
+                  //   Stack(
+                  //     children: [ClipRRect(
+                  //       borderRadius: BorderRadius.circular(25.0),
+                  //       child: Container(
+                  //         padding:
+                  //             EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.white,
+                  //         ),
+                  //         // child: SearchScreen()
+
+                  //       ),
+                  //     ),
+                  // ]),
                   SizedBox(
                     height: 25,
                   )
@@ -137,12 +136,12 @@ class MovieListState extends State<MovieList> {
             //           fontSize: 20,
             //           fontWeight: FontWeight.bold,
             //           color: const Color.fromARGB(255, 66, 62, 62)),
-                   
+
             //     ),
             //       //  ListView(
             //       //   scrollDirection: Axis.horizontal,
             //       //       children: [
-                         
+
             //       //       ],
             //           // )
             //   ]),
@@ -156,33 +155,18 @@ class MovieListState extends State<MovieList> {
   Widget buildMovieListTile(
       String title, List<String> popupContent, int index) {
     MovieListTile movieListTile = MovieListTile(
-      // ignore: sort_child_properties_last
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(25.0),
-        ),
-        child: Container(
-          height: 25,
-          width: 50,
-          decoration: const BoxDecoration(
-            color: Colors.red,
-          ),
-          child: Center(
-            child: Text(
-              title,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-          ),
-        ),
-      ),
       txt1: popupContent.isNotEmpty ? popupContent[0] : '',
       txt2: popupContent.length > 1 ? popupContent[1] : '',
       txt3: popupContent.length > 2 ? popupContent[2] : '',
       txt4: popupContent.length > 3 ? popupContent[3] : '',
       index: index,
+      child: Center(
+        child: Text(
+          title,
+          style: const TextStyle(
+              color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
     // popupContentMap[movieListTile] = popupContent;
     return movieListTile;

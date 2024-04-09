@@ -1,3 +1,7 @@
+import 'package:cineflix/src/blocs/search/search_bloc.dart';
+import 'package:cineflix/src/blocs/search/search_state.dart';
+import 'package:cineflix/src/ui/search_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'movie_list_tile.dart';
 import '../models/item_model.dart';
@@ -23,7 +27,7 @@ class MovieListState extends State<MovieList> {
   void initState() {
     super.initState();
     // bloc.fetchAllMovies();
-    bloc.fetchMoviesForIndex(1);
+    // bloc.fetchMoviesForIndex(1);
   }
 
   @override
@@ -35,30 +39,68 @@ class MovieListState extends State<MovieList> {
   @override
   Widget build(BuildContext context) {
     // bloc.fetchAllMovies();
-    bloc.fetchMoviesForIndex(1);
-    return StreamBuilder(
-      stream: bloc.getStreamForIndex(1),
-      builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
-        if (snapshot.hasData) {
-          return buildList(snapshot);
-        } else if (snapshot.connectionState == ConnectionState.none ||
-            snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          return const Center(
-            child: Text('No data avaliable'),
-          );
-        }
+    // bloc.fetchMoviesForIndex(1);
+    // return StreamBuilder(
+    //   stream: bloc.getStreamForIndex(1),
+    //   builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
+    //     if (snapshot.hasData) {
+    //       return buildList(snapshot);
+    //     } else if (snapshot.connectionState == ConnectionState.none ||
+    //         snapshot.connectionState == ConnectionState.waiting) {
+    //       return const Center(
+    //         child: CircularProgressIndicator(),
+    //       );
+    //     } else if (snapshot.connectionState == ConnectionState.done) {
+    //       return const Center(
+    //         child: Text('No data avaliable'),
+    //       );
+    //     }
 
-        return const Center(child: Text('ERRor'));
+    //     return const Center(child: Text('ERRor'));
+    //   },
+    // );
+    return BlocBuilder<SearchBloc, SearchState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'CineFlix',
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
+            actions: [
+              Builder(builder: (context) {
+                return IconButton(
+                  onPressed: () {
+                    bloc.handleHidePopup();
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SearchScreen()));
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    weight: 50.0,
+                  ),
+                );
+              })
+            ],
+          ),
+          body: Listener(
+            onPointerDown: (event) {
+              bloc.handleHidePopup();
+            },
+            child: buildList(),
+          ),
+        );
       },
     );
   }
 
+// AsyncSnapshot<ItemModel?> snapshot
   // Map<MovieListTile, List<String>> popupContentMap = {};
-  buildList(AsyncSnapshot<ItemModel?> snapshot) {
+  Widget buildList() {
     return Column(
       children: [
         SizedBox(
@@ -109,20 +151,20 @@ class MovieListState extends State<MovieList> {
                   SizedBox(
                     height: 25,
                   ),
-                //   Stack(
-                //     children: [ClipRRect(
-                //       borderRadius: BorderRadius.circular(25.0),
-                //       child: Container(
-                //         padding:
-                //             EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                //         decoration: BoxDecoration(
-                //           color: Colors.white,
-                //         ),
-                //         // child: SearchScreen()
-                       
-                //       ),
-                //     ),
-                // ]),
+                  //   Stack(
+                  //     children: [ClipRRect(
+                  //       borderRadius: BorderRadius.circular(25.0),
+                  //       child: Container(
+                  //         padding:
+                  //             EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.white,
+                  //         ),
+                  //         // child: SearchScreen()
+
+                  //       ),
+                  //     ),
+                  // ]),
                   SizedBox(
                     height: 25,
                   )
@@ -137,12 +179,12 @@ class MovieListState extends State<MovieList> {
             //           fontSize: 20,
             //           fontWeight: FontWeight.bold,
             //           color: const Color.fromARGB(255, 66, 62, 62)),
-                   
+
             //     ),
             //       //  ListView(
             //       //   scrollDirection: Axis.horizontal,
             //       //       children: [
-                         
+
             //       //       ],
             //           // )
             //   ]),

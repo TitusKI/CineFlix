@@ -1,7 +1,9 @@
 import 'package:cineflix/src/models/genre_model.dart';
 import 'package:cineflix/src/resources/genre_api_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class GenrePage extends StatefulWidget {
   const GenrePage({super.key});
@@ -34,22 +36,27 @@ class _GenrePageState extends State<GenrePage> {
             itemCount: genres.length,
             itemBuilder: (context, index) {
               Genre genre = genres[index];
-              return SizedBox(
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 height: cardHeight,
                 width: cardWidth,
                 key: Key(genre.id.toString()),
                 child: Stack(children: [
-                  Image.asset(
-                    'assets/images/img.jpg',
-                    width: cardWidth,
-                    height: cardHeight,
-                    fit: BoxFit.fill,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(22),
+                    child: Image.asset(
+                      'assets/images/img.jpg',
+                      width: cardWidth,
+                      height: cardHeight,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                   Center(
                       child: Text(
                     genre.name,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 28,
+                      color: Colors.white.withOpacity(0.8),
                       fontWeight: FontWeight.w900,
                       // color: Colors.white.withOpacity(0.8)
                     ),
@@ -59,9 +66,17 @@ class _GenrePageState extends State<GenrePage> {
             },
           );
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return const Center(
+              child: Text(
+            "Could not fetch genres",
+            style: TextStyle(fontSize: 28),
+          ));
         }
-        return const CircularProgressIndicator();
+        return const Center(
+            child: SpinKitCubeGrid(
+          color: Colors.red,
+          size: 80.0,
+        ));
       },
     );
   }

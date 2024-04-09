@@ -208,11 +208,12 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
                       ),
                       Text(
                         snapshot.data?.results[index].title ?? " ",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       Text(
                         snapshot.data?.results[index].release_date ?? " ",
-                        style: const TextStyle(fontWeight: FontWeight.w100),
+                        style: const TextStyle(fontWeight: FontWeight.w200),
                       ),
                       StarRating(voteAverage: voteAverage!),
                       // Row(

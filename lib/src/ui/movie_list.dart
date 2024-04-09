@@ -1,5 +1,6 @@
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
+import 'package:cineflix/src/ui/favorites_page.dart';
 import 'package:cineflix/src/ui/genre_page.dart';
 import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
@@ -54,6 +55,8 @@ class MovieListState extends State<MovieList> {
 
     if (_selectedIndex == 1) {
       body = const GenrePage();
+    } else if (_selectedIndex == 2) {
+      body = const FavoritesPage();
     }
     // bloc.fetchAllMovies();
     // bloc.fetchMoviesForIndex(1);

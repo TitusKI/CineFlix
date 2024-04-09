@@ -18,6 +18,15 @@ class _SearchScreenState extends State<SearchScreen> {
   String query = '';
   String selectedMediaType = 'movie'; // default media Type
 
+  year(String date) {
+    String year = '';
+    if (date.isNotEmpty) {
+      DateTime dateTime = DateTime.parse(date);
+      year = dateTime.year.toString();
+    }
+    return year;
+  }
+
   @override
   Widget build(BuildContext context) {
     final SearchBloc searchBloc = BlocProvider.of<SearchBloc>(context);
@@ -131,14 +140,5 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
     );
-  }
-
-  year(String date) {
-    String year = '';
-    if (date.isNotEmpty) {
-      DateTime dateTime = DateTime.parse(date);
-      year = dateTime.year.toString();
-    }
-    return year;
   }
 }

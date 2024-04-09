@@ -1,5 +1,6 @@
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
+import 'package:cineflix/src/ui/genre_page.dart';
 import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +50,11 @@ class MovieListState extends State<MovieList> {
 
   @override
   Widget build(BuildContext context) {
+    Widget body = HomePage();
+
+    if (_selectedIndex == 1) {
+      body = const GenrePage();
+    }
     // bloc.fetchAllMovies();
     // bloc.fetchMoviesForIndex(1);
     // return StreamBuilder(
@@ -98,16 +104,20 @@ class MovieListState extends State<MovieList> {
               })
             ],
           ),
-          body: Listener(
-            onPointerDown: (event) {
-              bloc.handleHidePopup();
-            },
-            child: buildList(),
-          ),
-          bottomNavigationBar:
-              BottomNavigation(onIndexChanged: _onIndexChanged),
+          body: body,
+          bottomNavigationBar: BottomNavigation(
+              index: _selectedIndex, onIndexChanged: _onIndexChanged),
         );
       },
+    );
+  }
+
+  Widget HomePage() {
+    return Listener(
+      onPointerDown: (event) {
+        bloc.handleHidePopup();
+      },
+      child: buildList(),
     );
   }
 

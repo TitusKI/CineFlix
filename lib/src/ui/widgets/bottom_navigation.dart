@@ -2,29 +2,35 @@ import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatelessWidget {
   final ValueChanged<int> onIndexChanged;
+  final int index;
 
-  const BottomNavigation({super.key, required this.onIndexChanged});
+  const BottomNavigation(
+      {super.key, required this.onIndexChanged, required this.index});
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        currentIndex: 0,
+        currentIndex: index,
         onTap: onIndexChanged,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: const Color.fromARGB(255, 190, 190, 190),
         iconSize: 30,
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              backgroundColor: Color.fromARGB(255, 17, 93, 156),
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
+              backgroundColor: Color.fromARGB(255, 187, 187, 187),
               label: "Home"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.movie),
-              backgroundColor: Color.fromARGB(255, 17, 93, 156),
+              activeIcon: Icon(Icons.movie),
+              icon: Icon(Icons.movie_outlined),
+              backgroundColor: Color.fromARGB(255, 187, 187, 187),
               label: "Genre"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
-              backgroundColor: Color.fromARGB(255, 17, 93, 156),
+              activeIcon: Icon(Icons.favorite),
+              icon: Icon(Icons.favorite_outline),
+              backgroundColor: Color.fromARGB(255, 187, 187, 187),
               label: "Favorites"),
         ]);
   }

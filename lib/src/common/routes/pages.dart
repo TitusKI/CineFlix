@@ -8,13 +8,13 @@ import 'package:cineflix/src/pages/sign_in/blocs/sign_in_bloc.dart';
 import 'package:cineflix/src/pages/sign_in/sign_in.dart';
 import 'package:cineflix/src/pages/welcome/blocs/bloc/welcome_bloc.dart';
 import 'package:cineflix/src/pages/welcome/welcome.dart';
+
 import 'package:cineflix/src/ui/movie_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class AppPages {
- static List<PageEntity> routes() {
+  static List<PageEntity> routes() {
     return [
       PageEntity(
         route: AppRoutes.INITIAL,
@@ -38,38 +38,46 @@ class AppPages {
         ),
       ),
       PageEntity(
-        route: AppRoutes.APPLICATION,
-        page: const MovieList(),
-        bloc: BlocProvider(create: (_)=> SearchBloc(),)
-        // bloc: BlocProvider(
-        //   create: (_) => ApplicationBl(),
-        // ),
-      )
+          route: AppRoutes.APPLICATION,
+          page: const MovieList(),
+          bloc: BlocProvider(
+            create: (_) => SearchBloc(),
+          )
+          // bloc: BlocProvider(
+          //   create: (_) => ApplicationBl(),
+          // ),
+          ),
+      // PageEntity(
+      //   route: AppRoutes.MOVIEDETAIL,
+      //   page: const MovieDetail(),
+      // )
     ];
   }
-  static List<dynamic> allBlocProvider(BuildContext context){
+
+  static List<dynamic> allBlocProvider(BuildContext context) {
     List<dynamic> blocProviders = <dynamic>[];
-    for(var bloc in routes()){
-     blocProviders.add(bloc.bloc);
+    for (var bloc in routes()) {
+      blocProviders.add(bloc.bloc);
     }
     return blocProviders;
   }
-  // models that covers entire screen as we click on navigator object
-  static MaterialPageRoute GenerateRouteSettings(RouteSettings settings){
-   if(settings.name!=null){
-    // check for route name matching when navigator gets triggered
-    var result = routes().where((element) => element.route==settings.name);
-    if(result.isNotEmpty){
-       print("valid route name: ${settings.name}");
-      return MaterialPageRoute(builder: (_)=> result.first.page, settings: settings);
-    }
 
-   }
-   print("Invalid route name: ${settings.name}");
-   return MaterialPageRoute(builder: (_)=>const SignIn(), settings: settings);
+  // models that covers entire screen as we click on navigator object
+  static MaterialPageRoute GenerateRouteSettings(RouteSettings settings) {
+    if (settings.name != null) {
+      // check for route name matching when navigator gets triggered
+      var result = routes().where((element) => element.route == settings.name);
+      if (result.isNotEmpty) {
+        print("valid route name: ${settings.name}");
+        return MaterialPageRoute(
+            builder: (_) => result.first.page, settings: settings);
+      }
+    }
+    print("Invalid route name: ${settings.name}");
+    return MaterialPageRoute(
+        builder: (_) => const SignIn(), settings: settings);
   }
 }
-
 
 class PageEntity {
   String route;

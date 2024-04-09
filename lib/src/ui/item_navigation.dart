@@ -141,7 +141,7 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
       SizedBox(
         height: 50,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             buildMovieListTile('Movies',
                 ["Popular ", 'Top Rated ', 'Now Playing', 'Upcoming '], 1),
@@ -176,36 +176,36 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
                   height: 600,
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: ClipRRect(
-
                           clipBehavior: Clip.hardEdge,
                           borderRadius: BorderRadius.circular(10.0),
                           child: SizedBox(
-                            height:300,
-                           width: 200,
+                            height: 300,
+                            width: 200,
                             child: AspectRatio(
-                              aspectRatio: 2/3,
+                              aspectRatio: 2 / 3,
                               child: Image.network(
-                                
                                 'https://image.tmdb.org/t/p/w185${snapshot.data?.results[index].poster_path}',
                                 fit: BoxFit.cover,
                                 // height: 500.0,
                                 // height: 400.0,
                                 // width: 200.0,
                                 errorBuilder: (context, error, StackTrace) {
-                                  return const Center(child: CircularProgressIndicator());
+                                  return const Center(
+                                      child: CircularProgressIndicator());
                                 },
                               ),
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8.0,),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
                       Text(
                         snapshot.data?.results[index].title ?? " ",
                         style: const TextStyle(fontWeight: FontWeight.bold),
@@ -224,7 +224,9 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
                       //     Text(snapshot.data?.results[index].vote_average.toString() ?? "_"),
                       //   ],
                       // ),
-                        const SizedBox(height: 10.0,),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
                     ],
                   ),
                 ),
@@ -265,23 +267,11 @@ Widget buildMovieListTile(String title, List<String> popupContent, int index) {
     txt3: popupContent.length > 2 ? popupContent[2] : '',
     txt4: popupContent.length > 3 ? popupContent[3] : '',
     index: index,
-    child: ClipRRect(
-      borderRadius: const BorderRadius.all(
-        Radius.circular(25.0),
-      ),
-      child: Container(
-        height: 25,
-        width: 50,
-        decoration: const BoxDecoration(
-          color: Colors.red,
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: const TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ),
+    child: Center(
+      child: Text(
+        title,
+        style: const TextStyle(
+            color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
       ),
     ),
   );

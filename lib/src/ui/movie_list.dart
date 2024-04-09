@@ -6,7 +6,7 @@ import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'movie_list_tile.dart';
-import '../models/item_model.dart';
+
 import '../blocs/movies_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -112,6 +112,7 @@ class MovieListState extends State<MovieList> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget HomePage() {
     return Listener(
       onPointerDown: (event) {

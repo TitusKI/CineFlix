@@ -3,9 +3,8 @@ class AppRoutes {
   static const INITIAL = '/';
   // application page
   static const APPLICATION = '/movie_list';
- // sign in page
+  // sign in page
   static const SIGN_IN = '/sign_in';
 // sign up page
   static const REGISTER = '/register';
-
 }

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
 
@@ -62,14 +61,14 @@ class _WelcomeState extends State<Welcome> {
                       ],
                     ),
                     Positioned(
-                      bottom: 80.h,
+                      bottom: 60.h,
                       child: DotsIndicator(
                         position: state.page,
                         dotsCount: 3,
                         mainAxisAlignment: MainAxisAlignment.center,
                         decorator: DotsDecorator(
                             activeColor: AppColors.primaryElement,
-                            color:AppColors.primaryThirdElementText,
+                            color: AppColors.primaryThirdElementText,
                             size: const Size.square(8.0),
                             activeSize: const Size(15.0, 8.0),
                             activeShape: RoundedRectangleBorder(
@@ -91,16 +90,9 @@ class _WelcomeState extends State<Welcome> {
     return Container(
       height: 350.h,
       decoration: BoxDecoration(
- image: DecorationImage(
-        opacity: 0.8,
-        image: AssetImage(imagePath),
-        fit: BoxFit.contain
-        ),
-        
-
-      )
-      ,
-     
+        image: DecorationImage(
+            opacity: 0.8, image: AssetImage(imagePath), fit: BoxFit.fitHeight),
+      ),
       child: Column(
         children: [
           SizedBox(
@@ -108,7 +100,7 @@ class _WelcomeState extends State<Welcome> {
             height: 345.w,
             // child: Image.asset(imagePath),
           ),
-        Container(
+          Container(
               child: Text(
             title,
             style: TextStyle(
@@ -134,7 +126,7 @@ class _WelcomeState extends State<Welcome> {
             width: 325.w,
             height: 50.h,
             decoration: BoxDecoration(
-              color:AppColors.primaryElement,
+              color: AppColors.primaryElement,
               borderRadius: BorderRadius.all(Radius.circular(15.w)),
               boxShadow: [
                 BoxShadow(
@@ -157,7 +149,8 @@ class _WelcomeState extends State<Welcome> {
                   //     builder: (context) => const MyHomePage(),
                   //   ),
                   // );
-                  Navigator.of(context).pushNamedAndRemoveUntil("/sign_in", (route) => false);
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil("/sign_in", (route) => false);
                 }
               },
               child: Center(

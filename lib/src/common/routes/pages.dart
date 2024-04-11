@@ -1,4 +1,5 @@
 // The UNIFICATION Of BlocProvider and routes and pages
+import 'package:cineflix/global.dart';
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/common/routes/names.dart';
 
@@ -69,7 +70,21 @@ class AppPages {
       // check for route name matching when navigator gets triggered
       var result = routes().where((element) => element.route == settings.name);
       if (result.isNotEmpty) {
+        print("first log");
+        print(result.first.route);
         print("valid route name: ${settings.name}");
+        bool deviceFirstOpen = Global.storageService.getDeviceFirstOpen();
+
+        if (result.first.route == AppRoutes.INITIAL && deviceFirstOpen) {
+          print("Second Log");
+          bool getIsLoggedIn = Global.storageService.getIsLoggedIn();
+          if (getIsLoggedIn) {
+            return MaterialPageRoute(
+                builder: (_) => const MovieList(), settings: settings);
+          }
+          return MaterialPageRoute(
+              builder: (_) => const SignIn(), settings: settings);
+        }
         return MaterialPageRoute(
             builder: (_) => result.first.page, settings: settings);
       }

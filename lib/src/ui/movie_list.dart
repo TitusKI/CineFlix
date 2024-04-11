@@ -1,9 +1,13 @@
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
+import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/ui/genre_page.dart';
 import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
+import 'package:cineflix/src/ui/widgets/drawer.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'movie_list_tile.dart';
 
@@ -79,6 +83,7 @@ class MovieListState extends State<MovieList> {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return Scaffold(
+          drawer: appDrawer(context),
           appBar: AppBar(
             title: const Text(
               'CineFlix',
@@ -148,7 +153,7 @@ class MovieListState extends State<MovieList> {
           height: 20,
         ),
         Container(
-          color: const Color.fromARGB(3, 39, 9, 191),
+          color: AppColors.primaryBackground,
           child: ListView(shrinkWrap: true, children: [
             Container(
               decoration: const BoxDecoration(

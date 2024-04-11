@@ -1,5 +1,8 @@
 import 'package:cineflix/src/common/date_formatter.dart';
+import 'package:cineflix/src/models/people_model.dart';
 import 'package:cineflix/src/ui/star_rating.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 import '../models/trailer_model.dart';
 
@@ -16,6 +19,7 @@ class MovieDetail extends StatefulWidget {
   final String? title;
   final double? voteAverage;
   final int movieId;
+  final List<Person>? cast;
 
   const MovieDetail({
     super.key,
@@ -25,6 +29,7 @@ class MovieDetail extends StatefulWidget {
     this.releaseDate,
     required this.voteAverage,
     required this.movieId,
+    this.cast,
   });
   @override
   State<StatefulWidget> createState() {
@@ -35,6 +40,7 @@ class MovieDetail extends StatefulWidget {
       releaseDate: releaseDate,
       voteAverage: voteAverage,
       movieId: movieId,
+      cast: cast,
     );
   }
 }
@@ -47,6 +53,8 @@ class MovieDetailState extends State<MovieDetail> {
   final double? voteAverage;
   final int movieId;
   late MovieDetailBloc bloc;
+  final List<Person>? cast;
+
   MovieDetailState({
     required this.title,
     this.posterUrl,
@@ -54,6 +62,7 @@ class MovieDetailState extends State<MovieDetail> {
     this.releaseDate,
     required this.voteAverage,
     required this.movieId,
+    this.cast,
   });
 
   double? _trailerHeight;
@@ -76,6 +85,7 @@ class MovieDetailState extends State<MovieDetail> {
 
   @override
   Widget build(BuildContext context) {
+    const String baseImgUrl = "https://image.tmdb.org/t/p/w500";
     return Scaffold(
         body: SafeArea(
       child: NestedScrollView(
@@ -162,18 +172,37 @@ class MovieDetailState extends State<MovieDetail> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: List.generate(10, (index) {
+                    children: cast!.map((item) {
+                      // int index = cast!.indexOf(item);
                       return Container(
-                        width: 80,
-                        height: 80,
-                        padding: const EdgeInsets.all(10),
-                        color: Colors.blue,
+                        width: 100,
+                        height: 160,
                         margin: const EdgeInsets.all(5),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 120,
+                              width: 90,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.network(
+                                  "$baseImgUrl/${item.profilePath}",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                item.name,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          ],
                         ),
                       );
-                    }),
+                    }).toList(),
                   ),
                 ),
                 const Text(

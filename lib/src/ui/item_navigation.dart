@@ -1,3 +1,5 @@
+import 'package:cineflix/src/models/people_model.dart';
+import 'package:cineflix/src/resources/people_api_provider.dart';
 import 'package:cineflix/src/ui/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +26,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
   final int buttonIndex;
   final int itemIndex;
   _ItemNavigationState({required this.buttonIndex, required this.itemIndex});
+
   @override
   Widget build(BuildContext context) {
     switch (buttonIndex) {
@@ -136,9 +139,9 @@ class _ItemNavigationState extends State<ItemNavigation> {
   }
 }
 
-buildList(
-  AsyncSnapshot<ItemModel?> snapshot,
-) {
+buildList(AsyncSnapshot<ItemModel?> snapshot) {
+  PeopleApiProvider pplApi = PeopleApiProvider();
+  late List<Person> cast;
   return Column(
     children: [
       SizedBox(
@@ -176,8 +179,15 @@ buildList(
               final voteAverage = snapshot.data?.results[index].vote_average;
               return GestureDetector(
                   // // we can use GestureDetector instead of InkResponse
-                  onTap: () {
-                    openDetailPage(context, snapshot.data, index);
+                  onTap: () async {
+                    cast = await pplApi
+                        .fetchPeople(snapshot.data!.results[index].id);
+                    openDetailPage(
+                      context,
+                      snapshot.data,
+                      cast,
+                      index,
+                    );
                   },
                   child: MovieTile(
                     itemModel: snapshot.data,
@@ -192,7 +202,8 @@ buildList(
   );
 }
 
-openDetailPage(BuildContext context, ItemModel? data, int index) {
+openDetailPage(
+    BuildContext context, ItemModel? data, List<Person> cast, int index) {
   Navigator.push(context, MaterialPageRoute(builder: (context) {
     return MovieDetailBlocProvider(
       // Returning of instances of MovieDetailBlocProvider(InheritedWidget)
@@ -208,6 +219,7 @@ openDetailPage(BuildContext context, ItemModel? data, int index) {
         releaseDate: data?.results[index].release_date,
         voteAverage: data?.results[index].vote_average,
         movieId: data!.results[index].id,
+        cast: cast,
       ),
     );
   }));

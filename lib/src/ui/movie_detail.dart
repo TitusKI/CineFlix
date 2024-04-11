@@ -1,3 +1,4 @@
+import 'package:cineflix/src/common/date_formatter.dart';
 import 'package:cineflix/src/ui/star_rating.dart';
 
 import '../models/trailer_model.dart';
@@ -142,6 +143,38 @@ class MovieDetailState extends State<MovieDetail> {
                 Text(
                   description,
                   style: const TextStyle(fontSize: 18.0),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Released In: ${formatDate(releaseDate)}",
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                const Text(
+                  "Cast",
+                  style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(10, (index) {
+                      return Container(
+                        width: 80,
+                        height: 80,
+                        padding: const EdgeInsets.all(10),
+                        color: Colors.blue,
+                        margin: const EdgeInsets.all(5),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      );
+                    }),
+                  ),
                 ),
                 const Text(
                   "Trailer",

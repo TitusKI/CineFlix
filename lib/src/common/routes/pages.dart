@@ -2,6 +2,8 @@
 import 'package:cineflix/global.dart';
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/common/routes/names.dart';
+import 'package:cineflix/src/pages/forgot_password/bloc/reset_password_bloc.dart';
+import 'package:cineflix/src/pages/forgot_password/reset_screen.dart';
 
 import 'package:cineflix/src/pages/register/bloc/register_bloc.dart';
 import 'package:cineflix/src/pages/register/register.dart';
@@ -48,6 +50,12 @@ class AppPages {
           //   create: (_) => ApplicationBl(),
           // ),
           ),
+      PageEntity(
+          route: AppRoutes.RESET_PASSWORD,
+          page: const ResetScreen(),
+          bloc: BlocProvider(
+            create: (_) => ResetPasswordBloc(),
+          ))
       // PageEntity(
       //   route: AppRoutes.MOVIEDETAIL,
       //   page: const MovieDetail(),
@@ -70,21 +78,22 @@ class AppPages {
       // check for route name matching when navigator gets triggered
       var result = routes().where((element) => element.route == settings.name);
       if (result.isNotEmpty) {
-        print("first log");
-        print(result.first.route);
-        print("valid route name: ${settings.name}");
+        // print("first log");
+        // print(result.first.route);
+        // print("valid route name: ${settings.name}");
         bool deviceFirstOpen = Global.storageService.getDeviceFirstOpen();
 
         if (result.first.route == AppRoutes.INITIAL && deviceFirstOpen) {
-          print("Second Log");
-          bool getIsLoggedIn = Global.storageService.getIsLoggedIn();
-          if (getIsLoggedIn) {
+          // print("Second Log");
+          bool isLoggedIn = Global.storageService.getIsLoggedIn();
+          if (isLoggedIn) {
             return MaterialPageRoute(
                 builder: (_) => const MovieList(), settings: settings);
           }
           return MaterialPageRoute(
               builder: (_) => const SignIn(), settings: settings);
         }
+
         return MaterialPageRoute(
             builder: (_) => result.first.page, settings: settings);
       }

@@ -1,6 +1,11 @@
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
+<<<<<<< HEAD
 import 'package:cineflix/src/common/values/colors.dart';
+=======
+import 'package:cineflix/src/resources/people_api_provider.dart';
+import 'package:cineflix/src/ui/favorites_page.dart';
+>>>>>>> 143074ab4b27096615a2c8f185d646cd47bd116c
 import 'package:cineflix/src/ui/genre_page.dart';
 import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
@@ -58,6 +63,8 @@ class MovieListState extends State<MovieList> {
 
     if (_selectedIndex == 1) {
       body = const GenrePage();
+    } else if (_selectedIndex == 2) {
+      body = const FavoritesPage();
     }
     // bloc.fetchAllMovies();
     // bloc.fetchMoviesForIndex(1);
@@ -109,7 +116,12 @@ class MovieListState extends State<MovieList> {
               })
             ],
           ),
-          body: body,
+          body: Column(
+            children: [
+              Expanded(child: body),
+              const Divider(),
+            ],
+          ),
           bottomNavigationBar: BottomNavigation(
               index: _selectedIndex, onIndexChanged: _onIndexChanged),
         );
@@ -152,7 +164,9 @@ class MovieListState extends State<MovieList> {
         const SizedBox(
           height: 20,
         ),
+
         Container(
+<<<<<<< HEAD
           color: AppColors.primaryBackground,
           child: ListView(shrinkWrap: true, children: [
             Container(
@@ -169,57 +183,104 @@ class MovieListState extends State<MovieList> {
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
+=======
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: 250,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 60,
+                child: GestureDetector(
+                  onTap: () {
+                    // Add your onTap function here
+                  },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Latest Movies',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Icon(Icons.arrow_forward_ios),
+                    ],
+>>>>>>> 143074ab4b27096615a2c8f185d646cd47bd116c
                   ),
-                  Text(
-                    "Millions of movies, TV shows and people to discover. Explore now.",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  //   Stack(
-                  //     children: [ClipRRect(
-                  //       borderRadius: BorderRadius.circular(25.0),
-                  //       child: Container(
-                  //         padding:
-                  //             EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  //         decoration: BoxDecoration(
-                  //           color: Colors.white,
-                  //         ),
-                  //         // child: SearchScreen()
-
-                  //       ),
-                  //     ),
-                  // ]),
-                  SizedBox(
-                    height: 25,
-                  )
-                ],
+                ),
               ),
-            ),
-            // Container(
-            //   child: Column(children: [
-            //     Text(
-            //       "Trending.",
-            //       style: TextStyle(
-            //           fontSize: 20,
-            //           fontWeight: FontWeight.bold,
-            //           color: const Color.fromARGB(255, 66, 62, 62)),
-
-            //     ),
-            //       //  ListView(
-            //       //   scrollDirection: Axis.horizontal,
-            //       //       children: [
-
-            //       //       ],
-            //           // )
-            //   ]),
-            // ),
-          ]),
+              Expanded(
+                  child: Container(
+                color: Colors.green,
+              ))
+            ],
+          ),
         )
+        // Container(
+//   color: const Color.fromARGB(3, 39, 9, 191),
+        //   child: ListView(shrinkWrap: true, children: [
+// Container(
+        //       decoration: const BoxDecoration(
+        //           image: DecorationImage(
+//     image: AssetImage('assets/cineflix.jpg')//     fit: BoxFit.cover)),
+        //
+        //        const Column(
+        //         // crossAxisAlignment: CrossAxisAlignment.baseline,
+        //         children: [
+        //           Text(
+        //             "Welcome.",
+        //             style: TextStyle(
+        //                 fontSize: 25,
+        //                 fontWeight: FontWeight.bold,
+        //                 color: Colors.white),
+        //           ),
+        //           Text(
+        //             "Millions of movies, TV shows and people to discover. Explore now.",
+        //             style: TextStyle(
+        //                 fontSize: 20,
+        //// color: Colors.white//        ),
+        //           SizedBox(
+        //             height: 25,
+        //////Stack(
+        //           //     children: [ClipRRect(
+        //           //       borderRadius: BorderRadius.circular(25.0),
+        //           //       child: Container(
+        //           //         padding:
+        //           //             EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+        //           //         decoration: BoxDecoration(
+        //           //           color: Colors.white,
+        //           //         ),
+        //           //         // child: SearchScreen()
+
+        //           //       ),
+        //           //     ),
+        //           // ]),
+        //           SizedBox(
+        //             height: 25,
+        //           )
+        //         ],
+        //       ),
+        //     ),
+        //     // Container(
+        //     //   child: Column(children: [
+        //     //     Text(
+        //     //       "Trending.",
+        //     //       style: TextStyle(
+        //     //           fontSize: 20,
+////    fontWeight: FontWeight.bold////      color: const Color.fromARGB(255, 66, 62, 62)
+//  //
+        //     //       //  ListView(
+        //     //       //   scrollDirection: Axis.horizontal,
+        //     //       //       children: [
+
+        //     //       //       ],
+        //     //           // )
+        //     //   ]),
+        //     // ),
+        //   ]),
+        // )
       ],
     );
   }

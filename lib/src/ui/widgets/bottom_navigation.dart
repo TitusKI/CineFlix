@@ -15,7 +15,7 @@ class BottomNavigation extends StatelessWidget {
         selectedItemColor: Colors.white,
         unselectedItemColor: const Color.fromARGB(255, 190, 190, 190),
         iconSize: 30,
-        backgroundColor: Colors.black,
+        // backgroundColor: Colors.black,
         items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),

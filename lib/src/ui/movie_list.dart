@@ -1,11 +1,11 @@
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
-<<<<<<< HEAD
+
 import 'package:cineflix/src/common/values/colors.dart';
-=======
+
 import 'package:cineflix/src/resources/people_api_provider.dart';
 import 'package:cineflix/src/ui/favorites_page.dart';
->>>>>>> 143074ab4b27096615a2c8f185d646cd47bd116c
+
 import 'package:cineflix/src/ui/genre_page.dart';
 import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
@@ -166,24 +166,6 @@ class MovieListState extends State<MovieList> {
         ),
 
         Container(
-<<<<<<< HEAD
-          color: AppColors.primaryBackground,
-          child: ListView(shrinkWrap: true, children: [
-            Container(
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/cineflix.jpg'),
-                      fit: BoxFit.cover)),
-              child: const Column(
-                // crossAxisAlignment: CrossAxisAlignment.baseline,
-                children: [
-                  Text(
-                    "Welcome.",
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-=======
           width: MediaQuery.of(context).size.width * 0.9,
           height: 250,
           alignment: Alignment.center,
@@ -207,7 +189,6 @@ class MovieListState extends State<MovieList> {
                       ),
                       Icon(Icons.arrow_forward_ios),
                     ],
->>>>>>> 143074ab4b27096615a2c8f185d646cd47bd116c
                   ),
                 ),
               ),

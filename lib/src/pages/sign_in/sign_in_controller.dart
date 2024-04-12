@@ -23,7 +23,7 @@ class SignInController {
           toastInfo(msg: "You need to fill email address");
           return;
         }
-        if (emailAddress.isEmail()) {
+        if (!emailAddress.isEmail()) {
           toastInfo(msg: "Please put valid Email address");
           return;
         }

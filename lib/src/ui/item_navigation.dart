@@ -1,5 +1,7 @@
+import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/people_model.dart';
 import 'package:cineflix/src/resources/people_api_provider.dart';
+import 'package:cineflix/src/ui/star_rating.dart';
 import 'package:cineflix/src/ui/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -72,70 +74,71 @@ class _ItemNavigationState extends State<ItemNavigation> {
     }
 
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark(),
-        home: Scaffold(
-            appBar: AppBar(
-              title: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: const Icon(
-                            Icons.home_filled,
-                            color: Colors.red,
-                          )),
-                      // ,SizedBox(width: 80,),
-                      const Text('Popular Movies',
-                          style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.white,
-                          )),
-                      const Center(
-                        child: Text('CineFlix',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                            )),
-                      ),
-                    ]),
-              ),
-            ),
-            body: Listener(
-              onPointerDown: (event) {
-                bloc.handleHidePopup();
-              },
-              child: Material(
-                child: StreamBuilder(
-                  stream: bloc.getStreamForIndex(itemIndex),
-                  builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
-                    if (snapshot.hasData) {
-                      return buildList(snapshot);
-                    } else if (snapshot.connectionState ==
-                            ConnectionState.none ||
-                        snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.done) {
-                      return const Center(
-                        child: Text('No data avaliable'),
-                      );
-                    }
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(
+                        Icons.home_filled,
+                        color: Colors.red,
+                      )),
+                  // ,SizedBox(width: 80,),
+                  const Text('Popular Movies',
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white,
+                      )),
+                  const Center(
+                    child: Text('CineFlix',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        )),
+                  ),
+                ]),
+          ),
+        ),
+        body: Listener(
+          onPointerDown: (event) {
+            bloc.handleHidePopup();
+          },
+          child: Material(
+            color: AppColors.primaryBackground,
+            child: StreamBuilder(
+              stream: bloc.getStreamForIndex(itemIndex),
+              builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
+                if (snapshot.hasData) {
+                  return buildList(snapshot);
+                } else if (snapshot.connectionState == ConnectionState.none ||
+                    snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  return const Center(
+                    child: Text('No data avaliable'),
+                  );
+                }
 
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                ),
-              ),
-            )));
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

@@ -1,8 +1,12 @@
 import 'package:cineflix/src/common/widgets/flutter_toast.dart';
 import 'package:cineflix/src/pages/register/bloc/register_bloc.dart';
+import 'package:cineflix/src/pages/register/bloc/register_event.dart';
+import 'package:cineflix/src/pages/register/bloc/register_state.dart';
+import 'package:cineflix/src/pages/register/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:regexpattern/regexpattern.dart';
 
 class RegisterController {
   final BuildContext context;
@@ -23,10 +27,14 @@ class RegisterController {
       toastInfo(msg: "Email can not be empty");
       return;
     }
+    if (!email.isEmail()) {
+      toastInfo(msg: "Please Enter a Valid Email Address");
+    }
     if (password.isEmpty) {
       toastInfo(msg: "Password can not be empty");
       return;
     }
+
     if (repassword.isEmpty) {
       toastInfo(msg: "Your password confirmation is wrong");
       return;
@@ -37,18 +45,21 @@ class RegisterController {
     }
 
     try {
+      context.read<RegisterBloc>().add(RegistereLoadingEvent());
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      if (credential.user!=null) {
+      if (credential.user != null) {
         await credential.user?.sendEmailVerification();
         await credential.user?.updateDisplayName(userName);
         toastInfo(
             msg:
                 "An email has been sent to your email. To activate it please check your email box and click on the link");
+        context.read<RegisterBloc>().add(RegistereSuccessEvent());
         Navigator.of(context).pop();
       }
     } on FirebaseAuthException catch (e) {
+      context.read<RegisterBloc>().add(RegistereFailureEvent(error: e.code));
       if (e.code == "weak-password") {
         toastInfo(msg: "The password provided is too weak");
       }

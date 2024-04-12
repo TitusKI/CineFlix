@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-
 AppBar buildAppBar(String type) {
   return AppBar(
     bottom: PreferredSize(
@@ -58,7 +56,7 @@ Widget reusableText(String text) {
     child: Text(
       text,
       style: TextStyle(
-        color: Colors.grey.withOpacity(0.5),
+        color: AppColors.primarySecondaryElementText,
         fontWeight: FontWeight.normal,
         fontSize: 14.sp,
       ),
@@ -66,7 +64,8 @@ Widget reusableText(String text) {
   );
 }
 
-Widget buildTextField(String hintText, String textType, String iconName, void Function(String value)? func) {
+Widget buildTextField(String hintText, String textType, String iconName,
+    void Function(String value)? func) {
   return Container(
     // height and width of the textfield
     width: 325.w,
@@ -77,23 +76,25 @@ Widget buildTextField(String hintText, String textType, String iconName, void Fu
       borderRadius: BorderRadius.all(
         Radius.circular(15.w),
       ),
-      border: Border.all(color:AppColors.primaryFourthElementText),
+      border: Border.all(color: AppColors.primaryFourthElementText),
     ),
     child: Row(
       children: [
         Container(
-          
           width: 16.w,
           height: 16.w,
           margin: EdgeInsets.only(left: 17.w),
-          child: Image.asset("assets/icons/$iconName.png", color: AppColors.primaryText,),
+          child: Image.asset(
+            "assets/icons/$iconName.png",
+            color: AppColors.primaryText,
+          ),
         ),
         SizedBox(
           width: 270.w,
           height: 50.h,
           child: TextField(
-            // sending the value user types on the textfield to the func 
-            onChanged: (value)=>func!(value),
+            // sending the value user types on the textfield to the func
+            onChanged: (value) => func!(value),
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               hintText: hintText,
@@ -113,7 +114,7 @@ Widget buildTextField(String hintText, String textType, String iconName, void Fu
                 ),
               ),
               hintStyle: const TextStyle(
-                color:AppColors.primarySecondaryElementText,
+                color: AppColors.primarySecondaryElementText,
               ),
             ),
             style: TextStyle(
@@ -131,18 +132,18 @@ Widget buildTextField(String hintText, String textType, String iconName, void Fu
   );
 }
 
-Widget forgotPassword() {
+Widget forgotPassword(void Function()? forgfunc) {
   return Container(
     margin: EdgeInsets.only(left: 25.h),
     width: 260.w,
     height: 44.h,
     child: GestureDetector(
-      onTap: () {},
+      onTap: forgfunc,
       child: Text(
         "Forgot password",
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color:AppColors.primaryText,
+          color: AppColors.primaryText,
           decoration: TextDecoration.underline,
           decorationColor: AppColors.primaryText,
           fontSize: 12.sp,
@@ -152,42 +153,48 @@ Widget forgotPassword() {
   );
 }
 
-Widget buildLogInAndRegButton(String buttonName, String buttonType, void Function()? func) {
+Widget buildLogInAndRegButton(
+    String buttonName, String buttonType, void Function()? func) {
   return GestureDetector(
     onTap: func,
-    child: Container(
-        margin: EdgeInsets.only(
-            left: 25.w, right: 25.w, top: buttonType == "login" ? 35.h : 20.h),
-        width: 325.w,
-        height: 50.h,
-        decoration: BoxDecoration(
-            color: buttonType == "login"
-                ? AppColors.primaryElement
-                : AppColors.primaryBackground,
-            borderRadius: BorderRadius.circular(15.w),
-            border: Border.all(
+    child: Column(
+      children: [
+        Container(
+            margin: EdgeInsets.only(
+                left: 25.w,
+                right: 25.w,
+                top: buttonType == "login" ? 35.h : 20.h),
+            width: 325.w,
+            height: 50.h,
+            decoration: BoxDecoration(
                 color: buttonType == "login"
-                    ? Colors.transparent
-                    : AppColors.primaryFourthElementText),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 1,
-                blurRadius: 2,
-                offset: const Offset(0, 1),
-                color: Colors.grey.withOpacity(0.1),
-              )
-            ]),
-        child: Center(
-          child: Text(
-            buttonName,
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.normal,
-              color: buttonType == "login"
-                  ? AppColors.primaryBackground
-                  : AppColors.primaryText,
-            ),
-          ),
-        )),
+                    ? AppColors.primaryElement
+                    : AppColors.primaryBackground,
+                borderRadius: BorderRadius.circular(15.w),
+                border: Border.all(
+                    color: buttonType == "login"
+                        ? Colors.transparent
+                        : AppColors.primaryFourthElementText),
+                boxShadow: [
+                  BoxShadow(
+                    spreadRadius: 1,
+                    blurRadius: 2,
+                    offset: const Offset(0, 1),
+                    color: Colors.grey.withOpacity(0.1),
+                  )
+                ]),
+            child: Center(
+              child: Text(
+                buttonName,
+                style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.normal,
+                    color: buttonType == "login"
+                        ? AppColors.primaryText
+                        : Colors.white),
+              ),
+            )),
+      ],
+    ),
   );
 }

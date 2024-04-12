@@ -1,11 +1,18 @@
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
+
+import 'package:cineflix/src/common/values/colors.dart';
+
 import 'package:cineflix/src/resources/people_api_provider.dart';
 import 'package:cineflix/src/ui/favorites_page.dart';
+
 import 'package:cineflix/src/ui/genre_page.dart';
 import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
+import 'package:cineflix/src/ui/widgets/drawer.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'movie_list_tile.dart';
 
@@ -41,6 +48,7 @@ class _MovieListState extends State<MovieList> {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return Scaffold(
+          drawer: appDrawer(context),
           appBar: AppBar(
             title: const Text(
               'CineFlix',

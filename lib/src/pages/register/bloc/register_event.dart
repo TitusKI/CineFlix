@@ -13,11 +13,20 @@ class EmailEvent extends RegisterEvents {
 }
 
 class PasswordEvent extends RegisterEvents {
-final String password;
+  final String password;
   const PasswordEvent(this.password);
 }
 
 class RepasswordEvent extends RegisterEvents {
   final String repassword;
   const RepasswordEvent(this.repassword);
+}
+
+class RegistereLoadingEvent extends RegisterEvents {}
+
+class RegistereSuccessEvent extends RegisterEvents {}
+
+class RegistereFailureEvent extends RegisterEvents {
+  final String error;
+  const RegistereFailureEvent({required this.error});
 }

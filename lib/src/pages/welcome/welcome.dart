@@ -1,4 +1,6 @@
+import 'package:cineflix/global.dart';
 import 'package:cineflix/src/common/values/colors.dart';
+import 'package:cineflix/src/common/values/constant.dart';
 import 'package:cineflix/src/pages/welcome/blocs/bloc/welcome_bloc.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -143,7 +145,7 @@ class _WelcomeState extends State<Welcome> {
             ),
             child: GestureDetector(
               onTap: () {
-                if (index < 3) {
+                if (index < 2) {
                   pageController.animateToPage(index,
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeIn);
@@ -153,6 +155,10 @@ class _WelcomeState extends State<Welcome> {
                   //     builder: (context) => const MyHomePage(),
                   //   ),
                   // );
+                  Global.storageService.setBool(
+                      AppConstant.STORAGE_DEVICE_OPEN_FIRST_TIME, true);
+                  print(
+                      "The value is: ${Global.storageService.getDeviceFirstOpen()}");
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil("/sign_in", (route) => false);
                 }

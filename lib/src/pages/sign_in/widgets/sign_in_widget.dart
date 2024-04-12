@@ -65,7 +65,8 @@ Widget reusableText(String text) {
   );
 }
 
-Widget buildTextField(String hintText, String textType, String iconName, void Function(String value)? func) {
+Widget buildTextField(String hintText, String textType, String iconName,
+    void Function(String value)? func) {
   return Container(
     // height and width of the textfield
     width: 325.w,
@@ -76,7 +77,7 @@ Widget buildTextField(String hintText, String textType, String iconName, void Fu
       borderRadius: BorderRadius.all(
         Radius.circular(15.w),
       ),
-      border: Border.all(color:AppColors.primaryFourthElementText),
+      border: Border.all(color: AppColors.primaryFourthElementText),
     ),
     child: Row(
       children: [
@@ -90,8 +91,8 @@ Widget buildTextField(String hintText, String textType, String iconName, void Fu
           width: 270.w,
           height: 50.h,
           child: TextField(
-            // sending the value user types on the textfield to the func 
-            onChanged: (value)=>func!(value),
+            // sending the value user types on the textfield to the func
+            onChanged: (value) => func!(value),
             keyboardType: TextInputType.multiline,
             decoration: InputDecoration(
               hintText: hintText,
@@ -111,7 +112,7 @@ Widget buildTextField(String hintText, String textType, String iconName, void Fu
                 ),
               ),
               hintStyle: const TextStyle(
-                color:AppColors.primarySecondaryElementText,
+                color: AppColors.primarySecondaryElementText,
               ),
             ),
             style: TextStyle(
@@ -129,17 +130,19 @@ Widget buildTextField(String hintText, String textType, String iconName, void Fu
   );
 }
 
-Widget forgotPassword() {
+Widget forgotPassword(BuildContext context) {
   return Container(
     margin: EdgeInsets.only(left: 25.h),
     width: 260.w,
     height: 44.h,
     child: GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed("/reset_screen");
+      },
       child: Text(
         "Forgot password",
         style: TextStyle(
-          color:AppColors.primaryText,
+          color: AppColors.primaryText,
           decoration: TextDecoration.underline,
           decorationColor: AppColors.primaryText,
           fontSize: 12.sp,
@@ -149,7 +152,8 @@ Widget forgotPassword() {
   );
 }
 
-Widget buildLogInAndRegButton(String buttonName, String buttonType, void Function()? func) {
+Widget buildLogInAndRegButton(
+    String buttonName, String buttonType, void Function()? func) {
   return GestureDetector(
     onTap: func,
     child: Container(

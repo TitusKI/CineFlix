@@ -1,8 +1,11 @@
+import 'package:cineflix/global.dart';
+import 'package:cineflix/src/common/values/constant.dart';
 import 'package:cineflix/src/common/widgets/flutter_toast.dart';
 import 'package:cineflix/src/pages/sign_in/blocs/sign_in_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:regexpattern/regexpattern.dart';
 
 class SignInController {
   final BuildContext context;
@@ -15,8 +18,13 @@ class SignInController {
         final state = context.read<SignInBloc>().state;
         String emailAddress = state.email;
         String userPassword = state.password;
+        print(emailAddress);
         if (emailAddress.isEmpty) {
           toastInfo(msg: "You need to fill email address");
+          return;
+        }
+        if (!emailAddress.isEmail()) {
+          toastInfo(msg: "Please put valid Email address");
           return;
         }
         if (userPassword.isEmpty) {
@@ -39,6 +47,8 @@ class SignInController {
 
           final user = credential.user;
           if (user != null) {
+            Global.storageService
+                .setString(AppConstant.STORAGE_USER_TOKEN_KEY, "12345678");
             Navigator.of(context)
                 .pushNamedAndRemoveUntil("/movie_list", ((route) => false));
             toastInfo(msg: "User exist");

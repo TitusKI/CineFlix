@@ -1,4 +1,5 @@
 import 'package:cineflix/src/common/routes/pages.dart';
+import 'package:cineflix/src/common/widgets/splash_screen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,7 @@ class App extends StatelessWidget {
       providers: [...AppPages.allBlocProvider(context)],
       child: ScreenUtilInit(
         builder: (context, child) => MaterialApp(
+          // home: SplashScreen(),
           debugShowCheckedModeBanner: false,
           theme: ThemeData.dark(),
           // theme: ThemeData(

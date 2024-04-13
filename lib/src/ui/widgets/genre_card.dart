@@ -23,7 +23,9 @@ class GenreCard extends StatelessWidget {
       width: cardWidth,
       key: Key(genreId),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          print(genreId);
+        },
         child: Stack(children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(22),

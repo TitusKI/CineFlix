@@ -1,15 +1,13 @@
 import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
 
-import 'package:cineflix/src/common/values/colors.dart';
-
-import 'package:cineflix/src/resources/people_api_provider.dart';
 import 'package:cineflix/src/ui/favorites_page.dart';
 
 import 'package:cineflix/src/ui/genre_page.dart';
 import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
 import 'package:cineflix/src/ui/widgets/drawer.dart';
+import 'package:cineflix/src/ui/widgets/movie-show_carousell.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,23 +24,47 @@ class MovieList extends StatefulWidget {
   State<MovieList> createState() => _MovieListState();
 }
 
-class _MovieListState extends State<MovieList> {
-  int _selectedIndex = 0;
-  void _onIndexChanged(int index) {
+class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
+  int _selectedBottomNavIndex = 0;
+  final int _selectedTabBarIndex = 0;
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    // _tabController.addListener(_handleTabSelection);
+  }
+
+  // void _handleTabSelection() {
+  //   if (!_tabController.indexIsChanging) {
+  //     setState(() {
+  //       // Handle tab selection
+  //     });
+  //   }
+  // }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void _onBottomNavIndexChanged(int index) {
     setState(() {
-      _selectedIndex = index;
+      _selectedBottomNavIndex = index;
     });
 
-    print(_selectedIndex);
+    print(_selectedBottomNavIndex);
   }
 
   @override
   Widget build(BuildContext context) {
     Widget body = HomePage();
 
-    if (_selectedIndex == 1) {
+    if (_selectedBottomNavIndex == 1) {
       body = const GenrePage();
-    } else if (_selectedIndex == 2) {
+    } else if (_selectedBottomNavIndex == 2) {
       body = const FavoritesPage();
     }
     return BlocBuilder<SearchBloc, SearchState>(
@@ -81,7 +103,8 @@ class _MovieListState extends State<MovieList> {
             ],
           ),
           bottomNavigationBar: BottomNavigation(
-              index: _selectedIndex, onIndexChanged: _onIndexChanged),
+              index: _selectedBottomNavIndex,
+              onIndexChanged: _onBottomNavIndexChanged),
         );
       },
     );
@@ -119,40 +142,40 @@ class _MovieListState extends State<MovieList> {
         const SizedBox(
           height: 20,
         ),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          height: 250,
-          alignment: Alignment.center,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 60,
-                child: GestureDetector(
-                  onTap: () {
-                    // Add your onTap function here
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Latest Movies',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Icon(Icons.arrow_forward_ios),
-                    ],
-                  ),
-                ),
+        TabBar(
+          dividerColor: Colors.transparent,
+          indicator: const UnderlineTabIndicator(
+            borderSide: BorderSide(
+                width: 4.0,
+                color: Colors.red), // Customize the indicator width and color
+            insets: EdgeInsets.symmetric(
+                horizontal: 16.0), // Adjust the indicator padding
+          ),
+          tabs: const [
+            Tab(
+              child: Text(
+                "Movies",
+                style: TextStyle(color: Colors.red, fontSize: 20),
               ),
-              Expanded(
-                  child: Container(
-                color: Colors.green,
-              ))
+            ),
+            Tab(
+              child: Text(
+                "Tv Shows",
+                style: TextStyle(color: Colors.red, fontSize: 20),
+              ),
+            ),
+          ],
+          controller: _tabController,
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: const [
+              Center(child: Text('Tab 1 Content')),
+              Center(child: Text('Tab 2 Content')),
             ],
           ),
-        )
+        ),
       ],
     );
   }

@@ -2,7 +2,6 @@ import 'package:cineflix/src/ui/item_navigation.dart';
 import 'package:flutter/material.dart';
 import '../blocs/movies_bloc.dart';
 
-
 class MovieListTile extends StatefulWidget {
   final Widget? child;
   final String? txt1;
@@ -12,7 +11,8 @@ class MovieListTile extends StatefulWidget {
   final int index;
 
   const MovieListTile(
-      {super.key, this.child,
+      {super.key,
+      this.child,
       this.txt1,
       this.txt2,
       this.txt3,
@@ -34,9 +34,11 @@ class _MovieListTileState extends State<MovieListTile> {
     // List<String?> popupContent = [widget.txt1, widget.txt2, widget.txt3, widget.txt4];
     // // ignore: unnecessary_null_comparison
     _popupContent = popupContent
-        . asMap().entries
+        .asMap()
+        .entries
         // .where((item) => item is String && (item as String).isNotEmpty)
-        .map((item) => _buildPopupItem(item.value as String, item.key + startingIndex))
+        .map((item) =>
+            _buildPopupItem(item.value as String, item.key + startingIndex))
         .toList();
   }
 
@@ -45,7 +47,7 @@ class _MovieListTileState extends State<MovieListTile> {
     super.initState();
     _popupContent = [
       _buildPopupItem(widget.txt1 ?? '', 1),
-      _buildPopupItem(widget.txt2 ?? '',2),
+      _buildPopupItem(widget.txt2 ?? '', 2),
       _buildPopupItem(widget.txt3 ?? '', 3),
       _buildPopupItem(widget.txt4 ?? '', 4),
     ];
@@ -133,27 +135,29 @@ class _MovieListTileState extends State<MovieListTile> {
   Widget _buildPopupItem(String? item, int itemIndex) {
     if (item != null && item.isNotEmpty) {
       return ListTile(
-        title: Text(
-          item,
-          style: const TextStyle(color: Colors.white),
-        ),
-        onTap: () {
-          bloc.handleHidePopup();
-          Future.delayed(const Duration(milliseconds: 200),(){
-          //   if(widget.index == 3){
-          // Navigator.push(context, MaterialPageRoute(builder: (context)=> PeopleScreen(buttonIndex: widget.index,itemIndex: itemIndex,)));
-          //   }
-            
-               Navigator.push(context, MaterialPageRoute(builder: (context)=> ItemNavigation(buttonIndex: widget.index,itemIndex: itemIndex,)));
-            
+          title: Text(
+            item,
+            style: const TextStyle(color: Colors.white),
+          ),
+          onTap: () {
+            bloc.handleHidePopup();
+            Future.delayed(const Duration(milliseconds: 200), () {
+              //   if(widget.index == 3){
+              // Navigator.push(context, MaterialPageRoute(builder: (context)=> PeopleScreen(buttonIndex: widget.index,itemIndex: itemIndex,)));
+              //   }
 
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ItemNavigation(
+                            buttonIndex: widget.index,
+                            itemIndex: itemIndex,
+                            pageTitle: "",
+                          )));
+            });
           });
-         
-        }
-      );
-    }
-    else{
+    } else {
       return Container();
     }
-}
+  }
 }

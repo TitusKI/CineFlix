@@ -1,3 +1,4 @@
+import 'package:cineflix/src/common/values/enums.dart';
 import 'package:rxdart/rxdart.dart';
 import '../models/item_model.dart';
 import '../resources/repository.dart';
@@ -48,6 +49,7 @@ class MoviesBloc {
     2: PublishSubject<ItemModel>(),
     3: PublishSubject<ItemModel>(),
     4: PublishSubject<ItemModel>(),
+    // 5: PublishSubject<ItemModel>()
   };
   Stream<ItemModel> getStreamForIndex(int index) {
     return _streamMap[index]!;
@@ -57,17 +59,22 @@ class MoviesBloc {
   void fetchMoviesForIndex(int index) async {
     switch (index) {
       case 1:
-        itemModel = await _repository.fetchMovieByType(Types.popular);
+        itemModel = await _repository.fetchMovieByType(MediaCategories.popular);
         break;
       case 2:
-        itemModel = await _repository.fetchMovieByType(Types.topRated);
+        itemModel =
+            await _repository.fetchMovieByType(MediaCategories.topRated);
         break;
       case 3:
-        itemModel = await _repository.fetchMovieByType(Types.nowPlaying);
+        itemModel =
+            await _repository.fetchMovieByType(MediaCategories.nowPlaying);
         break;
       case 4:
-        itemModel = await _repository.fetchMovieByType(Types.upcoming);
+        itemModel =
+            await _repository.fetchMovieByType(MediaCategories.upcoming);
         break;
+      // default:
+      //   itemModel = await _repository.fetchMovieByType();
     }
     _streamMap[index]!.add(itemModel!);
   }
@@ -75,16 +82,19 @@ class MoviesBloc {
   void fetchTVShowsForIndex(int index) async {
     switch (index) {
       case 1:
-        itemModel = await _repository.fetchTVShowByType(Types.popular);
+        itemModel =
+            await _repository.fetchTVShowByType(MediaCategories.popular);
         break;
       case 2:
-        itemModel = await _repository.fetchTVShowByType(Types.topRated);
+        itemModel =
+            await _repository.fetchTVShowByType(MediaCategories.topRated);
         break;
       case 3:
-        itemModel = await _repository.fetchTVShowByType(Types.airingToday);
+        itemModel =
+            await _repository.fetchTVShowByType(MediaCategories.airingToday);
         break;
       case 4:
-        itemModel = await _repository.fetchTVShowByType(Types.onTv);
+        itemModel = await _repository.fetchTVShowByType(MediaCategories.onTv);
         break;
     }
     _streamMap[index]!.add(itemModel!);
@@ -93,7 +103,7 @@ class MoviesBloc {
 //   PeopleModel? peopleModel;
 //  switch(index){
 //   case 1:
-//      peopleModel = (await _repository.fetchPeopleByType(Types.popular)) ;
+//      peopleModel = (await _repository.fetchPeopleByType(MediaCategories.popular)) ;
 //  }
 //  }
   // fetchAllMovies() async {

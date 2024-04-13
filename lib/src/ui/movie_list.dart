@@ -6,6 +6,7 @@ import 'package:cineflix/src/ui/favorites_page.dart';
 import 'package:cineflix/src/ui/genre_page.dart';
 import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
+import 'package:cineflix/src/ui/widgets/carousel_container.dart';
 import 'package:cineflix/src/ui/widgets/drawer.dart';
 import 'package:cineflix/src/ui/widgets/movie-show_carousell.dart';
 import 'package:flutter/widgets.dart';
@@ -26,7 +27,6 @@ class MovieList extends StatefulWidget {
 
 class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
   int _selectedBottomNavIndex = 0;
-  final int _selectedTabBarIndex = 0;
   late TabController _tabController;
 
   @override
@@ -35,14 +35,6 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
     _tabController = TabController(length: 2, vsync: this);
     // _tabController.addListener(_handleTabSelection);
   }
-
-  // void _handleTabSelection() {
-  //   if (!_tabController.indexIsChanging) {
-  //     setState(() {
-  //       // Handle tab selection
-  //     });
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -171,8 +163,50 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
           child: TabBarView(
             controller: _tabController,
             children: const [
-              Center(child: Text('Tab 1 Content')),
-              Center(child: Text('Tab 2 Content')),
+              CarouselContainer(carouselList: [
+                MovieShowCarousel(
+                  categoryId: 1,
+                  mediaId: 1,
+                  title: "Popular Movies",
+                ),
+                MovieShowCarousel(
+                  categoryId: 2,
+                  mediaId: 1,
+                  title: "Upcoming Movies",
+                ),
+                MovieShowCarousel(
+                  categoryId: 3,
+                  mediaId: 1,
+                  title: "Top Rated",
+                ),
+                MovieShowCarousel(
+                  categoryId: 4,
+                  mediaId: 1,
+                  title: "Now Playing",
+                ),
+              ]),
+              CarouselContainer(carouselList: [
+                MovieShowCarousel(
+                  categoryId: 1,
+                  mediaId: 2,
+                  title: "Popular Shows",
+                ),
+                MovieShowCarousel(
+                  categoryId: 2,
+                  mediaId: 2,
+                  title: "Airing Today",
+                ),
+                MovieShowCarousel(
+                  categoryId: 2,
+                  mediaId: 3,
+                  title: "Top Rated",
+                ),
+                MovieShowCarousel(
+                  categoryId: 2,
+                  mediaId: 4,
+                  title: "On Tv",
+                ),
+              ]),
             ],
           ),
         ),

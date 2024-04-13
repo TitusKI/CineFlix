@@ -13,65 +13,68 @@ import 'movie_detail.dart';
 import 'movie_list_tile.dart';
 
 class ItemNavigation extends StatefulWidget {
-  final int buttonIndex;
-  final int itemIndex;
+  final int? buttonIndex;
+  final int? itemIndex;
+  final int? genreId;
+  final String pageTitle;
   const ItemNavigation(
-      {super.key, required this.buttonIndex, required this.itemIndex});
+      {super.key,
+      this.buttonIndex,
+      this.itemIndex,
+      this.genreId,
+      required this.pageTitle});
 
   @override
   // ignore: no_logic_in_create_state
-  State<ItemNavigation> createState() =>
-      _ItemNavigationState(buttonIndex: buttonIndex, itemIndex: itemIndex);
+  State<ItemNavigation> createState() => _ItemNavigationState();
 }
 
 class _ItemNavigationState extends State<ItemNavigation> {
-  final int buttonIndex;
-  final int itemIndex;
-  _ItemNavigationState({required this.buttonIndex, required this.itemIndex});
-
   @override
   Widget build(BuildContext context) {
-    switch (buttonIndex) {
-      case 1:
-        switch (itemIndex) {
-          case 1:
-          case 2:
-          case 3:
-          case 4:
-            bloc.fetchMoviesForIndex(itemIndex);
-            break;
-          default:
-            bloc.fetchMoviesForIndex(2);
-        }
+    if (widget.genreId == null) {
+      switch (widget.buttonIndex) {
+        case 1:
+          switch (widget.itemIndex) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+              bloc.fetchMoviesForIndex(widget.itemIndex!);
+              break;
+            default:
+              bloc.fetchMoviesForIndex(2);
+          }
 
-        break;
-      case 2:
-        switch (itemIndex) {
-          case 1:
-          case 2:
-          case 3:
-          case 4:
-            bloc.fetchTVShowsForIndex(itemIndex);
-            break;
-          default:
-            bloc.fetchTVShowsForIndex(2);
-        }
-        break;
-      case 3:
-        switch (itemIndex) {
-          case 1:
-            bloc.fetchTVShowsForIndex(itemIndex);
-            break;
-        }
-        break;
-      case 4:
-        switch (itemIndex) {
-          case 1:
-            bloc.fetchMoviesForIndex(itemIndex);
-            break;
-        }
-        break;
-    }
+          break;
+        case 2:
+          switch (widget.itemIndex) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+              bloc.fetchTVShowsForIndex(widget.itemIndex!);
+              break;
+            default:
+              bloc.fetchTVShowsForIndex(2);
+          }
+          break;
+        case 3:
+          switch (widget.itemIndex) {
+            case 1:
+              bloc.fetchTVShowsForIndex(widget.itemIndex!);
+              break;
+          }
+          break;
+        case 4:
+          switch (widget.itemIndex) {
+            case 1:
+              bloc.fetchMoviesForIndex(widget.itemIndex!);
+              break;
+          }
+          break;
+      }
+    } else {}
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -94,8 +97,8 @@ class _ItemNavigationState extends State<ItemNavigation> {
                         color: Colors.red,
                       )),
                   // ,SizedBox(width: 80,),
-                  const Text('Popular Movies',
-                      style: TextStyle(
+                  Text(widget.pageTitle,
+                      style: const TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w300,
                         color: Colors.white,
@@ -117,7 +120,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
           child: Material(
             color: AppColors.primaryBackground,
             child: StreamBuilder(
-              stream: bloc.getStreamForIndex(itemIndex),
+              stream: bloc.getStreamForIndex(widget.itemIndex!),
               builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
                 if (snapshot.hasData) {
                   return buildList(snapshot);

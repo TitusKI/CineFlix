@@ -1,12 +1,20 @@
+import 'package:cineflix/src/ui/item_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class MovieShowCarousel extends StatelessWidget {
-  const MovieShowCarousel({super.key});
+  final int categoryId;
+  final int mediaId;
+  final String title;
+  const MovieShowCarousel(
+      {super.key,
+      required this.categoryId,
+      required this.title,
+      required this.mediaId});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       width: MediaQuery.of(context).size.width * 0.9,
       height: 250,
       alignment: Alignment.center,
@@ -16,19 +24,24 @@ class MovieShowCarousel extends StatelessWidget {
             height: 60,
             child: GestureDetector(
               onTap: () {
-                // Add your onTap function here
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ItemNavigation(
+                          pageTitle: title,
+                          buttonIndex: mediaId,
+                          itemIndex: categoryId,
+                        )));
               },
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Latest Movies',
-                    style: TextStyle(
-                      fontSize: 18,
+                    title,
+                    style: const TextStyle(
+                      fontSize: 26,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Icon(Icons.arrow_forward_ios),
+                  const Icon(Icons.arrow_forward_ios),
                 ],
               ),
             ),

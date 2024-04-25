@@ -14,17 +14,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: MediaQuery.,
-      margin: const EdgeInsets.symmetric(horizontal: 72, vertical: 12),
+      margin: const EdgeInsets.symmetric(horizontal: 88, vertical: 12),
       height: 66,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 31, 31, 31),
-          border: Border.all(color: Colors.red, width: 2),
+          // color: const Color.fromARGB(255, 31, 31, 31),
+          color: Colors.black,
+          border: Border.all(color: Colors.red, width: 3),
           borderRadius: const BorderRadius.all(Radius.circular(33)),
           boxShadow: const [
             BoxShadow(
-                color: Color.fromARGB(60, 66, 64, 64),
+                color: Color.fromARGB(57, 0, 0, 0),
                 offset: Offset(0, 20),
                 blurRadius: 20)
           ]),

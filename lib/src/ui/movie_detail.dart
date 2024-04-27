@@ -91,15 +91,24 @@ class MovieDetailState extends State<MovieDetail> {
       child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
-            SliverAppBar(
-              expandedHeight: 200.0,
-              floating: false,
-              pinned: true,
-              elevation: 0.0,
-              flexibleSpace: FlexibleSpaceBar(
-                  background: Image.network(
-                      'https://image.tmdb.org/t/p/w500$posterUrl',
-                      fit: BoxFit.cover)),
+            Stack(
+              children: [
+                SliverAppBar(
+                  expandedHeight: 200.0,
+                  floating: false,
+                  pinned: true,
+                  elevation: 0.0,
+                  flexibleSpace: FlexibleSpaceBar(
+                      background: Image.network(
+                          'https://image.tmdb.org/t/p/w500$posterUrl',
+                          fit: BoxFit.cover)),
+                ),
+                const Positioned(
+                  child: Icon(
+                    Icons.bookmark_add_outlined,
+                  ),
+                ),
+              ],
             ),
           ];
         },

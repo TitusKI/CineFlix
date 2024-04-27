@@ -11,7 +11,7 @@ class Repository {
   final tvShowsApiProvider = TvShowsApiProvider();
   // final peopleApiProvider = PeopleApiProvider();
 
-  Future<ItemModel?> fetchMovieByType(MediaCategories type, {int? movieId}) {
+  Future<ItemModel?> fetchMovieByType(MediaCategories type, {String? movieId}) {
     switch (type) {
       case MediaCategories.popular:
         return moviesApiProvider.fetchMovieList();
@@ -22,7 +22,7 @@ class Repository {
       case MediaCategories.upcoming:
         return moviesApiProvider.fetchUpcoming();
       case MediaCategories.genre:
-      // return moviesApiProvider.fetchMovieFromGenre(genreId);
+        return moviesApiProvider.fetchMovieFromGenre(movieId!.toString());
       default:
         throw Exception("Invalid Movie Type provided: $type");
     }

@@ -7,15 +7,10 @@ import 'package:cineflix/src/ui/genre_page.dart';
 import 'package:cineflix/src/ui/home_page.dart';
 import 'package:cineflix/src/ui/search_screen.dart';
 import 'package:cineflix/src/ui/widgets/bottom_navigation.dart';
-import 'package:cineflix/src/ui/widgets/carousel_container.dart';
 import 'package:cineflix/src/ui/widgets/drawer.dart';
-import 'package:cineflix/src/ui/widgets/movie-show_carousell.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/movies_bloc.dart';
 import 'package:flutter/material.dart';
 
 class MovieList extends StatefulWidget {
@@ -47,43 +42,36 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return Scaffold(
-            drawer: appDrawer(context),
-            appBar: AppBar(
-              title: const Text(
-                'CineFlix',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                ),
+          drawer: appDrawer(context),
+          appBar: AppBar(
+            title: const Text(
+              'CineFlix',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
               ),
-              actions: [
-                Builder(builder: (context) {
-                  return IconButton(
-                    onPressed: () {
-                      bloc.handleHidePopup();
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SearchScreen()));
-                    },
-                    icon: const Icon(
-                      Icons.search,
-                      weight: 50.0,
-                    ),
-                  );
-                })
-              ],
             ),
-            body: Column(
-              children: [
-                Expanded(child: body!),
-              ],
-            ),
-            bottomNavigationBar:
-                BottomNavigation(onIndexChanged: _onBottomNavIndexChanged)
-            // BottomNavigation(
-            //     index: _selectedBottomNavIndex,
-            //     onIndexChanged: _onBottomNavIndexChanged),
-            );
+            actions: [
+              Builder(builder: (context) {
+                return IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SearchScreen()));
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    weight: 50.0,
+                  ),
+                );
+              })
+            ],
+          ),
+          body: Stack(alignment: Alignment.bottomCenter, children: [
+            body!,
+            BottomNavigation(onIndexChanged: _onBottomNavIndexChanged),
+          ]),
+        );
       },
     );
   }

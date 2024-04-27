@@ -45,7 +45,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               height: 36,
               width: 36,
               child: currentIndex != 0
-                  ? const Icon(Icons.home_outlined, size: 32)
+                  ? const Icon(Icons.home_outlined, size: 28)
                   : const Icon(
                       Icons.home,
                       size: 36,
@@ -69,7 +69,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               child: currentIndex != 1
                   ? const Icon(
                       Icons.movie_outlined,
-                      size: 32,
+                      size: 28,
                     )
                   : const Icon(
                       Icons.movie,
@@ -92,7 +92,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               height: 36,
               width: 36,
               child: currentIndex != 2
-                  ? const Icon(Icons.favorite_outline, size: 32)
+                  ? const Icon(Icons.favorite_outline, size: 28)
                   : const Icon(
                       Icons.favorite,
                       size: 36,

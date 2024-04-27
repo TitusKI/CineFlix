@@ -1,19 +1,22 @@
 import 'dart:ui';
 
+import 'package:cineflix/src/common/values/genre_images.dart';
+import 'package:cineflix/src/ui/item_navigation.dart';
 import 'package:flutter/material.dart';
 
 class GenreCard extends StatelessWidget {
   final String genreId;
   final String genreName;
-  final VoidCallback onPressed;
-  const GenreCard(
-      {super.key,
-      required this.genreId,
-      required this.genreName,
-      required this.onPressed});
+  const GenreCard({
+    super.key,
+    required this.genreId,
+    required this.genreName,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // MoviesApiProvider apiProvider = MoviesApiProvider();
+
     Size deviceSize = MediaQuery.of(context).size;
     double cardHeight = deviceSize.height * 0.3;
     double cardWidth = deviceSize.width;
@@ -24,7 +27,11 @@ class GenreCard extends StatelessWidget {
       key: Key(genreId),
       child: GestureDetector(
         onTap: () {
-          print(genreId);
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ItemNavigation(
+                    pageTitle: "$genreName Movies",
+                    genreId: genreId,
+                  )));
         },
         child: Stack(children: [
           ClipRRect(
@@ -36,8 +43,8 @@ class GenreCard extends StatelessWidget {
                   Colors.black.withOpacity(0.5),
                   BlendMode.darken,
                 ),
-                child: Image.asset(
-                  'assets/images/img.jpg',
+                child: Image.network(
+                  genreImages[18]!,
                   width: cardWidth,
                   height: cardHeight,
                   fit: BoxFit.fill,

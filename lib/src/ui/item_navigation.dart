@@ -1,7 +1,6 @@
 import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/people_model.dart';
 import 'package:cineflix/src/resources/people_api_provider.dart';
-import 'package:cineflix/src/ui/star_rating.dart';
 import 'package:cineflix/src/ui/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +9,10 @@ import '../blocs/movies_detail_bloc_provider.dart';
 import '../models/item_model.dart';
 import 'movie_detail.dart';
 
-import 'movie_list_tile.dart';
-
 class ItemNavigation extends StatefulWidget {
   final int? buttonIndex;
   final int? itemIndex;
-  final int? genreId;
+  final String? genreId;
   final String pageTitle;
   const ItemNavigation(
       {super.key,
@@ -74,7 +71,9 @@ class _ItemNavigationState extends State<ItemNavigation> {
           }
           break;
       }
-    } else {}
+    } else {
+      bloc.fetchMoviesForIndex(5, genreId: widget.genreId!);
+    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -113,31 +112,26 @@ class _ItemNavigationState extends State<ItemNavigation> {
                 ]),
           ),
         ),
-        body: Listener(
-          onPointerDown: (event) {
-            bloc.handleHidePopup();
-          },
-          child: Material(
-            color: AppColors.primaryBackground,
-            child: StreamBuilder(
-              stream: bloc.getStreamForIndex(widget.itemIndex!),
-              builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
-                if (snapshot.hasData) {
-                  return buildList(snapshot);
-                } else if (snapshot.connectionState == ConnectionState.none ||
-                    snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.connectionState == ConnectionState.done) {
-                  return const Center(
-                    child: Text('No data avaliable'),
-                  );
-                }
+        body: Material(
+          color: AppColors.primaryBackground,
+          child: StreamBuilder(
+            stream: bloc.getStreamForIndex(widget.itemIndex ?? 5),
+            builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
+              if (snapshot.hasData) {
+                return buildList(snapshot);
+              } else if (snapshot.connectionState == ConnectionState.none ||
+                  snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                return const Center(
+                  child: Text('No data avaliable'),
+                );
+              }
 
-                return const Center(child: CircularProgressIndicator());
-              },
-            ),
+              return const Center(child: CircularProgressIndicator());
+            },
           ),
         ),
       ),
@@ -150,25 +144,8 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
   late List<Person> cast;
   return Column(
     children: [
-      SizedBox(
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            buildMovieListTile('Movies',
-                ["Popular ", 'Top Rated ', 'Now Playing', 'Upcoming '], 1),
-            // Padding(padding: EdgeInsets.all(4.0)),
-            buildMovieListTile("TV Shows",
-                ['Popular', 'Top Rated', 'Airing Today', 'On TV'], 2),
-            // Padding(padding: EdgeInsets.all(4.0)),
-            buildMovieListTile('People', ['Popular People'], 3),
-            // Padding(padding: EdgeInsets.all(4.0)),
-            buildMovieListTile('More', ['Genre'], 4)
-          ],
-        ),
-      ),
       const SizedBox(
-        height: 10,
+        height: 30,
       ),
       Expanded(
         child: Padding(
@@ -229,23 +206,4 @@ openDetailPage(
       ),
     );
   }));
-}
-
-Widget buildMovieListTile(String title, List<String> popupContent, int index) {
-  MovieListTile movieListTile = MovieListTile(
-    txt1: popupContent.isNotEmpty ? popupContent[0] : '',
-    txt2: popupContent.length > 1 ? popupContent[1] : '',
-    txt3: popupContent.length > 2 ? popupContent[2] : '',
-    txt4: popupContent.length > 3 ? popupContent[3] : '',
-    index: index,
-    child: Center(
-      child: Text(
-        title,
-        style: const TextStyle(
-            color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-    ),
-  );
-  // popupContentMap[movieListTile] = popupContent;
-  return movieListTile;
 }

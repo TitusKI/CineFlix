@@ -37,7 +37,6 @@ class _GenrePageState extends State<GenrePage> {
               return GenreCard(
                 genreId: genre.id.toString(),
                 genreName: genre.name,
-                onPressed: () {},
               );
             },
           );
@@ -50,7 +49,7 @@ class _GenrePageState extends State<GenrePage> {
         }
         return const Center(
             child: SpinKitCubeGrid(
-          color: Colors.white,
+          color: Colors.red,
           size: 60.0,
         ));
       },

@@ -49,34 +49,44 @@ class MoviesBloc {
     2: PublishSubject<ItemModel>(),
     3: PublishSubject<ItemModel>(),
     4: PublishSubject<ItemModel>(),
-    // 5: PublishSubject<ItemModel>()
+    5: PublishSubject<ItemModel>(),
   };
   Stream<ItemModel> getStreamForIndex(int index) {
     return _streamMap[index]!;
   }
 
   ItemModel? itemModel;
-  void fetchMoviesForIndex(int index) async {
+  void fetchMoviesForIndex(int index, {String? genreId}) async {
     switch (index) {
       case 1:
         itemModel = await _repository.fetchMovieByType(MediaCategories.popular);
+        _streamMap[index]!.add(itemModel!);
+
         break;
       case 2:
         itemModel =
             await _repository.fetchMovieByType(MediaCategories.topRated);
+        _streamMap[index]!.add(itemModel!);
+
         break;
       case 3:
         itemModel =
             await _repository.fetchMovieByType(MediaCategories.nowPlaying);
+        _streamMap[index]!.add(itemModel!);
+
         break;
       case 4:
         itemModel =
             await _repository.fetchMovieByType(MediaCategories.upcoming);
+        _streamMap[index]!.add(itemModel!);
+
         break;
-      // default:
-      //   itemModel = await _repository.fetchMovieByType();
+      case 5:
+        itemModel = await _repository.fetchMovieByType(MediaCategories.genre,
+            movieId: genreId);
+        _streamMap[5]!.add(itemModel!);
+        break;
     }
-    _streamMap[index]!.add(itemModel!);
   }
 
   void fetchTVShowsForIndex(int index) async {
@@ -123,25 +133,6 @@ class MoviesBloc {
   // fetchUpcoming() async{
   //   ItemModel? itemModel = await _repository.fetchUpcoming();
   // }
-
-  handleHidePopup() {
-    hidePopupSink.add(true);
-  }
-
-  handleShowPopup() {
-    showPopupSink.add(true);
-  }
-
-  Stream<List<String>> getPopupContentForIndex(int index) {
-    return _popupContentMap[index]!.stream;
-  }
-
-  handleTileTap(int index, List<String> content) {
-    selectedTileIndexSink.add(index);
-    List<String> filterdContent =
-        content.where((item) => item.isNotEmpty).toList();
-    _popupContentMap[index]!.sink.add(filterdContent);
-  }
 
   dispose() {
     // for Closing the _moviesFetcher stream when the moviesBloc is no longer needed

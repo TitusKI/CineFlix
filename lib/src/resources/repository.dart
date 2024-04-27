@@ -1,3 +1,4 @@
+import 'package:cineflix/src/common/values/enums.dart';
 import 'package:cineflix/src/resources/tv_shows_api_provider.dart';
 
 import '../models/trailer_model.dart';
@@ -5,64 +6,54 @@ import 'dart:async';
 import 'movies_api_provider.dart';
 import '../models/item_model.dart';
 
-enum Types {
-  popular,
-  topRated,
-  nowPlaying,
-  upcoming,
-  airingToday,
-  onTv,
-  genre,
-
-  trailers,
-}
-
 class Repository {
   final moviesApiProvider = MoviesApiProvider();
   final tvShowsApiProvider = TvShowsApiProvider();
   // final peopleApiProvider = PeopleApiProvider();
 
-  Future<ItemModel?> fetchMovieByType(Types type, {int? movieId}) {
+  Future<ItemModel?> fetchMovieByType(MediaCategories type, {String? movieId}) {
     switch (type) {
-      case Types.popular:
+      case MediaCategories.popular:
         return moviesApiProvider.fetchMovieList();
-      case Types.topRated:
+      case MediaCategories.topRated:
         return moviesApiProvider.fetchTopRated();
-      case Types.nowPlaying:
+      case MediaCategories.nowPlaying:
         return moviesApiProvider.fetchNowPlaying();
-      case Types.upcoming:
+      case MediaCategories.upcoming:
         return moviesApiProvider.fetchUpcoming();
+      case MediaCategories.genre:
+        return moviesApiProvider.fetchMovieFromGenre(movieId!.toString());
       default:
         throw Exception("Invalid Movie Type provided: $type");
     }
   }
 
-  Future<ItemModel?> fetchTVShowByType(Types type, {int? movieId}) {
+  Future<ItemModel?> fetchTVShowByType(MediaCategories type, {int? movieId}) {
     switch (type) {
-      case Types.popular:
+      case MediaCategories.popular:
         return tvShowsApiProvider.fetchPopular();
-      case Types.topRated:
+      case MediaCategories.topRated:
         return tvShowsApiProvider.fetchTopRated();
-      case Types.airingToday:
+      case MediaCategories.airingToday:
         return tvShowsApiProvider.fetchAiringToday();
-      case Types.onTv:
+      case MediaCategories.onTv:
         return tvShowsApiProvider.fetchOnTv();
       default:
         throw Exception('Invalid TV Shows Type provided: $type');
     }
   }
 
-  // Future<PeopleModel?> fetchPeopleByType(Types type, {int? movieId}) {
+  // Future<PeopleModel?> fetchPeopleByType(MediaCategories type, {int? movieId}) {
   //   switch (type) {
-  //     case Types.popular:
+  //     case MediaCategories.popular:
   //       return peopleApiProvider.fetchPopularPeople();
   //     default:
   //       throw Exception('Invalid People Type provided : $type');
   //   }
   // }
-  //  Future<ItemModel?> fetchMoreByType(Types type,{int? movieId}){
+  //  Future<ItemModel?> fetchMoreByType(MediaCategories type,{int? movieId}){
   //   switch (type){
-  //     case Types.allMovies
+  //     case MediaCategories.allMovies
   //   }
 
   // Future<ItemModel?> fetchAllMovies() {

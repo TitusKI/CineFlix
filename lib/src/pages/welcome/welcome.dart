@@ -4,6 +4,7 @@ import 'package:cineflix/src/common/values/constant.dart';
 import 'package:cineflix/src/pages/welcome/blocs/bloc/welcome_bloc.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,23 +44,23 @@ class _WelcomeState extends State<Welcome> {
                             1,
                             context,
                             'Next',
-                            "First See Learning",
-                            "Forget about a for of paper all knowledhe in one learning",
-                            "assets/moviesAssets/helloBoy.jpg"),
+                            "Unravel Cinematic Mastery",
+                            "Embark on a journey through the cinematic masterpiece that redefined storytelling. Explore the intricate web of power dynamics, riveting drama, and unforgettable performances.",
+                            "assets/moviesAssets/godfather.jpg"),
                         _page(
                             2,
                             context,
                             'Next',
-                            "Connect With Everyone",
-                            "Always keep in touch with your tutor & friend. Let's get connected",
-                            "assets/moviesAssets/wakanda.jpg"),
+                            "Discover Seamless Navigation",
+                            "Swing through our app with the agility and precision of your favorite web-slinging hero. Experience seamless navigation that takes you from one thrilling adventure to the next.",
+                            "assets/moviesAssets/spiderman.jpg"),
                         _page(
                             3,
                             context,
                             'Get Started',
-                            "Always Fascinated Learning",
-                            "Anywhere, anytime. The time is at your discretion so study whenever you want",
-                            "assets/moviesAssets/onFireWoman.jpg"),
+                            "Create Your Inner Circle",
+                            "Build your own close-knit community of favorite movies. Save movies to your favorites list, curate your own collection, and enjoy the comfort of knowing your cinematic companions are always close at hand",
+                            "assets/moviesAssets/friends.jpg"),
                       ],
                     ),
                     Positioned(
@@ -93,24 +94,27 @@ class _WelcomeState extends State<Welcome> {
       height: 350.h,
       decoration: BoxDecoration(
         image: DecorationImage(
-            opacity: 0.8, image: AssetImage(imagePath), fit: BoxFit.fitHeight),
+            opacity: 0.3, image: AssetImage(imagePath), fit: BoxFit.cover),
       ),
       child: Column(
         children: [
           SizedBox(
-            width: 345.w,
-            height: 345.w,
-            // child: Image.asset(imagePath),
+            height: 290.w,
           ),
-          Container(
-              child: Text(
-            title,
-            style: TextStyle(
-              color: AppColors.primaryText,
-              fontSize: 25.sp,
-              fontWeight: FontWeight.normal,
-            ),
-          )),
+          SizedBox(
+              height: 120,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: AppColors.primaryText,
+                    fontSize: 32.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )),
           Container(
             width: 375.w,
             padding: EdgeInsets.only(left: 30.w, right: 30.w),
@@ -124,7 +128,7 @@ class _WelcomeState extends State<Welcome> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 100.h, left: 25.w, right: 25.w),
+            margin: EdgeInsets.only(top: 30.h, left: 25.w, right: 25.w),
             width: 325.w,
             height: 50.h,
             decoration: BoxDecoration(
@@ -135,7 +139,7 @@ class _WelcomeState extends State<Welcome> {
                   color: Colors.grey.withOpacity(0.1),
                   spreadRadius: 1,
                   blurRadius: 2,
-                  offset: Offset(0, 1),
+                  offset: const Offset(0, 1),
                 ),
               ],
             ),

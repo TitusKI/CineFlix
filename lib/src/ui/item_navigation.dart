@@ -1,7 +1,6 @@
 import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/people_model.dart';
 import 'package:cineflix/src/resources/people_api_provider.dart';
-import 'package:cineflix/src/ui/star_rating.dart';
 import 'package:cineflix/src/ui/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -10,67 +9,70 @@ import '../blocs/movies_detail_bloc_provider.dart';
 import '../models/item_model.dart';
 import 'movie_detail.dart';
 
-import 'movie_list_tile.dart';
-
 class ItemNavigation extends StatefulWidget {
-  final int buttonIndex;
-  final int itemIndex;
+  final int? buttonIndex;
+  final int? itemIndex;
+  final String? genreId;
+  final String pageTitle;
   const ItemNavigation(
-      {super.key, required this.buttonIndex, required this.itemIndex});
+      {super.key,
+      this.buttonIndex,
+      this.itemIndex,
+      this.genreId,
+      required this.pageTitle});
 
   @override
   // ignore: no_logic_in_create_state
-  State<ItemNavigation> createState() =>
-      _ItemNavigationState(buttonIndex: buttonIndex, itemIndex: itemIndex);
+  State<ItemNavigation> createState() => _ItemNavigationState();
 }
 
 class _ItemNavigationState extends State<ItemNavigation> {
-  final int buttonIndex;
-  final int itemIndex;
-  _ItemNavigationState({required this.buttonIndex, required this.itemIndex});
-
   @override
   Widget build(BuildContext context) {
-    switch (buttonIndex) {
-      case 1:
-        switch (itemIndex) {
-          case 1:
-          case 2:
-          case 3:
-          case 4:
-            bloc.fetchMoviesForIndex(itemIndex);
-            break;
-          default:
-            bloc.fetchMoviesForIndex(2);
-        }
+    if (widget.genreId == null) {
+      switch (widget.buttonIndex) {
+        case 1:
+          switch (widget.itemIndex) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+              bloc.fetchMoviesForIndex(widget.itemIndex!);
+              break;
+            default:
+              bloc.fetchMoviesForIndex(2);
+          }
 
-        break;
-      case 2:
-        switch (itemIndex) {
-          case 1:
-          case 2:
-          case 3:
-          case 4:
-            bloc.fetchTVShowsForIndex(itemIndex);
-            break;
-          default:
-            bloc.fetchTVShowsForIndex(2);
-        }
-        break;
-      case 3:
-        switch (itemIndex) {
-          case 1:
-            bloc.fetchTVShowsForIndex(itemIndex);
-            break;
-        }
-        break;
-      case 4:
-        switch (itemIndex) {
-          case 1:
-            bloc.fetchMoviesForIndex(itemIndex);
-            break;
-        }
-        break;
+          break;
+        case 2:
+          switch (widget.itemIndex) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+              bloc.fetchTVShowsForIndex(widget.itemIndex!);
+              break;
+            default:
+              bloc.fetchTVShowsForIndex(2);
+          }
+          break;
+        case 3:
+          switch (widget.itemIndex) {
+            case 1:
+              bloc.fetchTVShowsForIndex(widget.itemIndex!);
+              break;
+          }
+          break;
+        case 4:
+          switch (widget.itemIndex) {
+            case 1:
+              bloc.fetchMoviesForIndex(widget.itemIndex!);
+              break;
+          }
+          break;
+      }
+    } else {
+      bloc.fetchMoviesForIndex(5, genreId: widget.genreId!);
     }
 
     return MaterialApp(
@@ -94,8 +96,8 @@ class _ItemNavigationState extends State<ItemNavigation> {
                         color: Colors.red,
                       )),
                   // ,SizedBox(width: 80,),
-                  const Text('Popular Movies',
-                      style: TextStyle(
+                  Text(widget.pageTitle,
+                      style: const TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.w300,
                         color: Colors.white,
@@ -110,31 +112,26 @@ class _ItemNavigationState extends State<ItemNavigation> {
                 ]),
           ),
         ),
-        body: Listener(
-          onPointerDown: (event) {
-            bloc.handleHidePopup();
-          },
-          child: Material(
-            color: AppColors.primaryBackground,
-            child: StreamBuilder(
-              stream: bloc.getStreamForIndex(itemIndex),
-              builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
-                if (snapshot.hasData) {
-                  return buildList(snapshot);
-                } else if (snapshot.connectionState == ConnectionState.none ||
-                    snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.connectionState == ConnectionState.done) {
-                  return const Center(
-                    child: Text('No data avaliable'),
-                  );
-                }
+        body: Material(
+          color: AppColors.primaryBackground,
+          child: StreamBuilder(
+            stream: bloc.getStreamForIndex(widget.itemIndex ?? 5),
+            builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
+              if (snapshot.hasData) {
+                return buildList(snapshot);
+              } else if (snapshot.connectionState == ConnectionState.none ||
+                  snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                return const Center(
+                  child: Text('No data avaliable'),
+                );
+              }
 
-                return const Center(child: CircularProgressIndicator());
-              },
-            ),
+              return const Center(child: CircularProgressIndicator());
+            },
           ),
         ),
       ),
@@ -147,25 +144,8 @@ buildList(AsyncSnapshot<ItemModel?> snapshot) {
   late List<Person> cast;
   return Column(
     children: [
-      SizedBox(
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            buildMovieListTile('Movies',
-                ["Popular ", 'Top Rated ', 'Now Playing', 'Upcoming '], 1),
-            // Padding(padding: EdgeInsets.all(4.0)),
-            buildMovieListTile("TV Shows",
-                ['Popular', 'Top Rated', 'Airing Today', 'On TV'], 2),
-            // Padding(padding: EdgeInsets.all(4.0)),
-            buildMovieListTile('People', ['Popular People'], 3),
-            // Padding(padding: EdgeInsets.all(4.0)),
-            buildMovieListTile('More', ['Genre'], 4)
-          ],
-        ),
-      ),
       const SizedBox(
-        height: 10,
+        height: 30,
       ),
       Expanded(
         child: Padding(
@@ -226,23 +206,4 @@ openDetailPage(
       ),
     );
   }));
-}
-
-Widget buildMovieListTile(String title, List<String> popupContent, int index) {
-  MovieListTile movieListTile = MovieListTile(
-    txt1: popupContent.isNotEmpty ? popupContent[0] : '',
-    txt2: popupContent.length > 1 ? popupContent[1] : '',
-    txt3: popupContent.length > 2 ? popupContent[2] : '',
-    txt4: popupContent.length > 3 ? popupContent[3] : '',
-    index: index,
-    child: Center(
-      child: Text(
-        title,
-        style: const TextStyle(
-            color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-    ),
-  );
-  // popupContentMap[movieListTile] = popupContent;
-  return movieListTile;
 }

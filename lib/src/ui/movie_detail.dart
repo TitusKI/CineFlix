@@ -96,23 +96,15 @@ class MovieDetailState extends State<MovieDetail> {
               pinned: true,
               elevation: 0.0,
               flexibleSpace: FlexibleSpaceBar(
-                  background: Image.network(
-                'https://image.tmdb.org/t/p/w500$posterUrl',
-                fit: BoxFit.cover,
-                loadingBuilder: (BuildContext ctx, Widget child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                      ),
-                    );
-                  }
-                },
-              )),
-            ),
+                background: Image.network(
+                  'https://image.tmdb.org/t/p/w500$posterUrl',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, StackTrace) {
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+              ),
+            )
           ];
         },
         body: Padding(

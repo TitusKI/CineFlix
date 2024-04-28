@@ -9,15 +9,10 @@ class MoviesApiProvider {
   final _apiKey = 'fdd7db0a47ca786d8055a9120ed43d35';
   final _apiUrl = 'https://api.themoviedb.org/3/movie';
   Future<ItemModel?> fetchMovieList() async {
-    print('entered');
     final response =
         await client.get(Uri.parse('$_apiUrl/popular?api_key=$_apiKey'));
-    print(response.body.toString());
-    final parsedJsonDecode = json.decode(response
-        .body); // We have to Decode the json file before using with fromJson
-    if (response.statusCode ==
-        200) // indicates that if the request is successful
-    {
+    final parsedJsonDecode = json.decode(response.body);
+    if (response.statusCode == 200) {
       return ItemModel.fromJson(parsedJsonDecode);
     } else {
       throw Exception('Failed to load Post');
@@ -25,10 +20,8 @@ class MoviesApiProvider {
   }
 
   Future<ItemModel?> fetchTopRated() async {
-    print('Entered'); // Checking the method fetchTopRated
     final response =
         await client.get(Uri.parse('$_apiUrl/top_rated?api_key=$_apiKey'));
-    print(response.body.toString()); // printing the json file as it is
 
     final parsedJsonDecode = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -39,10 +32,8 @@ class MoviesApiProvider {
   }
 
   Future<ItemModel?> fetchNowPlaying() async {
-    print('Now Playing Entered');
     final response =
         await client.get(Uri.parse('$_apiUrl/now_playing?api_key=$_apiKey'));
-    print(response.body.toString());
     final parsedJsonDecode = json.decode(response.body);
     if (response.statusCode == 200) {
       return ItemModel.fromJson(parsedJsonDecode);
@@ -52,10 +43,8 @@ class MoviesApiProvider {
   }
 
   Future<ItemModel?> fetchUpcoming() async {
-    print('Upcoming');
     final response =
         await client.get(Uri.parse('$_apiUrl/upcoming?api_key=$_apiKey'));
-    print(response.body.toString());
     final parsedJsonDecode = json.decode(response.body);
     if (response.statusCode == 200) {
       return ItemModel.fromJson(parsedJsonDecode);
@@ -65,16 +54,13 @@ class MoviesApiProvider {
   }
 
   Future<ItemModel?> fetchMovieFromGenre(String genreId) async {
-    print('fetching from genre');
     final response = await client.get(Uri.parse(
         'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=$genreId&api_key=$_apiKey'));
-    print(response.body.toString());
     final parsedJsonDecode = json.decode(response
         .body); // We have to Decode the json file before using with fromJson
     if (response.statusCode ==
         200) // indicates that if the request is successful
     {
-      print(ItemModel.fromJson(parsedJsonDecode));
       return ItemModel.fromJson(parsedJsonDecode);
     } else {
       throw Exception('Failed to load Post');

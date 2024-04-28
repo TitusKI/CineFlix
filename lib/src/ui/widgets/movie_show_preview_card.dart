@@ -20,12 +20,16 @@ class MovieShowPreviewCard extends StatelessWidget {
         children: [
           SizedBox(
             height: 150,
-            child: Image.network(
-              'https://image.tmdb.org/t/p/w185${itemModel?.results[index].poster_path}',
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, StackTrace) {
-                return const Center(child: CircularProgressIndicator());
-              },
+            child: ClipRRect(
+              clipBehavior: Clip.hardEdge,
+              borderRadius: BorderRadius.circular(10.0),
+              child: Image.network(
+                'https://image.tmdb.org/t/p/w185${itemModel?.results[index].poster_path}',
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, StackTrace) {
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
             ),
           ),
           SizedBox(

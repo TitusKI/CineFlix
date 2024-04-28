@@ -43,8 +43,9 @@ class GenreCard extends StatelessWidget {
                   Colors.black.withOpacity(0.5),
                   BlendMode.darken,
                 ),
-                child: Image.network(
-                  genreImages[18]!,
+                child: Image.asset(
+                  genreImages[int.parse(genreId)] ??
+                      './assets/images/genre_card_covers/action.jpg',
                   width: cardWidth,
                   height: cardHeight,
                   fit: BoxFit.fill,

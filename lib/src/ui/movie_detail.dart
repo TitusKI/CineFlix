@@ -1,6 +1,10 @@
 import 'package:cineflix/src/common/date_formatter.dart';
+import 'package:cineflix/src/common/services/cloud_services.dart';
+import 'package:cineflix/src/models/item_model.dart';
 import 'package:cineflix/src/models/people_model.dart';
 import 'package:cineflix/src/ui/star_rating.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
@@ -18,6 +22,8 @@ class MovieDetail extends StatefulWidget {
   final double? voteAverage;
   final int movieId;
   final List<Person>? cast;
+  final int itemIndex;
+  final ItemModel? itemModel;
 
   const MovieDetail({
     super.key,
@@ -28,6 +34,8 @@ class MovieDetail extends StatefulWidget {
     required this.voteAverage,
     required this.movieId,
     this.cast,
+    required this.itemIndex,
+    this.itemModel,
   });
   @override
   State<StatefulWidget> createState() {
@@ -39,6 +47,8 @@ class MovieDetail extends StatefulWidget {
       voteAverage: voteAverage,
       movieId: movieId,
       cast: cast,
+      itemIndex: itemIndex,
+      itemModel: itemModel,
     );
   }
 }
@@ -52,6 +62,10 @@ class MovieDetailState extends State<MovieDetail> {
   final int movieId;
   late MovieDetailBloc bloc;
   final List<Person>? cast;
+  final int itemIndex;
+  final ItemModel? itemModel;
+  bool _isFavorite = false;
+  FavoriteServices favoriteServices = FavoriteServices();
 
   MovieDetailState({
     required this.title,
@@ -61,9 +75,29 @@ class MovieDetailState extends State<MovieDetail> {
     required this.voteAverage,
     required this.movieId,
     this.cast,
+    required this.itemIndex,
+    this.itemModel,
   });
 
   double? _trailerHeight;
+  String? _emailAddress;
+  @override
+  void initState() {
+    super.initState();
+    // Fetch username when the drawer is initialized
+    fetchUsername();
+  }
+
+  Future<void> fetchUsername() async {
+    String? uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      DocumentSnapshot userData =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      setState(() {
+        _emailAddress = userData.get('email');
+      });
+    }
+  }
 
   @override
   void didChangeDependencies() {
@@ -89,24 +123,15 @@ class MovieDetailState extends State<MovieDetail> {
       child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
-            Stack(
-              children: [
-                SliverAppBar(
-                  expandedHeight: 200.0,
-                  floating: false,
-                  pinned: true,
-                  elevation: 0.0,
-                  flexibleSpace: FlexibleSpaceBar(
-                      background: Image.network(
-                          'https://image.tmdb.org/t/p/w500$posterUrl',
-                          fit: BoxFit.cover)),
-                ),
-                const Positioned(
-                  child: Icon(
-                    Icons.bookmark_add_outlined,
-                  ),
-                ),
-              ],
+            SliverAppBar(
+              expandedHeight: 200.0,
+              floating: false,
+              pinned: true,
+              elevation: 0.0,
+              flexibleSpace: FlexibleSpaceBar(
+                  background: Image.network(
+                      'https://image.tmdb.org/t/p/w500$posterUrl',
+                      fit: BoxFit.cover)),
             ),
           ];
         },
@@ -116,44 +141,43 @@ class MovieDetailState extends State<MovieDetail> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 5.0),
-                  child: Text(
-                    title!,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 23,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 5.0),
+                      child: Text(
+                        title!,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 23,
+                        ),
+                      ),
                     ),
-                  ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isFavorite = !_isFavorite;
+                        });
+                        if (_isFavorite) {
+                          onFavoritePressed(itemModel);
+                        } else {
+                          onFavoriteRemove(itemModel);
+                        }
+                      },
+                      icon: Icon(
+                        _isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border_outlined,
+                        color: _isFavorite ? Colors.red : null,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 8.0,
                 ),
                 StarRating(voteAverage: voteAverage!),
-                // Row(
-                //   // mainAxisAlignment: MainAxisAlignment.start,
-                //   // children: [
-                //   //   IconButton(
-                //   //     onPressed: () {},
-                //   //     icon: Icon(Icons.favorite),
-                //   //     color: Colors.red,
-                //   //   ),
-                //   //   Container(
-                //   //     margin: EdgeInsets.only(left: 1.0, right: 1.0),
-                //   //   ),
-                //   //   Text(
-                //   //     voteAverage!,
-                //   //     style: TextStyle(fontSize: 18.0),
-                //   //   ),
-                //   //   Container(
-                //   //     margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                //   //   ),
-                //   //   Text(
-                //   //     releaseDate,
-                //   //     style: TextStyle(fontSize: 18.0),
-                //   //   )
-                //   // ],
-                // ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -171,7 +195,6 @@ class MovieDetailState extends State<MovieDetail> {
                 const SizedBox(
                   height: 10,
                 ),
-
                 const Text(
                   "Cast",
                   style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
@@ -250,6 +273,15 @@ class MovieDetailState extends State<MovieDetail> {
         ),
       ),
     ));
+  }
+
+  onFavoritePressed(ItemModel? moviesModel) {
+    //  final id = moviesModel!.results[].id;
+    favoriteServices.addFavorite(moviesModel!, itemIndex);
+  }
+
+  onFavoriteRemove(ItemModel? moviesModel) {
+    favoriteServices.deleteFavorite(moviesModel!.results[itemIndex].id);
   }
 
   noTrailer(TrailerModel? data) {

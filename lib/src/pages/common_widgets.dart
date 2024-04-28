@@ -198,3 +198,6 @@ Widget buildLogInAndRegButton(
     ),
   );
 }
+// Widget buildBookmark(){
+
+// }

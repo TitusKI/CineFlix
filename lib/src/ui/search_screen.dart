@@ -130,6 +130,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   movieId: tapped.id,
                                   releaseDate: tapped.release_date ?? "",
                                   cast: cast,
+                                  itemIndex: index,
                                   //  Since it causes invalid format date exeception
                                   // releaseDate: tapped.release_date,
                                   posterUrl: tapped.poster_path,

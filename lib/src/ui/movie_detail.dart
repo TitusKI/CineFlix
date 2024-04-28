@@ -1,6 +1,6 @@
 import 'package:cineflix/src/common/date_formatter.dart';
 import 'package:cineflix/src/models/people_model.dart';
-import 'package:cineflix/src/ui/star_rating.dart';
+import 'package:cineflix/src/ui/widgets/star_rating.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 

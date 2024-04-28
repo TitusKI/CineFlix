@@ -28,43 +28,10 @@ class _ItemNavigationState extends State<ItemNavigation> {
     if (widget.genreId == null) {
       switch (widget.buttonIndex) {
         case 1:
-          switch (widget.itemIndex) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-              bloc.fetchMoviesForIndex(widget.itemIndex!);
-              break;
-            default:
-              bloc.fetchMoviesForIndex(2);
-          }
-
+          bloc.fetchMoviesForIndex(widget.itemIndex!);
           break;
         case 2:
-          switch (widget.itemIndex) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-              bloc.fetchTVShowsForIndex(widget.itemIndex!);
-              break;
-            default:
-              bloc.fetchTVShowsForIndex(2);
-          }
-          break;
-        case 3:
-          switch (widget.itemIndex) {
-            case 1:
-              bloc.fetchTVShowsForIndex(widget.itemIndex!);
-              break;
-          }
-          break;
-        case 4:
-          switch (widget.itemIndex) {
-            case 1:
-              bloc.fetchMoviesForIndex(widget.itemIndex!);
-              break;
-          }
+          bloc.fetchTVShowsForIndex(widget.itemIndex!);
           break;
       }
     } else {

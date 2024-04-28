@@ -346,9 +346,9 @@ class MovieDetailState extends State<MovieDetail> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Text(
-                                    'Trailer Play',
-                                    style: TextStyle(
+                                  Text(
+                                    title ?? "Trailer play",
+                                    style: const TextStyle(
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,

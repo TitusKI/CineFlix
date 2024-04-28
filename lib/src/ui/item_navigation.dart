@@ -1,5 +1,10 @@
+import 'package:cineflix/src/blocs/movies_detail_bloc_provider.dart';
 import 'package:cineflix/src/common/values/colors.dart';
+import 'package:cineflix/src/models/people_model.dart';
+import 'package:cineflix/src/resources/people_api_provider.dart';
+import 'package:cineflix/src/ui/movie_detail.dart';
 import 'package:cineflix/src/ui/widgets/movie_show_list_builder.dart';
+import 'package:cineflix/src/ui/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../blocs/movies_bloc.dart';
@@ -82,6 +87,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
             builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
               if (snapshot.hasData) {
                 return MovieShowListBuilder(snapshot: snapshot);
+                // return buildList(snapshot);
               } else if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -148,4 +154,25 @@ class _ItemNavigationState extends State<ItemNavigation> {
 //   );
 // }
 
-
+// openDetailPage(
+//     BuildContext context, ItemModel? data, List<Person> cast, int index) {
+//   Navigator.push(context, MaterialPageRoute(builder: (context) {
+//     return MovieDetailBlocProvider(
+//       // Returning of instances of MovieDetailBlocProvider(InheritedWidget)
+//       // wrapping the MOvieDetail screen to it.
+//       // So MovieDetailBloc class will be accessible inside the detail
+//       // screen and to all the widgets since
+//       // It is in the Initializer list of the MovieDetailBlocProvider instances
+//       key: GlobalKey(),
+//       child: MovieDetail(
+//         title: data?.results[index].title,
+//         posterUrl: data?.results[index].poster_path,
+//         description: data?.results[index].overview,
+//         releaseDate: data?.results[index].release_date,
+//         voteAverage: data?.results[index].vote_average,
+//         movieId: data!.results[index].id,
+//         cast: cast,
+//       ),
+//     );
+//   }));
+// }

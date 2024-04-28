@@ -57,27 +57,25 @@ class MovieShowHomeCard extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: StreamBuilder(
-              stream: bloc.getStreamForIndex(categoryId),
-              builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
-                if (snapshot.hasData) {
-                  return MovieShowCarousel(snapshot: snapshot);
-                } else if (snapshot.connectionState == ConnectionState.none ||
-                    snapshot.connectionState == ConnectionState.waiting) {
-                  print("waiting state");
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.connectionState == ConnectionState.done) {
-                  return const Center(
-                    child: Text('No data avaliable'),
-                  );
-                }
+          StreamBuilder(
+            stream: bloc.getStreamForIndex(categoryId),
+            builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
+              if (snapshot.hasData) {
+                return MovieShowCarousel(snapshot: snapshot);
+              } else if (snapshot.connectionState == ConnectionState.none ||
+                  snapshot.connectionState == ConnectionState.waiting) {
+                print("waiting state");
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                return const Center(
+                  child: Text('No data avaliable'),
+                );
+              }
 
-                return const Center(child: CircularProgressIndicator());
-              },
-            ),
+              return const Center(child: CircularProgressIndicator());
+            },
           )
         ],
       ),

@@ -11,9 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetail extends StatefulWidget {
-  final posterUrl;
-  final description;
-  final releaseDate;
+  final String? posterUrl;
+  final String? description;
+  final String? releaseDate;
   final String? title;
   final double? voteAverage;
   final int movieId;
@@ -44,9 +44,9 @@ class MovieDetail extends StatefulWidget {
 }
 
 class MovieDetailState extends State<MovieDetail> {
-  final posterUrl;
-  final description;
-  final releaseDate;
+  final String? posterUrl;
+  final String? description;
+  final String? releaseDate;
   final String? title;
   final double? voteAverage;
   final int movieId;
@@ -88,6 +88,7 @@ class MovieDetailState extends State<MovieDetail> {
         body: SafeArea(
       child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          print('https://image.tmdb.org/t/p/w500$posterUrl');
           return [
             SliverAppBar(
               expandedHeight: 200.0,
@@ -96,8 +97,21 @@ class MovieDetailState extends State<MovieDetail> {
               elevation: 0.0,
               flexibleSpace: FlexibleSpaceBar(
                   background: Image.network(
-                      'https://image.tmdb.org/t/p/w500$posterUrl',
-                      fit: BoxFit.cover)),
+                'https://image.tmdb.org/t/p/w500$posterUrl',
+                fit: BoxFit.cover,
+                loadingBuilder: (BuildContext ctx, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                      ),
+                    );
+                  }
+                },
+              )),
             ),
           ];
         },
@@ -149,14 +163,16 @@ class MovieDetailState extends State<MovieDetail> {
                   height: 10,
                 ),
                 Text(
-                  description,
+                  description!,
                   style: const TextStyle(fontSize: 18.0),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "Released In: ${formatDate(releaseDate)}",
+                  releaseDate != null
+                      ? "Released In: ${formatDate(releaseDate!)}"
+                      : "Released In: N/A",
                   style: const TextStyle(fontSize: 20),
                 ),
                 const SizedBox(

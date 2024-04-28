@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cineflix/src/blocs/movies_detail_bloc_provider.dart';
 import 'package:cineflix/src/models/item_model.dart';
 import 'package:cineflix/src/models/people_model.dart';
@@ -12,12 +14,14 @@ class MovieShowCarousel extends StatelessWidget {
 
   const MovieShowCarousel({super.key, required this.snapshot});
 
+  // }
   @override
   Widget build(BuildContext context) {
     PeopleApiProvider pplApi = PeopleApiProvider();
     late List<Person> cast;
     return Expanded(
       child: ListView.builder(
+        // controller: scrollController,
         itemCount: snapshot.data?.results.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
@@ -67,3 +71,33 @@ openDetailPage(
     );
   }));
 }
+
+
+// int scrolledToTileIndex = 0;
+  // ScrollController scrollController = ScrollController();
+
+  // Timer? timer;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   // Start auto-scrolling after 1 second
+  //   timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+  //     if (scrolledToTileIndex < 20) {
+  //       scrolledToTileIndex++;
+  //       scrollController.animateTo(
+  //         scrolledToTileIndex * 130,
+  //         duration: const Duration(milliseconds: 500),
+  //         curve: Curves.easeInOut,
+  //       );
+  //     }
+  //   });
+  // }
+
+  // @override
+  // void dispose() {
+  //   // Cancel the timer and dispose the scroll controller to avoid memory leaks
+  //   timer?.cancel();
+  //   scrollController.dispose();
+  //   super.dispose();

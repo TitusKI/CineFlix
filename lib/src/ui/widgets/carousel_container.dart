@@ -1,8 +1,8 @@
-import 'package:cineflix/src/ui/widgets/movie-show_carousell.dart';
+import 'package:cineflix/src/ui/widgets/movie_show_home_card.dart';
 import 'package:flutter/widgets.dart';
 
 class CarouselContainer extends StatelessWidget {
-  final List<MovieShowCarousel> carouselList;
+  final List<MovieShowHomeCard> carouselList;
 
   const CarouselContainer({
     super.key,

@@ -1,5 +1,5 @@
 import 'package:cineflix/src/models/item_model.dart';
-import 'package:cineflix/src/ui/star_rating.dart';
+import 'package:cineflix/src/ui/widgets/star_rating.dart';
 import 'package:flutter/material.dart';
 
 class MovieTile extends StatelessWidget {
@@ -29,9 +29,6 @@ class MovieTile extends StatelessWidget {
                 child: Image.network(
                   'https://image.tmdb.org/t/p/w185${itemModel?.results[index].poster_path}',
                   fit: BoxFit.cover,
-                  // height: 500.0,
-                  // height: 400.0,
-                  // width: 200.0,
                   errorBuilder: (context, error, StackTrace) {
                     return const Center(child: CircularProgressIndicator());
                   },

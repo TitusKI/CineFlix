@@ -87,13 +87,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   title: "Airing Today",
                 ),
                 MovieShowHomeCard(
-                  categoryId: 2,
-                  mediaId: 3,
+                  categoryId: 3,
+                  mediaId: 2,
                   title: "Top Rated",
                 ),
                 MovieShowHomeCard(
-                  categoryId: 2,
-                  mediaId: 4,
+                  categoryId: 4,
+                  mediaId: 2,
                   title: "On Tv",
                 ),
               ]),

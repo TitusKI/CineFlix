@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'src/app.dart';
 
-// void main() {
-//   runApp(BlocProvider(create: (context) => SearchBloc(), child: const App()));
-// }
-
 Future<void> main() async {
   await Global.init();
 

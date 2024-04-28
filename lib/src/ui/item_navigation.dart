@@ -1,13 +1,14 @@
+import 'package:cineflix/src/blocs/movies_detail_bloc_provider.dart';
 import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/people_model.dart';
 import 'package:cineflix/src/resources/people_api_provider.dart';
+import 'package:cineflix/src/ui/movie_detail.dart';
+import 'package:cineflix/src/ui/widgets/movie_show_list_builder.dart';
 import 'package:cineflix/src/ui/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../blocs/movies_bloc.dart';
-import '../blocs/movies_detail_bloc_provider.dart';
 import '../models/item_model.dart';
-import 'movie_detail.dart';
 
 class ItemNavigation extends StatefulWidget {
   final int? buttonIndex;
@@ -32,43 +33,10 @@ class _ItemNavigationState extends State<ItemNavigation> {
     if (widget.genreId == null) {
       switch (widget.buttonIndex) {
         case 1:
-          switch (widget.itemIndex) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-              bloc.fetchMoviesForIndex(widget.itemIndex!);
-              break;
-            default:
-              bloc.fetchMoviesForIndex(2);
-          }
-
+          bloc.fetchMoviesForIndex(widget.itemIndex!);
           break;
         case 2:
-          switch (widget.itemIndex) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-              bloc.fetchTVShowsForIndex(widget.itemIndex!);
-              break;
-            default:
-              bloc.fetchTVShowsForIndex(2);
-          }
-          break;
-        case 3:
-          switch (widget.itemIndex) {
-            case 1:
-              bloc.fetchTVShowsForIndex(widget.itemIndex!);
-              break;
-          }
-          break;
-        case 4:
-          switch (widget.itemIndex) {
-            case 1:
-              bloc.fetchMoviesForIndex(widget.itemIndex!);
-              break;
-          }
+          bloc.fetchTVShowsForIndex(widget.itemIndex!);
           break;
       }
     } else {
@@ -118,7 +86,8 @@ class _ItemNavigationState extends State<ItemNavigation> {
             stream: bloc.getStreamForIndex(widget.itemIndex ?? 5),
             builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
               if (snapshot.hasData) {
-                return buildList(snapshot);
+                return MovieShowListBuilder(snapshot: snapshot);
+                // return buildList(snapshot);
               } else if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -139,51 +108,51 @@ class _ItemNavigationState extends State<ItemNavigation> {
   }
 }
 
-buildList(AsyncSnapshot<ItemModel?> snapshot) {
-  PeopleApiProvider pplApi = PeopleApiProvider();
-  late List<Person> cast;
-  return Column(
-    children: [
-      const SizedBox(
-        height: 30,
-      ),
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: GridView.builder(
-            itemCount: snapshot.data?.results.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 5 / 8,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              crossAxisCount: 2,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              final voteAverage = snapshot.data?.results[index].vote_average;
-              return GestureDetector(
-                  // // we can use GestureDetector instead of InkResponse
-                  onTap: () async {
-                    cast = await pplApi
-                        .fetchPeople(snapshot.data!.results[index].id);
-                    openDetailPage(
-                      context,
-                      snapshot.data,
-                      cast,
-                      index,
-                    );
-                  },
-                  child: MovieTile(
-                    itemModel: snapshot.data,
-                    index: index,
-                    voteAverage: voteAverage,
-                  ));
-            },
-          ),
-        ),
-      ),
-    ],
-  );
-}
+// buildList(AsyncSnapshot<ItemModel?> snapshot) {
+//   PeopleApiProvider pplApi = PeopleApiProvider();
+//   late List<Person> cast;
+//   return Column(
+//     children: [
+//       const SizedBox(
+//         height: 30,
+//       ),
+//       Expanded(
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 10.0),
+//           child: GridView.builder(
+//             itemCount: snapshot.data?.results.length,
+//             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//               childAspectRatio: 5 / 8,
+//               crossAxisSpacing: 20,
+//               mainAxisSpacing: 20,
+//               crossAxisCount: 2,
+//             ),
+//             itemBuilder: (BuildContext context, int index) {
+//               final voteAverage = snapshot.data?.results[index].vote_average;
+//               return GestureDetector(
+//                   // // we can use GestureDetector instead of InkResponse
+//                   onTap: () async {
+//                     cast = await pplApi
+//                         .fetchPeople(snapshot.data!.results[index].id);
+//                     openDetailPage(
+//                       context,
+//                       snapshot.data,
+//                       cast,
+//                       index,
+//                     );
+//                   },
+//                   child: MovieTile(
+//                     itemModel: snapshot.data,
+//                     index: index,
+//                     voteAverage: voteAverage,
+//                   ));
+//             },
+//           ),
+//         ),
+//       ),
+//     ],
+//   );
+// }
 
 openDetailPage(
     BuildContext context, ItemModel? data, List<Person> cast, int index) {

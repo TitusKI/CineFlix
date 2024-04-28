@@ -2,9 +2,9 @@ import 'package:cineflix/src/common/date_formatter.dart';
 import 'package:cineflix/src/common/services/cloud_services.dart';
 import 'package:cineflix/src/models/item_model.dart';
 import 'package:cineflix/src/models/people_model.dart';
-import 'package:cineflix/src/ui/star_rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cineflix/src/ui/widgets/star_rating.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,9 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetail extends StatefulWidget {
-  final posterUrl;
-  final description;
-  final releaseDate;
+  final String? posterUrl;
+  final String? description;
+  final String? releaseDate;
   final String? title;
   final double? voteAverage;
   final int movieId;
@@ -54,9 +54,9 @@ class MovieDetail extends StatefulWidget {
 }
 
 class MovieDetailState extends State<MovieDetail> {
-  final posterUrl;
-  final description;
-  final releaseDate;
+  final String? posterUrl;
+  final String? description;
+  final String? releaseDate;
   final String? title;
   final double? voteAverage;
   final int movieId;
@@ -122,6 +122,7 @@ class MovieDetailState extends State<MovieDetail> {
         body: SafeArea(
       child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          print('https://image.tmdb.org/t/p/w500$posterUrl');
           return [
             SliverAppBar(
               expandedHeight: 200.0,
@@ -129,10 +130,15 @@ class MovieDetailState extends State<MovieDetail> {
               pinned: true,
               elevation: 0.0,
               flexibleSpace: FlexibleSpaceBar(
-                  background: Image.network(
-                      'https://image.tmdb.org/t/p/w500$posterUrl',
-                      fit: BoxFit.cover)),
-            ),
+                background: Image.network(
+                  'https://image.tmdb.org/t/p/w500$posterUrl',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, StackTrace) {
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+              ),
+            )
           ];
         },
         body: Padding(
@@ -182,14 +188,16 @@ class MovieDetailState extends State<MovieDetail> {
                   height: 10,
                 ),
                 Text(
-                  description,
+                  description!,
                   style: const TextStyle(fontSize: 18.0),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "Released In: ${formatDate(releaseDate)}",
+                  releaseDate != null
+                      ? "Released In: ${formatDate(releaseDate!)}"
+                      : "Released In: N/A",
                   style: const TextStyle(fontSize: 20),
                 ),
                 const SizedBox(
@@ -387,9 +395,9 @@ class MovieDetailState extends State<MovieDetail> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Text(
-                                    'Trailer Play',
-                                    style: TextStyle(
+                                  Text(
+                                    title ?? "Trailer play",
+                                    style: const TextStyle(
                                       decoration: TextDecoration.none,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,

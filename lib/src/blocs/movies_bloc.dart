@@ -35,15 +35,7 @@ class MoviesBloc {
       _popupContentMap[i] = BehaviorSubject<List<String>>.seeded([]);
     }
   }
-// final Map<int, PublishSubject<PeopleModel>> _streamMapPeople = {
-//     1: PublishSubject<PeopleModel>(),
-//     2: PublishSubject<PeopleModel>(),
-//     3: PublishSubject<PeopleModel>(),
-//     4: PublishSubject<PeopleModel>(),
-// };
-// Stream<PeopleModel> getStreamForPeopleIndex(int index){
-//   return _streamMapPeople[index]!;
-// }
+
   final Map<int, PublishSubject<ItemModel>> _streamMap = {
     1: PublishSubject<ItemModel>(),
     2: PublishSubject<ItemModel>(),
@@ -109,30 +101,6 @@ class MoviesBloc {
     }
     _streamMap[index]!.add(itemModel!);
   }
-//  void fetchPeopleForIndex(int index) async{
-//   PeopleModel? peopleModel;
-//  switch(index){
-//   case 1:
-//      peopleModel = (await _repository.fetchPeopleByType(MediaCategories.popular)) ;
-//  }
-//  }
-  // fetchAllMovies() async {
-  //   // It fetches all movies from the repository then waits
-  //   // and adds the itemModel to the movieFetcher Stream using sink
-  //   ItemModel? itemModel = await _repository.fetchAllMovies();
-  //   _moviesFetcher.sink.add(itemModel!);
-  // }
-
-  // fetchRatedMovies() async {
-  //   ItemModel? itemModel = await _repository.fetchTopRatedMovies();
-  //   _topRatedFetcher.sink.add(itemModel);
-  // }
-  // fetchNowPlaying() async{
-  //   ItemModel? itemModel = await _repository.fetchNowPlaying();
-  // }
-  // fetchUpcoming() async{
-  //   ItemModel? itemModel = await _repository.fetchUpcoming();
-  // }
 
   dispose() {
     // for Closing the _moviesFetcher stream when the moviesBloc is no longer needed

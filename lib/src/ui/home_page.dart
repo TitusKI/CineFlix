@@ -1,5 +1,5 @@
 import 'package:cineflix/src/ui/widgets/carousel_container.dart';
-import 'package:cineflix/src/ui/widgets/movie-show_carousell.dart';
+import 'package:cineflix/src/ui/widgets/movie_show_home_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,46 +54,46 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             controller: _tabController,
             children: const [
               CarouselContainer(carouselList: [
-                MovieShowCarousel(
+                MovieShowHomeCard(
                   categoryId: 1,
                   mediaId: 1,
                   title: "Popular Movies",
                 ),
-                MovieShowCarousel(
+                MovieShowHomeCard(
                   categoryId: 2,
                   mediaId: 1,
                   title: "Upcoming Movies",
                 ),
-                MovieShowCarousel(
+                MovieShowHomeCard(
                   categoryId: 3,
                   mediaId: 1,
                   title: "Top Rated",
                 ),
-                MovieShowCarousel(
+                MovieShowHomeCard(
                   categoryId: 4,
                   mediaId: 1,
                   title: "Now Playing",
                 ),
               ]),
               CarouselContainer(carouselList: [
-                MovieShowCarousel(
+                MovieShowHomeCard(
                   categoryId: 1,
                   mediaId: 2,
                   title: "Popular Shows",
                 ),
-                MovieShowCarousel(
+                MovieShowHomeCard(
                   categoryId: 2,
                   mediaId: 2,
                   title: "Airing Today",
                 ),
-                MovieShowCarousel(
-                  categoryId: 2,
-                  mediaId: 3,
+                MovieShowHomeCard(
+                  categoryId: 3,
+                  mediaId: 2,
                   title: "Top Rated",
                 ),
-                MovieShowCarousel(
-                  categoryId: 2,
-                  mediaId: 4,
+                MovieShowHomeCard(
+                  categoryId: 4,
+                  mediaId: 2,
                   title: "On Tv",
                 ),
               ]),

@@ -3,10 +3,10 @@ class ItemModel {
   late int _total_results;
   late int _total_pages;
   List<_Result> _results = [];
-   List<_Result> _similarTitles =[];
+  List<_Result> _similarTitles = [];
 
-   // ignore: library_private_types_in_public_api
-   
+  // ignore: library_private_types_in_public_api
+
   ItemModel.fromJson(Map<String, dynamic> parsedJson) {
     print(parsedJson['results'].length);
     _page = parsedJson['page'];
@@ -14,37 +14,37 @@ class ItemModel {
     _total_pages = parsedJson['total_pages'];
     List<_Result> temp = [];
     // for(_page = 1; _page <= _total_pages; _page ++){
-    //   _page = _page++; 
-       for (int i = 0; i < parsedJson['results'].length; i++) {
+    //   _page = _page++;
+    for (int i = 0; i < parsedJson['results'].length; i++) {
       _Result result = _Result(parsedJson['results'][
           i]); // It only responses one result from the list with specific index
       temp.add(result); // add that result of specific index to the temp list
     }
 
     // }
-   
+
     _results = temp;
-  }_Result? populateSimilarTitles(String clickedTitle) {
-  _Result? clickedItem;
-
-  // Find all items with the same title
-  List<_Result> similarTitles = _results.where((result) => result.title == clickedTitle).toList();
-
-  if (similarTitles.length == 1) {
-    clickedItem = similarTitles[0];
-  } else {
-    clickedItem = null;
   }
-  _similarTitles = similarTitles;
-  return clickedItem;
-}
+  _Result? populateSimilarTitles(String clickedTitle) {
+    _Result? clickedItem;
 
+    // Find all items with the same title
+    List<_Result> similarTitles =
+        _results.where((result) => result.title == clickedTitle).toList();
 
+    if (similarTitles.length == 1) {
+      clickedItem = similarTitles[0];
+    } else {
+      clickedItem = null;
+    }
+    _similarTitles = similarTitles;
+    return clickedItem;
+  }
 
-void setResults(List<_Result> results){
+  void setResults(List<_Result> results) {
     _results = results;
-   }
-  
+  }
+
   //  populateSimilarTitles(String clickedTitle){
   //   List<_Result> similarTitles = _results.where((result) => result.title == clickedTitle).toList();
   //   _similarTitles = similarTitles;
@@ -62,6 +62,7 @@ class _Result {
   // late int _vote_count;
   late int _id;
   // late bool _video;
+  // late int _first_air_date_year;
   late double _vote_average;
   late String? _title;
   late String? _original_name;
@@ -76,6 +77,7 @@ class _Result {
   late String? _release_date;
   _Result(result) {
     // _vote_count = result['vote_count'];
+    // _first_air_date_year = result['first_air_date_year'];
     _id = result['id'];
     // _video = result['video'];
     _vote_average = result['vote_average'];
@@ -95,6 +97,7 @@ class _Result {
     _release_date = result['release_date'] as String?;
   }
   String? get release_date => _release_date;
+  // String? get tv_release_date => _first_air_date_year.toString();
 
   String? get overview => _overview;
 

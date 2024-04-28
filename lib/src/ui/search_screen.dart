@@ -1,3 +1,6 @@
+import 'package:cineflix/src/models/people_model.dart';
+import 'package:cineflix/src/resources/people_api_provider.dart';
+import 'package:cineflix/src/ui/item_navigation.dart';
 import 'package:cineflix/src/ui/movie_detail.dart';
 
 import 'package:flutter/material.dart';
@@ -30,7 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final SearchBloc searchBloc = BlocProvider.of<SearchBloc>(context);
-
+    PeopleApiProvider pplApi = PeopleApiProvider();
     return Scaffold(
       appBar: AppBar(
         bottom: const PreferredSize(
@@ -99,22 +102,35 @@ class _SearchScreenState extends State<SearchScreen> {
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ),
-                              Text(
-                                " (${year(itemModel.results[index].release_date ?? " ")})",
-                                style: const TextStyle(color: Colors.white),
-                              ),
+                              // Text(
+                              //   " (${year(itemModel.results[index].release_date ?? " ")})",
+                              //   style: const TextStyle(color: Colors.white),
+                              // ),
                             ],
                           ),
-                          onTap: () {
+                          onTap: () async {
+                            List<Person>? cast;
+                            final tapped = itemModel.results[index];
+                            cast = await pplApi.fetchPeople(tapped.id);
+                            openDetailPage(
+                              context,
+                              itemModel,
+                              cast,
+                              index,
+                            );
+
                             // Navigator.of(context)
                             // Navigator.of(context).pushNamed('/movie_detail');
-                            final tapped = itemModel.results[index];
+
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => MovieDetail(
                                   title: tapped.title,
                                   voteAverage: tapped.vote_average,
                                   movieId: tapped.id,
+                                  releaseDate: tapped.release_date ?? "",
+                                  cast: cast,
+                                  itemIndex: index,
                                   //  Since it causes invalid format date exeception
                                   // releaseDate: tapped.release_date,
                                   posterUrl: tapped.poster_path,

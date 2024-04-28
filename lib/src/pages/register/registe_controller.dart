@@ -3,6 +3,7 @@ import 'package:cineflix/src/pages/register/bloc/register_bloc.dart';
 import 'package:cineflix/src/pages/register/bloc/register_event.dart';
 import 'package:cineflix/src/pages/register/bloc/register_state.dart';
 import 'package:cineflix/src/pages/register/register.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,6 +59,11 @@ class RegisterController {
         context.read<RegisterBloc>().add(RegistereSuccessEvent());
         Navigator.of(context).pop();
       }
+      String userID = credential.user!.uid;
+      await FirebaseFirestore.instance.collection('users').doc(userID).set({
+        "email": email,
+        "username": userName,
+      });
     } on FirebaseAuthException catch (e) {
       context.read<RegisterBloc>().add(RegistereFailureEvent(error: e.code));
       if (e.code == "weak-password") {
@@ -69,6 +75,16 @@ class RegisterController {
       if (e.code == "invalid-email") {
         toastInfo(msg: "Your email is invalidT");
       }
+    }
+  }
+
+  getUserInfo(String uid) async {
+    try {
+      DocumentSnapshot userData =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      return userData.data();
+    } catch (e) {
+      print("Error getting user Info ${e.toString()}");
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:cineflix/src/ui/movie_detail.dart';
 
 import 'package:cineflix/src/ui/widgets/movie_show_list_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../blocs/movies_bloc.dart';
 import '../models/item_model.dart';
@@ -93,7 +94,10 @@ class _ItemNavigationState extends State<ItemNavigation> {
               } else if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: SpinKitThreeBounce(
+                    color: AppColors.primaryText,
+                    size: 20.0,
+                  ),
                 );
               } else if (snapshot.connectionState == ConnectionState.done) {
                 return const Center(
@@ -101,7 +105,11 @@ class _ItemNavigationState extends State<ItemNavigation> {
                 );
               }
 
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: SpinKitThreeBounce(
+                color: AppColors.primaryText,
+                size: 20.0,
+              ));
             },
           ),
         ),

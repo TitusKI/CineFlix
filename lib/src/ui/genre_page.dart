@@ -49,9 +49,9 @@ class _GenrePageState extends State<GenrePage> {
           ));
         }
         return const Center(
-            child: SpinKitCubeGrid(
-          color: AppColors.primaryElement,
-          size: 60.0,
+            child: SpinKitThreeBounce(
+          color: AppColors.primaryText,
+          size: 50.0,
         ));
       },
     );

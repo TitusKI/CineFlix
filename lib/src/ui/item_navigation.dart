@@ -60,7 +60,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
                       },
                       icon: const Icon(
                         Icons.home_filled,
-                        color: Colors.red,
+                        color: AppColors.primaryElement,
                       )),
                   // ,SizedBox(width: 80,),
                   Text(widget.pageTitle,
@@ -73,7 +73,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
                     child: Text('CineFlix',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: AppColors.primaryElement,
                         )),
                   ),
                 ]),

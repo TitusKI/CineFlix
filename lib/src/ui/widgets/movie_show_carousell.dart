@@ -24,7 +24,7 @@ class MovieShowCarousel extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         // controller: scrollController,
-        itemCount: snapshot.data?.results.length,
+        itemCount: 10,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           final voteAverage = snapshot.data?.results[index].vote_average;

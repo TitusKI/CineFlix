@@ -71,8 +71,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               onChanged: (newQuery) {
                 query = newQuery;
-                print("selected type: $selectedMediaType");
-                print("Query: $query");
+
                 searchBloc.add(PerformSearchEvent(
                     query: query, mediaType: selectedMediaType));
               },
@@ -113,10 +112,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           onTap: () async {
                             List<Person>? cast;
                             final tapped = itemModel.results[index];
-                            print(
-                                "--------------${tapped.title}----------------");
-                            print(
-                                "selected media type inside search is: $selectedMediaType");
+
                             cast = await pplApi.fetchPeople(
                                 tapped.id, selectedMediaType == "tv" ? 2 : 1);
                             openDetailPage(

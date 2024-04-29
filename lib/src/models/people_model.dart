@@ -22,7 +22,6 @@ class People {
 
     List<Person> people =
         peopleList.map((person) => Person.fromJson(person)).toList();
-    print(people);
     return People(people: people);
   }
 

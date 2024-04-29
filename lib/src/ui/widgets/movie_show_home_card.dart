@@ -67,7 +67,6 @@ class MovieShowHomeCard extends StatelessWidget {
                 );
               } else if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.connectionState == ConnectionState.waiting) {
-                print("waiting state");
                 return const Center(
                   child: CircularProgressIndicator(),
                 );

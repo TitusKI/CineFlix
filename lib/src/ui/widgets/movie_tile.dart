@@ -48,15 +48,6 @@ class MovieTile extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.w200),
           ),
           StarRating(voteAverage: voteAverage!),
-          // Row(
-          //   children: [
-          //     Icon(
-          //       Icons.favorite,
-          //       color: Colors.red,
-          //     ),
-          //     Text(snapshot.data?.results[index].vote_average.toString() ?? "_"),
-          //   ],
-          // ),
           const SizedBox(
             height: 10.0,
           ),

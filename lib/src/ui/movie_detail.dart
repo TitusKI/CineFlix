@@ -122,7 +122,6 @@ class MovieDetailState extends State<MovieDetail> {
         body: SafeArea(
       child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          print('https://image.tmdb.org/t/p/w500$posterUrl');
           return [
             SliverAppBar(
               expandedHeight: 200.0,

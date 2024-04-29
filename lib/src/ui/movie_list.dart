@@ -65,6 +65,7 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           drawer: appDrawer(context),
           appBar: AppBar(
             title: const Text(
@@ -72,7 +73,7 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Colors.red,
+                color: AppColors.primaryElement,
               ),
             ),
             actions: [

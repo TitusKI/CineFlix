@@ -21,9 +21,9 @@ class _SearchScreenState extends State<SearchScreen> {
   String query = '';
   String selectedMediaType = 'movie'; // default media Type
 
-  year(String date) {
-    String year = '';
-    if (date.isNotEmpty) {
+  year(String? date) {
+    String year = 'N/A';
+    if (date != null) {
       DateTime dateTime = DateTime.parse(date);
       year = dateTime.year.toString();
     }
@@ -103,6 +103,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                  "(${year(itemModel.results[index].release_date)})")
                             ],
                           ),
                           onTap: () async {

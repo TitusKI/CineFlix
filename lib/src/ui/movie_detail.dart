@@ -151,9 +151,11 @@ class MovieDetailState extends State<MovieDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
                       margin: const EdgeInsets.only(top: 5.0),
                       child: Text(
                         title!,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 23,

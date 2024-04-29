@@ -15,7 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({super.key});
+  const FavoritesPage({
+    super.key,
+  });
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
@@ -76,8 +78,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
             children: [
               ListTile(
                 onTap: () async {
-                  cast = await pplApi
-                      .fetchPeople(snapshot.data!.results[index].id);
+                  cast = await pplApi.fetchPeople(
+                      snapshot.data!.results[index].id, 1);
                   openDetailPage(
                     context,
                     snapshot.data as ItemModel?,

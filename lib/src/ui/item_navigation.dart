@@ -1,11 +1,11 @@
 import 'package:cineflix/src/blocs/movies_detail_bloc_provider.dart';
 import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/people_model.dart';
-import 'package:cineflix/src/resources/people_api_provider.dart';
 import 'package:cineflix/src/ui/movie_detail.dart';
+
 import 'package:cineflix/src/ui/widgets/movie_show_list_builder.dart';
-import 'package:cineflix/src/ui/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../blocs/movies_bloc.dart';
 import '../models/item_model.dart';
@@ -61,7 +61,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
                       },
                       icon: const Icon(
                         Icons.home_filled,
-                        color: Colors.red,
+                        color: AppColors.primaryElement,
                       )),
                   // ,SizedBox(width: 80,),
                   Text(widget.pageTitle,
@@ -74,7 +74,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
                     child: Text('CineFlix',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: AppColors.primaryElement,
                         )),
                   ),
                 ]),
@@ -86,12 +86,18 @@ class _ItemNavigationState extends State<ItemNavigation> {
             stream: bloc.getStreamForIndex(widget.itemIndex ?? 5),
             builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
               if (snapshot.hasData) {
-                return MovieShowListBuilder(snapshot: snapshot);
+                return MovieShowListBuilder(
+                  snapshot: snapshot,
+                  mediaType: widget.buttonIndex ?? 1,
+                );
                 // return buildList(snapshot);
               } else if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: SpinKitThreeBounce(
+                    color: AppColors.primaryText,
+                    size: 20.0,
+                  ),
                 );
               } else if (snapshot.connectionState == ConnectionState.done) {
                 return const Center(
@@ -99,7 +105,11 @@ class _ItemNavigationState extends State<ItemNavigation> {
                 );
               }
 
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: SpinKitThreeBounce(
+                color: AppColors.primaryText,
+                size: 20.0,
+              ));
             },
           ),
         ),

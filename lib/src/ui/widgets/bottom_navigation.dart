@@ -1,3 +1,4 @@
+import 'package:cineflix/src/common/values/colors.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -20,7 +21,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       decoration: BoxDecoration(
           // color: const Color.fromARGB(255, 31, 31, 31),
           color: Colors.black,
-          border: Border.all(color: Colors.red, width: 3),
+          border: Border.all(color: AppColors.primaryElement, width: 3),
           borderRadius: const BorderRadius.all(Radius.circular(33)),
           boxShadow: const [
             BoxShadow(
@@ -39,7 +40,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 });
                 widget.onIndexChanged(currentIndex);
               }
-              print(currentIndex);
             },
             child: SizedBox(
               height: 36,
@@ -49,7 +49,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   : const Icon(
                       Icons.home,
                       size: 36,
-                      color: Colors.red,
+                      color: AppColors.primaryElement,
                     ),
             ),
           ),
@@ -61,7 +61,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 });
                 widget.onIndexChanged(currentIndex);
               }
-              print(currentIndex);
             },
             child: SizedBox(
               height: 36,
@@ -74,7 +73,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   : const Icon(
                       Icons.movie,
                       size: 36,
-                      color: Colors.red,
+                      color: AppColors.primaryElement,
                     ),
             ),
           ),
@@ -86,7 +85,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 });
                 widget.onIndexChanged(currentIndex);
               }
-              print(currentIndex);
             },
             child: SizedBox(
               height: 36,
@@ -96,7 +94,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   : const Icon(
                       Icons.favorite,
                       size: 36,
-                      color: Colors.red,
+                      color: AppColors.primaryElement,
                     ),
             ),
           )

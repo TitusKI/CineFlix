@@ -1,3 +1,4 @@
+import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/ui/widgets/carousel_container.dart';
 import 'package:cineflix/src/ui/widgets/movie_show_home_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,20 +31,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         TabBar(
           dividerColor: Colors.transparent,
           indicator: const UnderlineTabIndicator(
-            borderSide: BorderSide(width: 5.0, color: Colors.red),
+            borderSide: BorderSide(width: 5.0, color: AppColors.primaryElement),
             insets: EdgeInsets.symmetric(horizontal: 20.0),
           ),
           tabs: const [
             Tab(
               child: Text(
                 "Movies",
-                style: TextStyle(color: Colors.red, fontSize: 20),
+                style: TextStyle(color: AppColors.primaryElement, fontSize: 20),
               ),
             ),
             Tab(
               child: Text(
                 "Tv Shows",
-                style: TextStyle(color: Colors.red, fontSize: 20),
+                style: TextStyle(color: AppColors.primaryElement, fontSize: 20),
               ),
             ),
           ],

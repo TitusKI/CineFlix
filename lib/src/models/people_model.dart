@@ -8,9 +8,7 @@ class Person {
 
   factory Person.fromJson(Map<String, dynamic> json) {
     return Person(
-        id: json['cast_id'],
-        name: json['name'],
-        profilePath: json["profile_path"]);
+        id: json['id'], name: json['name'], profilePath: json["profile_path"]);
   }
 }
 
@@ -24,7 +22,6 @@ class People {
 
     List<Person> people =
         peopleList.map((person) => Person.fromJson(person)).toList();
-    print(people);
     return People(people: people);
   }
 

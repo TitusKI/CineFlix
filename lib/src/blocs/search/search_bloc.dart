@@ -39,11 +39,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     final String apiUrl = "https://api.themoviedb.org/3/search/$mediaType";
 
     final String url = "$apiUrl?query=$query&api_key=$apiKey";
-    print('API URL: $url');
 
     final response = await client.get(Uri.parse(url));
     final parsedJson = json.decode(response.body);
-    print('Response status code: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       return ItemModel.fromJson(parsedJson as Map<String, dynamic>);

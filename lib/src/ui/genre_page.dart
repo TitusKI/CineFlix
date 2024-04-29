@@ -1,3 +1,4 @@
+import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/genre_model.dart';
 import 'package:cineflix/src/resources/genre_api_provider.dart';
 import 'package:cineflix/src/ui/widgets/genre_card.dart';
@@ -48,9 +49,9 @@ class _GenrePageState extends State<GenrePage> {
           ));
         }
         return const Center(
-            child: SpinKitCubeGrid(
-          color: Colors.red,
-          size: 60.0,
+            child: SpinKitThreeBounce(
+          color: AppColors.primaryText,
+          size: 50.0,
         ));
       },
     );

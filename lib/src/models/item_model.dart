@@ -8,7 +8,6 @@ class ItemModel {
   // ignore: library_private_types_in_public_api
 
   ItemModel.fromJson(Map<String, dynamic> parsedJson) {
-    print(parsedJson['results'].length);
     _page = parsedJson['page'];
     _total_results = parsedJson['total_results'];
     _total_pages = parsedJson['total_pages'];

@@ -1,5 +1,6 @@
 import 'package:cineflix/src/common/date_formatter.dart';
 import 'package:cineflix/src/common/services/cloud_services.dart';
+import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/item_model.dart';
 import 'package:cineflix/src/models/people_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cineflix/src/ui/widgets/star_rating.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../models/trailer_model.dart';
 
@@ -122,7 +124,6 @@ class MovieDetailState extends State<MovieDetail> {
         body: SafeArea(
       child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          print('https://image.tmdb.org/t/p/w500$posterUrl');
           return [
             SliverAppBar(
               expandedHeight: 200.0,
@@ -134,7 +135,11 @@ class MovieDetailState extends State<MovieDetail> {
                   'https://image.tmdb.org/t/p/w500$posterUrl',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, StackTrace) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: SpinKitThreeBounce(
+                      color: AppColors.primaryText,
+                      size: 20.0,
+                    ));
                   },
                 ),
               ),
@@ -151,9 +156,11 @@ class MovieDetailState extends State<MovieDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
                       margin: const EdgeInsets.only(top: 5.0),
                       child: Text(
                         title!,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 23,
@@ -265,13 +272,19 @@ class MovieDetailState extends State<MovieDetail> {
                                 }
                               } else {
                                 return const Center(
-                                  child: CircularProgressIndicator(),
+                                  child: SpinKitThreeBounce(
+                                    color: AppColors.primaryText,
+                                    size: 20.0,
+                                  ),
                                 );
                               }
                             });
                       } else {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: SpinKitThreeBounce(
+                            color: AppColors.primaryText,
+                            size: 20.0,
+                          ),
                         );
                       }
                     }),

@@ -2,6 +2,7 @@ import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
 import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/pages/Settings/setting_page.dart';
+import 'package:cineflix/src/ui/about_us.dart';
 
 import 'package:cineflix/src/ui/favorites_page.dart';
 
@@ -65,6 +66,7 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           drawer: appDrawer(context),
           appBar: AppBar(
             title: const Text(
@@ -72,7 +74,7 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Colors.red,
+                color: AppColors.primaryElement,
               ),
             ),
             actions: [
@@ -143,29 +145,15 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
               color: AppColors.primarySecondaryElementText,
               thickness: 1.2,
             ),
-            drawerTile("share", "Share App", () {
+            drawerTile("settings", "Settings", () {
               Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const SettingsPage()));
             }),
-            drawerTile("star", "Rate Us", () {
-              Navigator.of(context).pop();
-            }),
-            drawerTile("feedback", "Feedback", () {
-              Navigator.of(context).pop();
-            }),
-            drawerTile("contact", "Contact Us", () {
-              Navigator.of(context).pop();
-            }),
-            const Divider(
-              color: AppColors.primarySecondaryElementText,
-              thickness: 1.2,
-            ),
-            drawerTile("", "Settings", () {
+            drawerTile("about", "About", () {
               Navigator.of(context).pop();
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SettingsPage()));
-            }),
-            drawerTile("", "About", () {
-              Navigator.of(context).pop();
+                  MaterialPageRoute(builder: (context) => const AboutUs()));
             }),
           ],
         ));
@@ -186,15 +174,11 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
 
   IconData? getIconData(String iconName) {
     switch (iconName) {
-      case "share":
-        return Icons.share;
-      case "star":
-        return Icons.star;
-      case "feedback":
-        return Icons.feedback;
-      case "contact":
-        return Icons.mail;
-      // Add more cases for other icon names as needed
+      case "settings":
+        return Icons.settings;
+      case "about":
+        return Icons.info;
+
       default:
         return null;
     }

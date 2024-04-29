@@ -1,6 +1,8 @@
+import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/item_model.dart';
 import 'package:cineflix/src/ui/widgets/star_rating.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MovieTile extends StatelessWidget {
   final ItemModel? itemModel;
@@ -30,7 +32,11 @@ class MovieTile extends StatelessWidget {
                   'https://image.tmdb.org/t/p/w185${itemModel?.results[index].poster_path}',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, StackTrace) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: SpinKitThreeBounce(
+                      color: AppColors.primaryText,
+                      size: 20.0,
+                    ));
                   },
                 ),
               ),
@@ -48,15 +54,6 @@ class MovieTile extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.w200),
           ),
           StarRating(voteAverage: voteAverage!),
-          // Row(
-          //   children: [
-          //     Icon(
-          //       Icons.favorite,
-          //       color: Colors.red,
-          //     ),
-          //     Text(snapshot.data?.results[index].vote_average.toString() ?? "_"),
-          //   ],
-          // ),
           const SizedBox(
             height: 10.0,
           ),

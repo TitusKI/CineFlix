@@ -1,8 +1,10 @@
 import 'package:cineflix/src/blocs/movies_bloc.dart';
+import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/item_model.dart';
 import 'package:cineflix/src/ui/item_navigation.dart';
 import 'package:cineflix/src/ui/widgets/movie_show_carousell.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MovieShowHomeCard extends StatelessWidget {
   final int categoryId;
@@ -61,12 +63,17 @@ class MovieShowHomeCard extends StatelessWidget {
             stream: bloc.getStreamForIndex(categoryId),
             builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
               if (snapshot.hasData) {
-                return MovieShowCarousel(snapshot: snapshot);
+                return MovieShowCarousel(
+                  snapshot: snapshot,
+                  mediaType: mediaId,
+                );
               } else if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.connectionState == ConnectionState.waiting) {
-                print("waiting state");
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: SpinKitThreeBounce(
+                    color: AppColors.primaryText,
+                    size: 20.0,
+                  ),
                 );
               } else if (snapshot.connectionState == ConnectionState.done) {
                 return const Center(
@@ -74,7 +81,11 @@ class MovieShowHomeCard extends StatelessWidget {
                 );
               }
 
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: SpinKitThreeBounce(
+                color: AppColors.primaryText,
+                size: 20.0,
+              ));
             },
           )
         ],

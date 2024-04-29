@@ -75,6 +75,7 @@ openDetailPage(
       // It is in the Initializer list of the MovieDetailBlocProvider instances
       key: GlobalKey(),
       child: MovieDetail(
+        itemIndex: index,
         title: data?.results[index].title,
         posterUrl: data?.results[index].poster_path,
         description: data?.results[index].overview,

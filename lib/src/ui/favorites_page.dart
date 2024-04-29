@@ -7,7 +7,8 @@ import 'package:cineflix/src/pages/common_widgets.dart';
 import 'package:cineflix/src/resources/people_api_provider.dart';
 import 'package:cineflix/src/ui/item_navigation.dart';
 import 'package:cineflix/src/ui/movie_detail.dart';
-import 'package:cineflix/src/ui/star_rating.dart';
+
+import 'package:cineflix/src/ui/widgets/star_rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

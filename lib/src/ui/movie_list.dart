@@ -143,28 +143,12 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
               color: AppColors.primarySecondaryElementText,
               thickness: 1.2,
             ),
-            drawerTile("share", "Share App", () {
+            drawerTile("settings", "Settings", () {
               Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const SettingsPage()));
             }),
-            drawerTile("star", "Rate Us", () {
-              Navigator.of(context).pop();
-            }),
-            drawerTile("feedback", "Feedback", () {
-              Navigator.of(context).pop();
-            }),
-            drawerTile("contact", "Contact Us", () {
-              Navigator.of(context).pop();
-            }),
-            const Divider(
-              color: AppColors.primarySecondaryElementText,
-              thickness: 1.2,
-            ),
-            drawerTile("", "Settings", () {
-              Navigator.of(context).pop();
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SettingsPage()));
-            }),
-            drawerTile("", "About", () {
+            drawerTile("about", "About", () {
               Navigator.of(context).pop();
             }),
           ],
@@ -186,15 +170,11 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
 
   IconData? getIconData(String iconName) {
     switch (iconName) {
-      case "share":
-        return Icons.share;
-      case "star":
-        return Icons.star;
-      case "feedback":
-        return Icons.feedback;
-      case "contact":
-        return Icons.mail;
-      // Add more cases for other icon names as needed
+      case "settings":
+        return Icons.settings;
+      case "about":
+        return Icons.info;
+
       default:
         return null;
     }

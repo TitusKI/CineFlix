@@ -71,9 +71,10 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               onChanged: (newQuery) {
                 query = newQuery;
+                print("selected type: $selectedMediaType");
                 print("Query: $query");
-                searchBloc
-                    .add(PerformSearchEvent(query: query, mediaType: 'movie'));
+                searchBloc.add(PerformSearchEvent(
+                    query: query, mediaType: selectedMediaType));
               },
             ),
           ],
@@ -102,16 +103,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ),
-                              // Text(
-                              //   " (${year(itemModel.results[index].release_date ?? " ")})",
-                              //   style: const TextStyle(color: Colors.white),
-                              // ),
                             ],
                           ),
                           onTap: () async {
                             List<Person>? cast;
                             final tapped = itemModel.results[index];
-                            cast = await pplApi.fetchPeople(tapped.id);
+                            print(
+                                "--------------${tapped.title}----------------");
+                            print(
+                                "selected media type inside search is: $selectedMediaType");
+                            cast = await pplApi.fetchPeople(
+                                tapped.id, selectedMediaType == "tv" ? 2 : 1);
                             openDetailPage(
                               context,
                               itemModel,
@@ -122,22 +124,22 @@ class _SearchScreenState extends State<SearchScreen> {
                             // Navigator.of(context)
                             // Navigator.of(context).pushNamed('/movie_detail');
 
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => MovieDetail(
-                                  title: tapped.title,
-                                  voteAverage: tapped.vote_average,
-                                  movieId: tapped.id,
-                                  releaseDate: tapped.release_date ?? "",
-                                  cast: cast,
-                                  itemIndex: index,
-                                  //  Since it causes invalid format date exeception
-                                  // releaseDate: tapped.release_date,
-                                  posterUrl: tapped.poster_path,
-                                  description: tapped.overview,
-                                ),
-                              ),
-                            );
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //     builder: (context) => MovieDetail(
+                            //       title: tapped.title,
+                            //       voteAverage: tapped.vote_average,
+                            //       movieId: tapped.id,
+                            //       releaseDate: tapped.release_date ?? "",
+                            //       cast: cast,
+                            //       itemIndex: index,
+                            //       //  Since it causes invalid format date exeception
+                            //       // releaseDate: tapped.release_date,
+                            //       posterUrl: tapped.poster_path,
+                            //       description: tapped.overview,
+                            //     ),
+                            //   ),
+                            // );
                           },
                         );
                       },

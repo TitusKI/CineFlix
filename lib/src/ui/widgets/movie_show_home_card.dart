@@ -61,7 +61,10 @@ class MovieShowHomeCard extends StatelessWidget {
             stream: bloc.getStreamForIndex(categoryId),
             builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
               if (snapshot.hasData) {
-                return MovieShowCarousel(snapshot: snapshot);
+                return MovieShowCarousel(
+                  snapshot: snapshot,
+                  mediaType: mediaId,
+                );
               } else if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.connectionState == ConnectionState.waiting) {
                 print("waiting state");

@@ -27,6 +27,7 @@ class GenreCard extends StatelessWidget {
       key: Key(genreId),
       child: GestureDetector(
         onTap: () {
+          print(genreId);
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ItemNavigation(
                     pageTitle: "$genreName Movies",

@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 
 class MovieShowCarousel extends StatelessWidget {
   final AsyncSnapshot<ItemModel?> snapshot;
+  final int mediaType;
 
-  const MovieShowCarousel({super.key, required this.snapshot});
+  const MovieShowCarousel(
+      {super.key, required this.snapshot, required this.mediaType});
 
   // }
   @override
@@ -29,8 +31,8 @@ class MovieShowCarousel extends StatelessWidget {
           return GestureDetector(
               // // we can use GestureDetector instead of InkResponse
               onTap: () async {
-                cast =
-                    await pplApi.fetchPeople(snapshot.data!.results[index].id);
+                cast = await pplApi.fetchPeople(
+                    snapshot.data!.results[index].id, mediaType);
                 openDetailPage(
                   context,
                   snapshot.data,
@@ -67,6 +69,7 @@ openDetailPage(
         voteAverage: data?.results[index].vote_average,
         movieId: data!.results[index].id,
         cast: cast,
+        itemIndex: index,
       ),
     );
   }));

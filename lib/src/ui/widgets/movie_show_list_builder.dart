@@ -8,7 +8,12 @@ import 'package:flutter/material.dart';
 
 class MovieShowListBuilder extends StatefulWidget {
   final AsyncSnapshot<ItemModel?> snapshot;
-  const MovieShowListBuilder({super.key, required this.snapshot});
+  final int mediaType;
+  const MovieShowListBuilder({
+    super.key,
+    required this.snapshot,
+    required this.mediaType,
+  });
 
   @override
   State<MovieShowListBuilder> createState() => _MovieShowListBuilderState();
@@ -41,8 +46,9 @@ class _MovieShowListBuilderState extends State<MovieShowListBuilder> {
                 return GestureDetector(
                     // // we can use GestureDetector instead of InkResponse
                     onTap: () async {
-                      cast = await pplApi
-                          .fetchPeople(widget.snapshot.data!.results[index].id);
+                      cast = await pplApi.fetchPeople(
+                          widget.snapshot.data!.results[index].id,
+                          widget.mediaType);
                       openDetailPage(
                         context,
                         widget.snapshot.data,
@@ -82,6 +88,7 @@ openDetailPage(
         voteAverage: data?.results[index].vote_average,
         movieId: data!.results[index].id,
         cast: cast,
+        itemIndex: index,
       ),
     );
   }));

@@ -1,4 +1,7 @@
+import 'package:cineflix/src/blocs/movies_detail_bloc_provider.dart';
 import 'package:cineflix/src/common/values/colors.dart';
+import 'package:cineflix/src/models/people_model.dart';
+import 'package:cineflix/src/ui/movie_detail.dart';
 
 import 'package:cineflix/src/ui/widgets/movie_show_list_builder.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +85,10 @@ class _ItemNavigationState extends State<ItemNavigation> {
             stream: bloc.getStreamForIndex(widget.itemIndex ?? 5),
             builder: (context, AsyncSnapshot<ItemModel?> snapshot) {
               if (snapshot.hasData) {
-                return MovieShowListBuilder(snapshot: snapshot);
+                return MovieShowListBuilder(
+                  snapshot: snapshot,
+                  mediaType: widget.buttonIndex ?? 1,
+                );
                 // return buildList(snapshot);
               } else if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.connectionState == ConnectionState.waiting) {

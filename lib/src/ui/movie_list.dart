@@ -2,6 +2,7 @@ import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
 import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/pages/Settings/setting_page.dart';
+import 'package:cineflix/src/ui/about_us.dart';
 
 import 'package:cineflix/src/ui/favorites_page.dart';
 
@@ -151,6 +152,8 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
             }),
             drawerTile("about", "About", () {
               Navigator.of(context).pop();
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const AboutUs()));
             }),
           ],
         ));

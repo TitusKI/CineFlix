@@ -101,7 +101,7 @@ class _ItemNavigationState extends State<ItemNavigation> {
                 );
               } else if (snapshot.connectionState == ConnectionState.done) {
                 return const Center(
-                  child: Text('No data avaliable'),
+                  child: Text('No data avaliable!'),
                 );
               }
 

@@ -20,8 +20,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MovieList extends StatefulWidget {
-  const MovieList({super.key});
-
   @override
   State<MovieList> createState() => _MovieListState();
 }

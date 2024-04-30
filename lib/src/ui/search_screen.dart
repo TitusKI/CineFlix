@@ -51,7 +51,7 @@ class _SearchScreenState extends State<SearchScreen> {
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintStyle: const TextStyle(color: Colors.white, fontSize: 20),
-                hintText: 'Search for a Movie, TvShow, Series.....',
+                hintText: 'Search for a movie, tvshow.....',
                 suffixIcon: PopupMenuButton<String>(
                   onSelected: (String mediaType) {
                     selectedMediaType = mediaType;

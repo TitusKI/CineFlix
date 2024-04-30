@@ -31,8 +31,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         TabBar(
           dividerColor: Colors.transparent,
           indicator: const UnderlineTabIndicator(
-            borderSide:
-                BorderSide(width: 50.0, color: AppColors.primaryElement),
+            borderSide: BorderSide(width: 5.0, color: AppColors.primaryElement),
             insets: EdgeInsets.symmetric(horizontal: 20.0),
           ),
           tabs: const [

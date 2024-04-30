@@ -31,4 +31,7 @@ class StorageService {
   Future<bool>? remove(String key) {
     return _prefs.remove(key);
   }
+  // bool getIsFavoriteClicked(){
+  //   return _prefs.getBool(key);
+  // }
 }

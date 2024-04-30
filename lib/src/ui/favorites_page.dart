@@ -62,7 +62,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
           Map<String, dynamic> data = document.data() as Map<String, dynamic>;
           String imageUrl = data['imageUrl'] ?? " ";
-          print("Image : $imageUrl");
+          print("Image: $imageUrl");
 
           String title = data['title'] ?? " ";
           print("title: $title");
@@ -154,7 +154,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             ));
           } else if (snapshot.connectionState == ConnectionState.done) {
             return const Center(
-              child: Text('No favorite avaliable'),
+              child: Text('No favorite avaliable.'),
             );
           }
 

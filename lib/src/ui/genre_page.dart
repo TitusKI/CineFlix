@@ -44,7 +44,7 @@ class _GenrePageState extends State<GenrePage> {
         } else if (snapshot.hasError) {
           return const Center(
               child: Text(
-            "Could not fetch genres",
+            "Could not fetch genres.",
             style: TextStyle(fontSize: 28),
           ));
         }

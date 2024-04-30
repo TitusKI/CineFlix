@@ -1,16 +1,33 @@
-# cineflix
+# CineFlix
 
-A new Flutter project.
+CineFlix is a Flutter project that allows users to browse and discover movies and TV shows.
+
+## Features
+
+- Browse popular movies and TV shows
+- Search for movies and TV shows
+- View movie and TV show details
+- Save favorite movies and TV shows
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To get started with the CineFlix project, follow these steps:
 
-A few resources to get you started if this is your first Flutter project:
+1. Clone the repository: `git clone https://github.com/your-username/CineFlix.git`
+2. Navigate to the project directory: `cd CineFlix`
+3. Install dependencies: `flutter pub get`
+4. Run the app: `flutter run`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Screenshots
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Home Screen](screenshots/home_screen.png)
+![Movie Details](screenshots/movie_details.png)
+![Search Results](screenshots/search_results.png)
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

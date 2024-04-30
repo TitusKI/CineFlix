@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Column(
       children: [
         const SizedBox(
-          height: 20,
+          height: 30,
         ),
         TabBar(
           dividerColor: Colors.transparent,

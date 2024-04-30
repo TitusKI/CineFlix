@@ -23,7 +23,7 @@ class AboutUs extends StatelessWidget {
             ),
             SizedBox(height: 20.0),
             Text(
-              'At Cineflix, we\'re passionate about bringing the magic of cinema and television to your fingertips. With an extensive collection of movies and shows spanning various genres, languages, and cultures, we strive to cater to the diverse tastes of our global audience.',
+              'At Cineflix, we\'re passionately dedicated bringing the magic of cinema and television to your fingertips. With an extensive collection of movies and shows spanning various genres, languages, and cultures, we strive to cater to the diverse tastes of our global audience.',
               style: TextStyle(fontSize: 16.0),
             ),
             SizedBox(height: 20.0),

@@ -64,7 +64,13 @@ class MovieDetailState extends State<MovieDetail> {
   final List<Person>? cast;
   final int itemIndex;
   final ItemModel? itemModel;
-  bool _isFavorite = false;
+
+  late bool _isFavorite = false;
+  late DocumentReference favoriteDocRef = favoriteServices.myCollection
+      .doc(itemModel?.results[itemIndex].id.toString());
+  //   final CollectionReference myCollection =
+  //     FirebaseFirestore.instance.collection('UsersWithFavorite');
+  // final DocumentReference favoriteDocRef = myCollection.doc(_user)
   FavoriteServices favoriteServices = FavoriteServices();
 
   MovieDetailState({
@@ -81,11 +87,13 @@ class MovieDetailState extends State<MovieDetail> {
 
   double? _trailerHeight;
   String? _emailAddress;
+
   @override
   void initState() {
     super.initState();
     // Fetch username when the drawer is initialized
     fetchUsername();
+    fetchFavoriteData();
   }
 
   Future<void> fetchUsername() async {
@@ -97,6 +105,13 @@ class MovieDetailState extends State<MovieDetail> {
         _emailAddress = userData.get('email');
       });
     }
+  }
+
+  Future<void> fetchFavoriteData() async {
+    final DocumentSnapshot favortieDocSnap = await favoriteDocRef.get();
+    setState(() {
+      _isFavorite = favortieDocSnap.exists;
+    });
   }
 
   @override
@@ -167,13 +182,10 @@ class MovieDetailState extends State<MovieDetail> {
                     ),
                     IconButton(
                       onPressed: () {
-                        setState(() {
-                          _isFavorite = !_isFavorite;
-                        });
                         if (_isFavorite) {
-                          onFavoritePressed();
-                        } else {
                           onFavoriteRemove(itemModel);
+                        } else {
+                          onFavoritePressed();
                         }
                       },
                       icon: Icon(

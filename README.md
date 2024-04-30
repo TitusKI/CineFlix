@@ -44,3 +44,10 @@ Thank you for contributing to CineFlix! Your help is greatly appreciated.
 ## License 📝
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Deployment 🚀
+
+CineFlix can be deployed to various platforms. Here are the steps to deploy the app:
+
+1. Build the app for the desired platform: `flutter build <platform>`
+2. Follow the platform-specific deployment instructions to deploy the app.

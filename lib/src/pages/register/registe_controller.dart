@@ -69,7 +69,7 @@ class RegisterController {
       if (e.code == "weak-password") {
         toastInfo(msg: "The password provided is too weak");
       }
-      if (e.code == "email-already-in-in-use") {
+      if (e.code == "email-already-in-use") {
         toastInfo(msg: "The email is already in use");
       }
       if (e.code == "invalid-email") {

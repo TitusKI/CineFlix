@@ -89,7 +89,7 @@ openDetailPage(
         voteAverage: data?.results[index].vote_average,
         movieId: data!.results[index].id,
         cast: cast,
-        itemIndex: index,
+        itemModel: data,
       ),
     );
   }));

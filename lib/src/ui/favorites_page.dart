@@ -25,32 +25,32 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPageState extends State<FavoritesPage> {
   FavoriteServices favoriteServices = FavoriteServices();
-  String? _userEmail;
-  @override
-  void initState() {
-    super.initState();
-    // Fetch username when the drawer is initialized
-    fetchUsername();
-  }
+//   String? _userEmail;
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Fetch username when the drawer is initialized
+//     fetchUsername();
+//   }
 
-  Future<void> fetchUsername() async {
-    String? userEmail = FirebaseAuth.instance.currentUser?.email;
-    if (_userEmail != null) {
-      DocumentSnapshot userData = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userEmail)
-          .get();
-      setState(() {
-        _userEmail = userData.get('email');
-      });
-    }
-  }
+//   Future<void> fetchUsername() async {
+//     String? userEmail = FirebaseAuth.instance.currentUser?.email;
+//     if (_userEmail != null) {
+//       DocumentSnapshot userData = await FirebaseFirestore.instance
+//           .collection('users')
+//           .doc(userEmail)
+//           .get();
+//       setState(() {
+//         _userEmail = userData.get('email');
+//       });
+//     }
+//   }
 
   buildFavoriteList(snapshot) {
     PeopleApiProvider pplApi = PeopleApiProvider();
     late List<Person> cast;
     List favoriteList = snapshot.data!.docs;
-    print(favoriteList);
+    print("List of favorite: $favoriteList");
     const Divider(
       color: AppColors.primarySecondaryElementText,
       thickness: 1.5,
@@ -77,16 +77,16 @@ class _FavoritesPageState extends State<FavoritesPage> {
           return Column(
             children: [
               ListTile(
-                onTap: () async {
-                  cast = await pplApi.fetchPeople(
-                      snapshot.data!.results[index].id, 1);
-                  openDetailPage(
-                    context,
-                    snapshot.data as ItemModel?,
-                    cast,
-                    index,
-                  );
-                },
+                onTap: () async {},
+                //   cast = await pplApi.fetchPeople(
+                //       snapshot.data!.results[index].id, 2);
+                //   openDetailPage(
+                //     context,
+                //     snapshot.data as ItemModel?,
+                //     cast,
+                //     index,
+                //   );
+                // },
                 title: AspectRatio(
                   aspectRatio: 2 / 3,
                   child: Image(
@@ -142,7 +142,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: favoriteServices.getRetriveData(_userEmail),
+        stream: favoriteServices
+            .getRetriveData(FirebaseAuth.instance.currentUser?.email),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return buildFavoriteList(snapshot);

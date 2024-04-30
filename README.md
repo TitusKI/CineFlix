@@ -41,7 +41,7 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 
 Thank you for contributing to CineFlix! Your help is greatly appreciated.
 
-## License
+## License 📝
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 

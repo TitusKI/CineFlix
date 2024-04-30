@@ -62,3 +62,10 @@ CineFlix is built using the following technologies:
 ## Support 📧
 
 If you have any questions or need support, please feel free to reach out to us at support@cineflix.com.
+
+## Acknowledgements 🙏
+
+We would like to thank the following resources for their contributions to CineFlix:
+
+- [The Movie Database (TMDb)](https://www.themoviedb.org/): A comprehensive database of movies and TV shows.
+- [Flutter](https://flutter.dev/): The UI toolkit used to build CineFlix.

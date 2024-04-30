@@ -4,7 +4,7 @@ CineFlix: A mobile app for movie enthusiasts. Search, explore, and watch trailer
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application, with firebase as its database.
 
 A few resources to get you started if this is your first Flutter project:
 

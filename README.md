@@ -24,7 +24,7 @@ To get started with the CineFlix project, follow these steps:
 ![Movie Details](screenshots/movie_details.png)
 ![Search Results](screenshots/search_results.png)
 
-## Contributing
+## Contributing 🤝
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please follow these steps to contribute:
 

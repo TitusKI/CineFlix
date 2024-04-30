@@ -51,3 +51,10 @@ CineFlix can be deployed to various platforms. Here are the steps to deploy the 
 
 1. Build the app for the desired platform: `flutter build <platform>`
 2. Follow the platform-specific deployment instructions to deploy the app.
+
+## Technologies Used 💻
+
+CineFlix is built using the following technologies:
+
+- Flutter: A UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
+- Dart: A programming language used for building Flutter applications.

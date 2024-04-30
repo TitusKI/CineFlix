@@ -58,3 +58,7 @@ CineFlix is built using the following technologies:
 
 - Flutter: A UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
 - Dart: A programming language used for building Flutter applications.
+
+## Support 📧
+
+If you have any questions or need support, please feel free to reach out to us at support@cineflix.com.

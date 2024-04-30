@@ -105,11 +105,10 @@ class _ItemNavigationState extends State<ItemNavigation> {
                 );
               }
 
-              return const Center(
-                  child: SpinKitThreeBounce(
-                color: AppColors.primaryText,
-                size: 20.0,
-              ));
+              return const Center(child: SpinKitThreeBounce(
+          color: AppColors.primaryText,
+          size: 20.0,
+        ));
             },
           ),
         ),

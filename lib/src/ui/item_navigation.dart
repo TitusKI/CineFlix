@@ -118,55 +118,12 @@ class _ItemNavigationState extends State<ItemNavigation> {
   }
 }
 
-// buildList(AsyncSnapshot<ItemModel?> snapshot) {
-//   PeopleApiProvider pplApi = PeopleApiProvider();
-//   late List<Person> cast;
-//   return Column(
-//     children: [
-//       const SizedBox(
-//         height: 30,
-//       ),
-//       Expanded(
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-//           child: GridView.builder(
-//             itemCount: snapshot.data?.results.length,
-//             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//               childAspectRatio: 5 / 8,
-//               crossAxisSpacing: 20,
-//               mainAxisSpacing: 20,
-//               crossAxisCount: 2,
-//             ),
-//             itemBuilder: (BuildContext context, int index) {
-//               final voteAverage = snapshot.data?.results[index].vote_average;
-//               return GestureDetector(
-//                   // // we can use GestureDetector instead of InkResponse
-//                   onTap: () async {
-//                     cast = await pplApi
-//                         .fetchPeople(snapshot.data!.results[index].id);
-//                     openDetailPage(
-//                       context,
-//                       snapshot.data,
-//                       cast,
-//                       index,
-//                     );
-//                   },
-//                   child: MovieTile(
-//                     itemModel: snapshot.data,
-//                     index: index,
-//                     voteAverage: voteAverage,
-//                   ));
-//             },
-//           ),
-//         ),
-//       ),
-//     ],
-//   );
-// }
-
 openDetailPage(
     BuildContext context, ItemModel? data, List<Person> cast, int index) {
   Navigator.push(context, MaterialPageRoute(builder: (context) {
+    print("The MovieData : ");
+    print(data);
+
     return MovieDetailBlocProvider(
       // Returning of instances of MovieDetailBlocProvider(InheritedWidget)
       // wrapping the MOvieDetail screen to it.

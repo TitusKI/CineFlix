@@ -1,6 +1,6 @@
 # cineflix
 
-A new Flutter project.
+CineFlix: A mobile app for movie enthusiasts. Search, explore, and watch trailers for movies and series. Discover and enjoy a world of entertainment on-the-go.
 
 ## Getting Started
 

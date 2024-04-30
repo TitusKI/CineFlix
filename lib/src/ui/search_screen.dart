@@ -12,7 +12,7 @@ import 'package:cineflix/src/blocs/search/search_state.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
-
+  @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
 

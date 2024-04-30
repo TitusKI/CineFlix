@@ -154,7 +154,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             ));
           } else if (snapshot.connectionState == ConnectionState.done) {
             return const Center(
-              child: Text('No favorite avaliable'),
+              child: Text('No favorite avaliable.'),
             );
           }
 

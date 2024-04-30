@@ -1,6 +1,6 @@
 # CineFlix 🎬
 
-CineFlix is a Flutter project that allows users to browse and discover movies and TV shows.
+CineFlix is a Flutter project that allows users to browse, discover movies and TV shows of wide range.
 
 ## Features 🌟
 
@@ -76,3 +76,4 @@ Thank you for contributing to CineFlix! Your help is greatly appreciated.
 ## License 📝
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+

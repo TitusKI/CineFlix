@@ -6,7 +6,7 @@ CineFlix is a Flutter project that allows users to browse and discover movies an
 
 - Browse popular movies and TV shows
 - Search for movies and TV shows
-- View movie and TV show details
+- View movie and TV show Trailers
 - Save favorite movies and TV shows
 
 ## Getting Started

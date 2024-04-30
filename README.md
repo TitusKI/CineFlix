@@ -1,4 +1,4 @@
-# CineFlix
+# CineFlix 🎬
 
 CineFlix is a Flutter project that allows users to browse and discover movies and TV shows.
 

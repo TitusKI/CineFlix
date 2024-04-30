@@ -69,3 +69,10 @@ We would like to thank the following resources for their contributions to CineFl
 
 - [The Movie Database (TMDb)](https://www.themoviedb.org/): A comprehensive database of movies and TV shows.
 - [Flutter](https://flutter.dev/): The UI toolkit used to build CineFlix.
+
+## Roadmap 🗺️
+
+- Recommendations based on user preferences
+- Integration with social media platforms
+
+We welcome any suggestions or ideas for additional features!

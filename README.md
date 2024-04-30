@@ -18,7 +18,7 @@ To get started with the CineFlix project, follow these steps:
 3. Install dependencies: `flutter pub get`
 4. Run the app: `flutter run`
 
-## Screenshots
+## Screenshots 📸
 
 ![Home Screen](screenshots/home_screen.png)
 ![Movie Details](screenshots/movie_details.png)

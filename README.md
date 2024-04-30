@@ -24,10 +24,6 @@ To get started with the CineFlix project, follow these steps:
 ![Movie Details](screenshots/movie_details.png)
 ![Search Results](screenshots/search_results.png)
 
-## License 📝
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Deployment 🚀
 
 CineFlix can be deployed to various platforms. Here are the steps to deploy the app:
@@ -76,3 +72,7 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 10. Submit the pull request and wait for the project maintainers to review and merge your changes.
 
 Thank you for contributing to CineFlix! Your help is greatly appreciated.
+
+## License 📝
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

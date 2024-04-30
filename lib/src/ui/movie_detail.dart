@@ -25,18 +25,17 @@ class MovieDetail extends StatefulWidget {
   final int itemIndex;
   final ItemModel? itemModel;
 
-  const MovieDetail({
-    super.key,
-    required this.title,
-    this.posterUrl,
-    this.description,
-    this.releaseDate,
-    required this.voteAverage,
-    required this.movieId,
-    this.cast,
-    required this.itemIndex,
-    this.itemModel,
-  });
+  const MovieDetail(
+      {super.key,
+      required this.title,
+      this.posterUrl,
+      this.description,
+      this.releaseDate,
+      required this.voteAverage,
+      required this.movieId,
+      this.cast,
+      required this.itemIndex,
+      this.itemModel});
   @override
   State<StatefulWidget> createState() {
     return MovieDetailState(

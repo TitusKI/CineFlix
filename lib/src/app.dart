@@ -23,9 +23,12 @@ class App extends StatelessWidget {
       providers: [...AppPages.allBlocProvider(context)],
       child: ScreenUtilInit(
         builder: (context, child) => MaterialApp(
-          // home: SplashScreen(),
           debugShowCheckedModeBanner: false,
-          theme: ThemeData.dark(),
+          theme: ThemeData(
+            primaryColor: Colors.red,
+            brightness: Brightness.dark,
+          ),
+          // home: const SplashScreen(),
           // theme: ThemeData(
 
           //   iconTheme: const IconThemeData(color: AppColors.primaryText),

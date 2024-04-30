@@ -6,8 +6,6 @@ import 'package:cineflix/src/models/people_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cineflix/src/ui/widgets/star_rating.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../models/trailer_model.dart';
@@ -173,7 +171,7 @@ class MovieDetailState extends State<MovieDetail> {
                           _isFavorite = !_isFavorite;
                         });
                         if (_isFavorite) {
-                          onFavoritePressed(itemModel);
+                          onFavoritePressed();
                         } else {
                           onFavoriteRemove(itemModel);
                         }
@@ -296,9 +294,9 @@ class MovieDetailState extends State<MovieDetail> {
     ));
   }
 
-  onFavoritePressed(ItemModel? moviesModel) {
+  onFavoritePressed() {
     //  final id = moviesModel!.results[].id;
-    favoriteServices.addFavorite(moviesModel!, itemIndex);
+    favoriteServices.addFavorite(itemModel!, itemIndex);
   }
 
   onFavoriteRemove(ItemModel? moviesModel) {

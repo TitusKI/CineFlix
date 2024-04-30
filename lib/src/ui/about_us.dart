@@ -62,7 +62,7 @@ class AboutUs extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Text(
-              'Extensive Library',
+              'Extensive Library!',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10.0),
@@ -72,7 +72,7 @@ class AboutUs extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Text(
-              'Seamless Experience',
+              'Seamless Experience!',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10.0),

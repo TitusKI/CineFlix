@@ -132,6 +132,7 @@ class MovieDetailState extends State<MovieDetail> {
   @override
   Widget build(BuildContext context) {
     const String baseImgUrl = "https://image.tmdb.org/t/p/w500";
+    print(posterUrl);
     return Scaffold(
         body: SafeArea(
       child: NestedScrollView(
@@ -143,15 +144,26 @@ class MovieDetailState extends State<MovieDetail> {
               pinned: true,
               elevation: 0.0,
               flexibleSpace: FlexibleSpaceBar(
+                //     background:
+                //         Image.network("$baseImgUrl/$posterUrl", fit: BoxFit.cover,
+                //             errorBuilder: (context, error, stackTrace) {
+                //   return Image.asset(
+                //     "assets/moviesAssets/user_profile.jpg",
+                //     fit: BoxFit.cover,
+                //   );
+                // })
                 background: Image.network(
-                  'https://image.tmdb.org/t/p/w500$posterUrl',
+                  '$baseImgUrl$posterUrl',
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, StackTrace) {
+                  loadingBuilder: (context, error, StackTrace) {
                     return const Center(
                         child: SpinKitThreeBounce(
                       color: AppColors.primaryText,
                       size: 20.0,
                     ));
+                  },
+                  errorBuilder: (context, error, StackTrace) {
+                    return const Center(child: Text("Could not Fetch Poster"));
                   },
                 ),
               ),

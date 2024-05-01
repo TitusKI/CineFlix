@@ -87,6 +87,7 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
               Builder(builder: (context) {
                 return IconButton(
                   onPressed: () {
+                    //TODO: remove prev. searches
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const SearchScreen()));
                   },

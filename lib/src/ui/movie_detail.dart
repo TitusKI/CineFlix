@@ -192,11 +192,11 @@ class MovieDetailState extends State<MovieDetail> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_isFavorite) {
-                          onFavoriteRemove(itemModel);
+                          await onFavoriteRemove(itemModel);
                         } else {
-                          onFavoritePressed();
+                          await onFavoritePressed();
                         }
                       },
                       icon: Icon(

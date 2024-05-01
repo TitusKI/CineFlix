@@ -227,6 +227,7 @@ class MovieDetailState extends State<MovieDetail> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: cast!.map((item) {
+                      print("profile: ${item.profilePath}");
                       // int index = cast!.indexOf(item);
                       return Container(
                         width: 100,
@@ -238,12 +239,17 @@ class MovieDetailState extends State<MovieDetail> {
                               height: 120,
                               width: 90,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  "$baseImgUrl/${item.profilePath}",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    "$baseImgUrl/${item.profilePath}",
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(
+                                        "assets/moviesAssets/user_profile.jpg",
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  )),
                             ),
                             Expanded(
                               child: Text(

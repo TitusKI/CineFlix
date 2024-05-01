@@ -21,7 +21,7 @@ class _SearchScreenState extends State<SearchScreen> {
   String selectedMediaType = 'movie'; // default media Type
 
   year(String? date) {
-    String year = 'N/A';
+    String year = "";
     if (date != null) {
       DateTime dateTime = DateTime.parse(date);
       year = dateTime.year.toString();
@@ -34,6 +34,7 @@ class _SearchScreenState extends State<SearchScreen> {
     final SearchBloc searchBloc = BlocProvider.of<SearchBloc>(context);
     PeopleApiProvider pplApi = PeopleApiProvider();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(1.0),
@@ -92,6 +93,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       shrinkWrap: true,
                       itemCount: itemModel!.results.length,
                       itemBuilder: (context, index) {
+                        print("the index is $index");
                         return ListTile(
                           title: Row(
                             children: [
@@ -104,8 +106,16 @@ class _SearchScreenState extends State<SearchScreen> {
                               const SizedBox(
                                 width: 10,
                               ),
-                              Text(
-                                  "(${year(itemModel.results[index].release_date)})")
+                              if (itemModel.results[index].release_date !=
+                                      null &&
+                                  itemModel
+                                      .results[index].release_date!.isNotEmpty)
+                                Text(
+                                    "(${year(itemModel.results[index].release_date)})")
+                              else
+                                Container()
+                              // Text(
+                              //     "(${year(itemModel.results[index].release_date)})")
                             ],
                           ),
                           onTap: () async {
@@ -148,7 +158,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     return Center(
                         child: Text('Error searching: ${state.errorMessage}'));
                   } else {
-                    return Container();
+                    return const Center(
+                        child:
+                            Text("Unknown problem occured! please try again."));
                   }
                   // throw Exception("Error displaying");
                 },

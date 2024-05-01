@@ -73,8 +73,10 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 9. Provide a clear and descriptive title for your pull request, along with a detailed description of the changes you made.
 10. Submit the pull request and wait for the project maintainers to review and merge your changes.
 
-Thank you for contributing to CineFlix! Your help is greatly appreciated.
+Thank you for contributing to CineFlix!
 
 ## License 📝
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+🎬🍿📺 Happy watching with CineFlix! 📺🍿🎬

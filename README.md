@@ -33,10 +33,10 @@ CineFlix can be deployed to various platforms. Here's how:
 
 ## Technologies Used 💻
 
-CineFlix is built using the following technologies:
+CineFlix is powered by:
 
-- Flutter: A UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
-- Dart: A programming language used for building Flutter applications.
+- **Flutter**: A versatile UI toolkit for building natively compiled applications across multiple platforms.
+- **Dart**: The programming language behind Flutter's magic.
 
 ## Support 📧
 
@@ -51,10 +51,12 @@ We would like to thank the following resources for their contributions to CineFl
 
 ## Roadmap 🗺️
 
-- Recommendations based on user preferences
-- Integration with social media platforms
+Our roadmap includes:
 
-We welcome any suggestions or ideas for additional features!
+- Recommendations based on user preferences 📜
+- Integration with social media platforms 📱
+
+We welcome your suggestions and feature requests!
 
 ## Contributing 🤝
 

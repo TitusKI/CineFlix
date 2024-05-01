@@ -126,7 +126,7 @@ class MovieDetailState extends State<MovieDetail> {
   @override
   void dispose() {
     bloc.dispose();
-
+    //  fetchFavoriteData().ignore();
     super.dispose();
   }
 

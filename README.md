@@ -11,12 +11,12 @@ CineFlix is a Flutter project that immerses users in the world of movies and TV 
 
 ## Getting Started 🚀
 
-To get started with the CineFlix project, follow these steps:
+To dive into the CineFlix project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/CineFlix.git`
-2. Navigate to the project directory: `cd CineFlix`
-3. Install dependencies: `flutter pub get`
-4. Run the app: `flutter run`
+1. **Clone the repository**: `git clone https://github.com/your-username/CineFlix.git`
+2. **Navigate to the project directory**: `cd CineFlix`
+3. **Install dependencies**: `flutter pub get`
+4. **Run the app**: `flutter run`
 
 ## Screenshots 📸
 

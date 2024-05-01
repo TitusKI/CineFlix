@@ -1,4 +1,3 @@
-import 'package:cineflix/src/models/item_model.dart';
 import 'package:rxdart/rxdart.dart';
 import '../models/trailer_model.dart';
 import '../resources/repository.dart';

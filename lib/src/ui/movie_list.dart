@@ -38,11 +38,17 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
 
   Future<void> fetchUsername() async {
     String? uid = FirebaseAuth.instance.currentUser?.uid;
+
     if (uid != null) {
       DocumentSnapshot userData =
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      _username = userData.get('username');
+      setState(() {});
+    } else {
+      DocumentSnapshot userData =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
       setState(() {
-        _username = userData.get('username');
+        _username = userData.get('Welcome');
       });
     }
   }
@@ -81,6 +87,7 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
               Builder(builder: (context) {
                 return IconButton(
                   onPressed: () {
+                    //TODO: remove prev. searches
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const SearchScreen()));
                   },

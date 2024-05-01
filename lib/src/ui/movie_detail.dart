@@ -6,8 +6,6 @@ import 'package:cineflix/src/models/people_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cineflix/src/ui/widgets/star_rating.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../models/trailer_model.dart';
@@ -27,18 +25,17 @@ class MovieDetail extends StatefulWidget {
   final int itemIndex;
   final ItemModel? itemModel;
 
-  const MovieDetail({
-    super.key,
-    required this.title,
-    this.posterUrl,
-    this.description,
-    this.releaseDate,
-    required this.voteAverage,
-    required this.movieId,
-    this.cast,
-    required this.itemIndex,
-    this.itemModel,
-  });
+  const MovieDetail(
+      {super.key,
+      required this.title,
+      this.posterUrl,
+      this.description,
+      this.releaseDate,
+      required this.voteAverage,
+      required this.movieId,
+      this.cast,
+      required this.itemIndex,
+      this.itemModel});
   @override
   State<StatefulWidget> createState() {
     return MovieDetailState(
@@ -66,7 +63,13 @@ class MovieDetailState extends State<MovieDetail> {
   final List<Person>? cast;
   final int itemIndex;
   final ItemModel? itemModel;
-  bool _isFavorite = false;
+
+  late bool _isFavorite = false;
+  late DocumentReference favoriteDocRef = favoriteServices.myCollection
+      .doc(itemModel?.results[itemIndex].id.toString());
+  //   final CollectionReference myCollection =
+  //     FirebaseFirestore.instance.collection('UsersWithFavorite');
+  // final DocumentReference favoriteDocRef = myCollection.doc(_user)
   FavoriteServices favoriteServices = FavoriteServices();
 
   MovieDetailState({
@@ -83,11 +86,13 @@ class MovieDetailState extends State<MovieDetail> {
 
   double? _trailerHeight;
   String? _emailAddress;
+
   @override
   void initState() {
     super.initState();
     // Fetch username when the drawer is initialized
     fetchUsername();
+    fetchFavoriteData();
   }
 
   Future<void> fetchUsername() async {
@@ -99,6 +104,13 @@ class MovieDetailState extends State<MovieDetail> {
         _emailAddress = userData.get('email');
       });
     }
+  }
+
+  Future<void> fetchFavoriteData() async {
+    final DocumentSnapshot favortieDocSnap = await favoriteDocRef.get();
+    setState(() {
+      _isFavorite = favortieDocSnap.exists;
+    });
   }
 
   @override
@@ -113,13 +125,14 @@ class MovieDetailState extends State<MovieDetail> {
   @override
   void dispose() {
     bloc.dispose();
-
+    //  fetchFavoriteData().ignore();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     const String baseImgUrl = "https://image.tmdb.org/t/p/w500";
+    print(posterUrl);
     return Scaffold(
         body: SafeArea(
       child: NestedScrollView(
@@ -131,15 +144,26 @@ class MovieDetailState extends State<MovieDetail> {
               pinned: true,
               elevation: 0.0,
               flexibleSpace: FlexibleSpaceBar(
+                //     background:
+                //         Image.network("$baseImgUrl/$posterUrl", fit: BoxFit.cover,
+                //             errorBuilder: (context, error, stackTrace) {
+                //   return Image.asset(
+                //     "assets/moviesAssets/user_profile.jpg",
+                //     fit: BoxFit.cover,
+                //   );
+                // })
                 background: Image.network(
-                  'https://image.tmdb.org/t/p/w500$posterUrl',
+                  '$baseImgUrl$posterUrl',
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, StackTrace) {
+                  loadingBuilder: (context, error, StackTrace) {
                     return const Center(
                         child: SpinKitThreeBounce(
                       color: AppColors.primaryText,
                       size: 20.0,
                     ));
+                  },
+                  errorBuilder: (context, error, StackTrace) {
+                    return const Center(child: Text("Could not Fetch Poster"));
                   },
                 ),
               ),
@@ -169,13 +193,10 @@ class MovieDetailState extends State<MovieDetail> {
                     ),
                     IconButton(
                       onPressed: () {
-                        setState(() {
-                          _isFavorite = !_isFavorite;
-                        });
                         if (_isFavorite) {
-                          onFavoritePressed(itemModel);
-                        } else {
                           onFavoriteRemove(itemModel);
+                        } else {
+                          onFavoritePressed();
                         }
                       },
                       icon: Icon(
@@ -218,6 +239,7 @@ class MovieDetailState extends State<MovieDetail> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: cast!.map((item) {
+                      print("profile: ${item.profilePath}");
                       // int index = cast!.indexOf(item);
                       return Container(
                         width: 100,
@@ -229,12 +251,17 @@ class MovieDetailState extends State<MovieDetail> {
                               height: 120,
                               width: 90,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  "$baseImgUrl/${item.profilePath}",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    "$baseImgUrl/${item.profilePath}",
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(
+                                        "assets/moviesAssets/user_profile.jpg",
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  )),
                             ),
                             Expanded(
                               child: Text(
@@ -296,9 +323,9 @@ class MovieDetailState extends State<MovieDetail> {
     ));
   }
 
-  onFavoritePressed(ItemModel? moviesModel) {
+  onFavoritePressed() {
     //  final id = moviesModel!.results[].id;
-    favoriteServices.addFavorite(moviesModel!, itemIndex);
+    favoriteServices.addFavorite(itemModel!, itemIndex);
   }
 
   onFavoriteRemove(ItemModel? moviesModel) {

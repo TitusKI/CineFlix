@@ -1,5 +1,6 @@
 import 'package:cineflix/src/common/services/cloud_services.dart';
 import 'package:cineflix/src/common/values/colors.dart';
+import 'package:cineflix/src/models/item_model.dart';
 import 'package:cineflix/src/models/people_model.dart';
 import 'package:cineflix/src/pages/common_widgets.dart';
 import 'package:cineflix/src/resources/people_api_provider.dart';
@@ -13,7 +14,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({
+  FavoritesPage({
     super.key,
   });
 
@@ -22,6 +23,8 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
+  int? itemIndex;
+  _FavoritesPageState({this.itemIndex});
   FavoriteServices favoriteServices = FavoriteServices();
 //   String? _userEmail;
 //   @override
@@ -59,7 +62,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
         itemBuilder: (context, index) {
           DocumentSnapshot document = favoriteList[index];
           String favMovieId = document.id;
-
+          itemIndex = index;
           Map<String, dynamic> data = document.data() as Map<String, dynamic>;
           String imageUrl = data['imageUrl'] ?? " ";
           print("Image: $imageUrl");
@@ -75,16 +78,16 @@ class _FavoritesPageState extends State<FavoritesPage> {
           print('description: $description');
           return GestureDetector(
             onTap: () async {
-              print('All snapshots are : $snapshot');
-              cast =
-                  await pplApi.fetchPeople(snapshot.data!.results[index].id, 2);
-              print('All Data : ${snapshot.data!.results[index]}');
-              openDetailPage(
-                context,
-                snapshot.data,
-                cast,
-                index,
-              );
+              // print('All snapshots are : $snapshot');
+              // cast =
+              //     await pplApi.fetchPeople(snapshot.data!.results[index].id, 2);
+              // print('All Data : ${snapshot.data!.results[index]}');
+              // openDetailPage(
+              //   context,
+              //   snapshot.data,
+              //   cast,
+              //   index,
+              // );
             },
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
@@ -137,11 +140,34 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       ],
                     ),
                   ),
+                  PopupMenuButton(
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem(
+                          child: GestureDetector(
+                            onTap: () {
+                              // try {
+                              //   onFavoriteRemove(snapshot.data.docs.id);
+                              // } on Exception catch (e) {
+                              //   print("Deleted Successfuly");
+                              // }
+                            },
+                            child: Text("Delete Favorite"),
+                          ),
+                        ),
+                      ];
+                    },
+                    child: const Icon(Icons.more_vert),
+                  )
                 ],
               ),
             ),
           );
         });
+  }
+
+  onFavoriteRemove(int id) {
+    favoriteServices.deleteFavorite(id);
   }
 
   @override

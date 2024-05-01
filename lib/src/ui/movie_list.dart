@@ -67,7 +67,7 @@ class _MovieListState extends State<MovieList> with TickerProviderStateMixin {
     } else if (_selectedBottomNavIndex == 1) {
       body = const GenrePage();
     } else if (_selectedBottomNavIndex == 2) {
-      body = const FavoritesPage();
+      body = FavoritesPage();
     }
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {

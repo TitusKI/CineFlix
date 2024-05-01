@@ -41,7 +41,7 @@ class FavoriteServices {
         // Access the data inside each document
         print('Document ID: ${document.id}');
         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-        print('Data: $data');
+        return print('Data: $data');
       });
     });
 

@@ -9,7 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class MovieShowHomeCard extends StatelessWidget {
   final int categoryId;
   final int mediaId;
-  final String title;
+  final String title; // final string title
   const MovieShowHomeCard(
       {super.key,
       required this.categoryId,

@@ -50,7 +50,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
     PeopleApiProvider pplApi = PeopleApiProvider();
     late List<Person> cast;
     List favoriteList = snapshot.data!.docs;
-    print("List of favorite: $favoriteList");
+    // print("All snapshots: $snapshot");
+    // print("List of favorite: $favoriteList");
     const Divider(
       color: AppColors.primarySecondaryElementText,
       thickness: 1.5,
@@ -77,14 +78,19 @@ class _FavoritesPageState extends State<FavoritesPage> {
           return Column(
             children: [
               ListTile(
-                onTap: () async {},
-                //   cast = await pplApi.fetchPeople(
-                //       snapshot.data!.results[index].id, 2);
-                //   openDetailPage(
-                //     context,
-                //     snapshot.data as ItemModel?,
-                //     cast,
-                //     index,
+                onTap: () async {
+                  print('All snapshots are : $snapshot');
+                  cast = await pplApi.fetchPeople(
+                      snapshot.data!.results[index].id, 2);
+                  print('All Data : ${snapshot.data!.results[index]}');
+                  openDetailPage(
+                    context,
+                    snapshot.data,
+                    cast,
+                    index,
+                  );
+                },
+
                 //   );
                 // },
                 title: AspectRatio(

@@ -1,3 +1,4 @@
+import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/models/people_model.dart';
 import 'package:cineflix/src/resources/people_api_provider.dart';
 import 'package:cineflix/src/ui/item_navigation.dart';
@@ -9,6 +10,7 @@ import 'package:cineflix/src/blocs/search/search_bloc.dart';
 import 'package:cineflix/src/blocs/search/search_event.dart';
 import 'package:cineflix/src/models/item_model.dart';
 import 'package:cineflix/src/blocs/search/search_state.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -86,14 +88,17 @@ class _SearchScreenState extends State<SearchScreen> {
               child: BlocBuilder<SearchBloc, SearchState>(
                 builder: (context, state) {
                   if (state is SearchLoadingState) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: SpinKitThreeBounce(
+                      color: AppColors.primaryText,
+                      size: 30.0,
+                    ));
                   } else if (state is SearchSuccessState) {
                     ItemModel? itemModel = state.getItemModel;
                     return ListView.builder(
                       shrinkWrap: true,
                       itemCount: itemModel!.results.length,
                       itemBuilder: (context, index) {
-                        print("the index is $index");
                         return ListTile(
                           title: Row(
                             children: [
@@ -130,26 +135,6 @@ class _SearchScreenState extends State<SearchScreen> {
                               cast,
                               index,
                             );
-
-                            // Navigator.of(context)
-                            // Navigator.of(context).pushNamed('/movie_detail');
-
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) => MovieDetail(
-                            //       title: tapped.title,
-                            //       voteAverage: tapped.vote_average,
-                            //       movieId: tapped.id,
-                            //       releaseDate: tapped.release_date ?? "",
-                            //       cast: cast,
-                            //       itemIndex: index,
-                            //       //  Since it causes invalid format date exeception
-                            //       // releaseDate: tapped.release_date,
-                            //       posterUrl: tapped.poster_path,
-                            //       description: tapped.overview,
-                            //     ),
-                            //   ),
-                            // );
                           },
                         );
                       },
@@ -158,9 +143,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     return Center(
                         child: Text('Error searching: ${state.errorMessage}'));
                   } else {
-                    return const Center(
-                        child:
-                            Text("Unknown problem occured! please try again."));
+                    return const SizedBox(
+                      child: Center(child: Text("Enter a Query")),
+                    );
                   }
                   // throw Exception("Error displaying");
                 },

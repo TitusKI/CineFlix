@@ -26,10 +26,10 @@ To dive into the CineFlix project, follow these steps:
 
 ## Deployment 🚀
 
-CineFlix can be deployed to various platforms. Here are the steps to deploy the app:
+CineFlix can be deployed to various platforms. Here's how:
 
-1. Build the app for the desired platform: `flutter build <platform>`
-2. Follow the platform-specific deployment instructions to deploy the app.
+1. **Build the app for the desired platform**: `flutter build <platform>`
+2. **Follow the platform-specific deployment instructions** to deploy the app.
 
 ## Technologies Used 💻
 

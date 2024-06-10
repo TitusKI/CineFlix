@@ -29,7 +29,7 @@ class MovieTile extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 3 / 2,
                 child: Image.network(
-                  'https://image.tmdb.org/t/p/w185${itemModel?.results[index].poster_path}',
+                  'https://image.tmdb.org/t/p/w185${itemModel?.results[index].posterPath}',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, StackTrace) {
                     return const Center(
@@ -50,7 +50,7 @@ class MovieTile extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            itemModel?.results[index].release_date ?? " ",
+            itemModel?.results[index].releaseDate ?? " ",
             style: const TextStyle(fontWeight: FontWeight.w200),
           ),
           StarRating(voteAverage: voteAverage!),

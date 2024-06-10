@@ -5,6 +5,7 @@ import 'package:cineflix/src/ui/item_navigation.dart';
 import 'package:cineflix/src/ui/widgets/movie_show_carousell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hive/hive.dart';
 
 class MovieShowHomeCard extends StatelessWidget {
   final int categoryId;
@@ -76,9 +77,20 @@ class MovieShowHomeCard extends StatelessWidget {
                   ),
                 );
               } else {
-                return const Center(
-                  child: Text('No Movies avaliable'),
-                );
+                final itemBox = Hive.box<ItemModel>('itemBox');
+                final cachedItems;
+                mediaId == 1
+                    ? cachedItems = itemBox.get('cachedMovies')
+                    : cachedItems = itemBox.get('cachedTvshows');
+                if (cachedItems != null) {
+                  return MovieShowCarousel(
+                      snapshot: cachedItems as AsyncSnapshot<ItemModel?>,
+                      mediaType: mediaId);
+                } else {
+                  return const Center(
+                    child: Text('No item found'),
+                  );
+                }
               }
 
               // return const Center(

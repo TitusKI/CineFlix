@@ -1,8 +1,9 @@
 import 'package:cineflix/src/common/values/colors.dart';
 import 'package:cineflix/src/ui/widgets/carousel_container.dart';
 import 'package:cineflix/src/ui/widgets/movie_show_home_card.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,6 +20,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     // _tabController.addListener(_handleTabSelection);
+  }
+
+  @override
+  void dispose() {
+    Hive.box('itemBox');
+    super.dispose();
   }
 
   @override
@@ -63,17 +70,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 MovieShowHomeCard(
                   categoryId: 2,
                   mediaId: 1,
-                  title: "Upcoming Movies",
+                  title: "Top Rated",
                 ),
                 MovieShowHomeCard(
                   categoryId: 3,
                   mediaId: 1,
-                  title: "Top Rated",
+                  title: "Now Playing",
                 ),
                 MovieShowHomeCard(
                   categoryId: 4,
                   mediaId: 1,
-                  title: "Now Playing",
+                  title: "Upcoming",
                 ),
               ]),
               CarouselContainer(carouselList: [

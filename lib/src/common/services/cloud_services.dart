@@ -16,10 +16,10 @@ class FavoriteServices {
     var moviesModel = itemModel!.results[index];
     try {
       await myCollection.doc(moviesModel.id.toString()).set({
-        'imageUrl': moviesModel.poster_path,
+        'imageUrl': moviesModel.posterPath,
         'title': moviesModel.title,
-        'date': moviesModel.release_date,
-        'rating': moviesModel.vote_average,
+        'date': moviesModel.releaseDate,
+        'rating': moviesModel.voteAverage,
         'description': moviesModel.overview,
         'timestamp': Timestamp.now(),
       });

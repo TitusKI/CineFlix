@@ -105,10 +105,11 @@ class _ItemNavigationState extends State<ItemNavigation> {
                 );
               }
 
-              return const Center(child: SpinKitThreeBounce(
-          color: AppColors.primaryText,
-          size: 20.0,
-        ));
+              return const Center(
+                  child: SpinKitThreeBounce(
+                color: AppColors.primaryText,
+                size: 20.0,
+              ));
             },
           ),
         ),
@@ -134,10 +135,10 @@ openDetailPage(
         itemModel: data,
         itemIndex: index,
         title: data?.results[index].title,
-        posterUrl: data?.results[index].poster_path,
+        posterUrl: data?.results[index].posterPath,
         description: data?.results[index].overview,
-        releaseDate: data?.results[index].release_date,
-        voteAverage: data?.results[index].vote_average,
+        releaseDate: data?.results[index].releaseDate,
+        voteAverage: data?.results[index].voteAverage,
         movieId: data!.results[index].id,
         cast: cast,
       ),

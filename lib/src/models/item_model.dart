@@ -1,126 +1,123 @@
+import 'package:hive/hive.dart';
+
+part 'item_model.g.dart';
+
+@HiveType(typeId: 0)
 class ItemModel {
-  late int _page;
-  late int _total_results;
-  late int _total_pages;
-  List<_Result> _results = [];
-  List<_Result> _similarTitles = [];
+  @HiveField(0)
+  int page;
 
-  // ignore: library_private_types_in_public_api
+  @HiveField(1)
+  List<Result> results;
 
-  ItemModel.fromJson(Map<String, dynamic> parsedJson) {
-    _page = parsedJson['page'];
-    _total_results = parsedJson['total_results'];
-    _total_pages = parsedJson['total_pages'];
-    List<_Result> temp = [];
-    // for(_page = 1; _page <= _total_pages; _page ++){
-    //   _page = _page++;
-    for (int i = 0; i < parsedJson['results'].length; i++) {
-      _Result result = _Result(parsedJson['results'][
-          i]); // It only responses one result from the list with specific index
-      temp.add(result); // add that result of specific index to the temp list
-    }
+  List<Result> similarTitles = [];
 
-    // }
+  ItemModel({required this.page, required this.results});
 
-    _results = temp;
+  factory ItemModel.fromJson(Map<String, dynamic> json) {
+    return ItemModel(
+      page: json['page'],
+      results: (json['results'] as List)
+          .map((result) => Result.fromJson(result))
+          .toList(),
+    );
   }
-  _Result? populateSimilarTitles(String clickedTitle) {
-    _Result? clickedItem;
+  Result? populateSimilarTitles(String clickedTitle) {
+    Result? clickedItem;
 
     // Find all items with the same title
-    List<_Result> similarTitles =
-        _results.where((result) => result.title == clickedTitle).toList();
+    List<Result> similarTitles =
+        results.where((result) => result.title == clickedTitle).toList();
 
     if (similarTitles.length == 1) {
       clickedItem = similarTitles[0];
     } else {
       clickedItem = null;
     }
-    _similarTitles = similarTitles;
+    similarTitles = similarTitles;
     return clickedItem;
   }
 
-  void setResults(List<_Result> results) {
-    _results = results;
+  void setResults(List<Result> results) {
+    results = results;
   }
 
-  //  populateSimilarTitles(String clickedTitle){
-  //   List<_Result> similarTitles = _results.where((result) => result.title == clickedTitle).toList();
-  //   _similarTitles = similarTitles;
-  //    return _similarTitles;
-  // }
-
-  List<_Result> get results => _results;
-  List<_Result> get similarTitles => _similarTitles;
-  int get total_pages => _total_pages;
-  int get total_results => _total_results;
-  int get page => _page;
+  Map<String, dynamic> toJson() {
+    return {
+      'page': page,
+      'results': results.map((result) => result.toJson()).toList(),
+    };
+  }
 }
 
-class _Result {
-  // late int _vote_count;
-  late int _id;
-  // late bool _video;
-  // late int _first_air_date_year;
-  late double _vote_average;
-  late String? _title;
-  late String? _original_name;
-  // late double _popularity;
-  late String? _poster_path;
-  // late String _original_language;
-  // late String _original_title;
-  late List<int> _genre_ids;
-  // late String _backdrop_path;
-  // late bool _adult;
-  late String? _overview;
-  late String? _release_date;
-  _Result(result) {
-    // _vote_count = result['vote_count'];
-    // _first_air_date_year = result['first_air_date_year'];
-    _id = result['id'];
-    // _video = result['video'];
-    _vote_average = result['vote_average'];
-    _original_name = result['original_name'] as String?;
-    _title = result['title'] as String?;
-    // _popularity = result['popularity'];
-    _poster_path = result['poster_path'] as String?;
-    // _original_language = result['original_language'];
-    // _original_title = result['original_title'];
-    _genre_ids = <int>[];
-    for (int i = 0; i < result['genre_ids'].length; i++) {
-      _genre_ids.add(result['genre_ids'][i]);
-    }
-    // _backdrop_path = result['backdrop_path'];
-    // _adult = result['adult'];
-    _overview = result['overview'] as String?;
-    _release_date = result['release_date'] as String?;
+@HiveType(typeId: 1)
+class Result {
+  // @HiveField(0)
+  // bool adult;
+
+  @HiveField(2)
+  int id;
+
+  @HiveField(6)
+  String overview;
+
+  @HiveField(8)
+  String? posterPath;
+
+  @HiveField(9)
+  String? firstAirDate;
+
+  @HiveField(10)
+  String? name;
+
+  @HiveField(11)
+  double? voteAverage;
+
+  @HiveField(12)
+  int? voteCount;
+  @HiveField(13)
+  String? releaseDate;
+  @HiveField(14)
+  String? title;
+
+  Result({
+    // required this.adult,
+    required this.id,
+    required this.overview,
+    required this.posterPath,
+    required this.firstAirDate,
+    required this.name,
+    required this.voteAverage,
+    required this.voteCount,
+    required this.releaseDate,
+    required this.title,
+  });
+
+  factory Result.fromJson(Map<String, dynamic> json) {
+    return Result(
+      // adult: json['adult'],
+      id: json['id'] as int,
+      overview: json['overview'],
+      posterPath: json['poster_path'],
+      firstAirDate: json['first_air_date'],
+      name: json['name'],
+      voteAverage: json['vote_average'],
+      voteCount: json['vote_count'],
+      releaseDate: json['releaseDate'],
+      title: json['title'],
+    );
   }
-  String? get release_date => _release_date;
-  // String? get tv_release_date => _first_air_date_year.toString();
 
-  String? get overview => _overview;
-
-  // bool get adult => _adult;
-
-  // String get backdrop_path => _backdrop_path;
-
-  List<int> get genre_ids => _genre_ids;
-
-  // String get original_title => _original_title;
-
-  // String get original_language => _original_language;
-
-  String? get poster_path => _poster_path;
-
-  // double get popularity => _popularity;
-
-  String? get title => _title ?? _original_name;
-
-  double get vote_average => _vote_average;
-
-  // bool get video => _video;
-
-  int get id => _id;
-
-  // int get vote_count => _vote_count;
+  Map<String, dynamic> toJson() {
+    return {
+      // 'adult': adult,
+      'id': id,
+      'overview': overview,
+      'poster_path': posterPath,
+      'first_air_date': firstAirDate,
+      'name': name,
+      'vote_average': voteAverage,
+      'vote_count': voteCount,
+    };
+  }
 }

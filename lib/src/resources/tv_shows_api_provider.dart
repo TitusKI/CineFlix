@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
+
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' show Client;
 import '../models/item_model.dart';
 // import '../models/trailer_model.dart';
@@ -16,7 +18,12 @@ class TvShowsApiProvider {
     if (response.statusCode ==
         200) // indicates that if the request is successful
     {
-      return ItemModel.fromJson(parsedJsonDecode);
+      final itemModel = ItemModel.fromJson(parsedJsonDecode);
+      final itemBox = Hive.box<ItemModel>('itemBox');
+      await itemBox.put('cachedTvshows', itemModel);
+      // print('ItemBox is : $itemBox');
+      // print({itemBox.get('cachedTvshows')});
+      return itemModel;
     } else {
       throw Exception('Failed to load Post');
     }
@@ -30,7 +37,10 @@ class TvShowsApiProvider {
     if (response.statusCode ==
         200) // indicates that if the request is successful
     {
-      return ItemModel.fromJson(parsedJsonDecode);
+      final itemModel = ItemModel.fromJson(parsedJsonDecode);
+      final itemBox = Hive.box<ItemModel>('itemBox');
+      await itemBox.put('cachedTvshows', itemModel);
+      return itemModel;
     } else {
       throw Exception('Failed to load Post');
     }
@@ -44,7 +54,10 @@ class TvShowsApiProvider {
     if (response.statusCode ==
         200) // indicates that if the request is successful
     {
-      return ItemModel.fromJson(parsedJsonDecode);
+      final itemModel = ItemModel.fromJson(parsedJsonDecode);
+      final itemBox = Hive.box<ItemModel>('itemBox');
+      await itemBox.put('cachedTvshows', itemModel);
+      return itemModel;
     } else {
       throw Exception('Failed to load Post');
     }
@@ -58,7 +71,10 @@ class TvShowsApiProvider {
     if (response.statusCode ==
         200) // indicates that if the request is successful
     {
-      return ItemModel.fromJson(parsedJsonDecode);
+      final itemModel = ItemModel.fromJson(parsedJsonDecode);
+      final itemBox = Hive.box<ItemModel>('itemBox');
+      await itemBox.put('cachedTvshows', itemModel);
+      return itemModel;
     } else {
       throw Exception('Failed to load Post');
     }

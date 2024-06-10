@@ -111,12 +111,12 @@ class _SearchScreenState extends State<SearchScreen> {
                               const SizedBox(
                                 width: 10,
                               ),
-                              if (itemModel.results[index].release_date !=
+                              if (itemModel.results[index].releaseDate !=
                                       null &&
                                   itemModel
-                                      .results[index].release_date!.isNotEmpty)
+                                      .results[index].releaseDate!.isNotEmpty)
                                 Text(
-                                    "(${year(itemModel.results[index].release_date)})")
+                                    "(${year(itemModel.results[index].releaseDate)})")
                               else
                                 Container()
                               // Text(

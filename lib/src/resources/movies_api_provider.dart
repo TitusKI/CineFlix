@@ -1,3 +1,5 @@
+import 'package:hive/hive.dart';
+
 import '../models/trailer_model.dart';
 import 'dart:async';
 import 'package:http/http.dart' show Client;
@@ -13,7 +15,10 @@ class MoviesApiProvider {
         await client.get(Uri.parse('$_apiUrl/popular?api_key=$_apiKey'));
     final parsedJsonDecode = json.decode(response.body);
     if (response.statusCode == 200) {
-      return ItemModel.fromJson(parsedJsonDecode);
+      final itemModel = ItemModel.fromJson(parsedJsonDecode);
+      final itemBox = Hive.box<ItemModel>('itemBox');
+      await itemBox.put('cachedMovies', itemModel);
+      return itemModel;
     } else {
       throw Exception('Failed to load Post');
     }
@@ -25,7 +30,10 @@ class MoviesApiProvider {
 
     final parsedJsonDecode = json.decode(response.body);
     if (response.statusCode == 200) {
-      return ItemModel.fromJson(parsedJsonDecode);
+      final itemModel = ItemModel.fromJson(parsedJsonDecode);
+      final itemBox = Hive.box<ItemModel>('itemBox');
+      await itemBox.put('cachedMovies', itemModel);
+      return itemModel;
     } else {
       throw Exception('Failed to load the post');
     }
@@ -36,7 +44,10 @@ class MoviesApiProvider {
         await client.get(Uri.parse('$_apiUrl/now_playing?api_key=$_apiKey'));
     final parsedJsonDecode = json.decode(response.body);
     if (response.statusCode == 200) {
-      return ItemModel.fromJson(parsedJsonDecode);
+      final itemModel = ItemModel.fromJson(parsedJsonDecode);
+      final itemBox = Hive.box<ItemModel>('itemBox');
+      await itemBox.put('cachedMovies', itemModel);
+      return itemModel;
     } else {
       throw Exception('Failed to load the post');
     }
@@ -47,7 +58,10 @@ class MoviesApiProvider {
         await client.get(Uri.parse('$_apiUrl/upcoming?api_key=$_apiKey'));
     final parsedJsonDecode = json.decode(response.body);
     if (response.statusCode == 200) {
-      return ItemModel.fromJson(parsedJsonDecode);
+      final itemModel = ItemModel.fromJson(parsedJsonDecode);
+      final itemBox = Hive.box<ItemModel>('itemBox');
+      await itemBox.put('cachedMovies', itemModel);
+      return itemModel;
     } else {
       throw Exception('Failed to load the post');
     }
@@ -61,7 +75,10 @@ class MoviesApiProvider {
     if (response.statusCode ==
         200) // indicates that if the request is successful
     {
-      return ItemModel.fromJson(parsedJsonDecode);
+      final itemModel = ItemModel.fromJson(parsedJsonDecode);
+      final itemBox = Hive.box<ItemModel>('itemBox');
+      await itemBox.put('cachedMovies', itemModel);
+      return itemModel;
     } else {
       throw Exception('Failed to load Post');
     }

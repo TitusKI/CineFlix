@@ -26,7 +26,7 @@ class MovieShowPreviewCard extends StatelessWidget {
               clipBehavior: Clip.hardEdge,
               borderRadius: BorderRadius.circular(10.0),
               child: Image.network(
-                'https://image.tmdb.org/t/p/w185${itemModel?.results[index].poster_path}',
+                'https://image.tmdb.org/t/p/w185${itemModel?.results[index].posterPath}',
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, StackTrace) {
                   return const Center(

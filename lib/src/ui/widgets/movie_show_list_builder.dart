@@ -42,7 +42,7 @@ class _MovieShowListBuilderState extends State<MovieShowListBuilder> {
               ),
               itemBuilder: (BuildContext context, int index) {
                 final voteAverage =
-                    widget.snapshot.data?.results[index].vote_average;
+                    widget.snapshot.data?.results[index].voteAverage;
                 return GestureDetector(
                     // // we can use GestureDetector instead of InkResponse
                     onTap: () async {
@@ -83,10 +83,10 @@ openDetailPage(
       child: MovieDetail(
         itemIndex: index,
         title: data?.results[index].title,
-        posterUrl: data?.results[index].poster_path,
+        posterUrl: data?.results[index].posterPath,
         description: data?.results[index].overview,
-        releaseDate: data?.results[index].release_date,
-        voteAverage: data?.results[index].vote_average,
+        releaseDate: data?.results[index].releaseDate,
+        voteAverage: data?.results[index].voteAverage,
         movieId: data!.results[index].id,
         cast: cast,
         itemModel: data,
